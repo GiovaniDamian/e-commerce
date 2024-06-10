@@ -2,7 +2,7 @@ import route from 'next/router'
 import { createContext, useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import firebase from '../../firebase/config'
-import Usuario from '../../model/Usuario'
+import { User as Usuario }from '../../models/User'
 
 interface AuthContextProps {
     usuario?: Usuario
@@ -19,21 +19,21 @@ async function usuarioNormalizado(usuarioFirebase: firebase.User): Promise<Usuar
     const token = await usuarioFirebase.getIdToken()
     return {
         uid: usuarioFirebase.uid,
-        nome: usuarioFirebase.displayName,
+        name: usuarioFirebase.displayName,
         email: usuarioFirebase.email,
         token,
-        provedor: usuarioFirebase.providerData[0].providerId,
-        imagemUrl: usuarioFirebase.photoURL
+        provider: usuarioFirebase.providerData[0].providerId,
+        imageUrl: usuarioFirebase.photoURL
     }
 }
 
 function gerenciarCookie(logado: boolean) {
     if (logado) {
-        Cookies.set('admin-template-cod3r-auth', logado, {
+        Cookies.set('iot-ecommerce', logado, {
             expires: 7
         })
     } else {
-        Cookies.remove('admin-template-cod3r-auth')
+        Cookies.remove('iot-ecommerce')
     }
 }
 
@@ -107,7 +107,7 @@ export function AuthProvider(props) {
     }
 
     useEffect(() => {
-        if(Cookies.get('admin-template-cod3r-auth')) {
+        if (Cookies.get('iot-ecommerce')) {
             const cancelar = firebase.auth().onIdTokenChanged(configurarSessao)
             return () => cancelar()
         } else {

@@ -14,32 +14,29 @@ interface ProductDetails {
 
 // Interface for product specifications
 interface ProductSpecifications {
-    material: string;
-    size: string;
-    weight: string;
+    material: string
+    size: string
+    weight: string
 }
 
 // Interface for a product
 export interface Product {
-    name: string;
-    price: string;
-    description: string;
-    details: ProductDetails;
-    specifications: ProductSpecifications;
-    category: string;
-    image_url: string;
-    product_url: string;
+    id: number
+    name: string
+    price: number
+    description: string
+    details: ProductDetails
+    specifications: ProductSpecifications
+    category: string
+    image_url: string
+    product_url: string
 }
 
-// Interface for the list of products categorized
-interface ProductCategories {
-    bulbs: Product[];
-    sockets: Product[];
-    outlets: Product[];
-    switches: Product[];
-}
-
-// Interface for the overall product structure
-export interface Products {
-    products: ProductCategories;
+//Interface for a Cart product
+export interface ProductCart {
+    id : number
+    name: string
+    price: number
+    description: string
+    image_url: string
 }

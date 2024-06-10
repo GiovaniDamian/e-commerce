@@ -1,160 +1,158 @@
-{
-  "products": {
-    "bulbs": [
-      {
-        "name": "Lâmpada LED E27 220V",
-        "price": "R$ 11,38",
-        "description": "Lâmpada LED de alta eficiência energética, base E27, adequada para uso em 220V.",
-        "details": {
-          "power": "10W",
-          "voltage": "220V",
-          "luminous_flux": "800 lumens",
-          "color_temperature": "6500K",
-          "lifespan": "25,000 horas"
-        },
-        "specifications": {
-          "material": "Alumínio + PC",
-          "size": "60mm x 110mm",
-          "weight": "100g"
-        },
-        "category": "bulbs",
-        "image_url": "https://example.com/image1.jpg",
-        "product_url": "https://pt.aliexpress.com/item/1005006278228813.html"
-      },
-      {
-        "name": "Lâmpada LED Inteligente RGB",
-        "price": "R$ 4,99",
-        "description": "Lâmpada LED inteligente com controle via app, várias cores disponíveis.",
-        "details": {
-          "power": "9W",
-          "voltage": "110-240V",
-          "luminous_flux": "600 lumens",
-          "color_temperature": "2700K-6500K",
-          "lifespan": "20,000 horas",
-          "features": [ "Cores RGB", "Controle por aplicativo", "Controle por voz" ]
-        },
-        "specifications": {
-          "material": "Plástico",
-          "size": "55mm x 105mm",
-          "weight": "90g"
-        },
-        "category": "bulbs",
-        "image_url": "https://example.com/image2.jpg",
-        "product_url": "https://pt.aliexpress.com/item/1005006166412041.html"
-      }
-    ],
-    "sockets": [
-      {
-        "name": "Bocal E27 com Sensor de Movimento",
-        "price": "R$ 32,44",
-        "description": "Bocal E27 com sensor de movimento, ideal para segurança e economia de energia.",
-        "details": {
-          "sensor_range": "5-8 metros",
-          "delay_time": "30-300 segundos",
-          "voltage": "110-240V",
-          "power": "Max 60W"
-        },
-        "specifications": {
-          "material": "Plástico",
-          "size": "70mm x 130mm",
-          "weight": "150g"
-        },
-        "category": "sockets",
-        "image_url": "https://example.com/image3.jpg",
-        "product_url": "https://pt.aliexpress.com/item/1005006313858972.html"
-      },
-      {
-        "name": "Bocal E27 Ajustável",
-        "price": "R$ 12,44",
-        "description": "Bocal E27 ajustável para lâmpadas LED e incandescentes.",
-        "details": {
-          "voltage": "110-240V",
-          "power": "Max 60W"
-        },
-        "specifications": {
-          "material": "Cerâmica",
-          "size": "50mm x 100mm",
-          "weight": "120g"
-        },
-        "category": "sockets",
-        "image_url": "https://example.com/image4.jpg",
-        "product_url": "https://pt.aliexpress.com/item/1005005902701040.html"
-      }
-    ],
-    "outlets": [
-      {
-        "name": "Tomada Inteligente Wi-Fi",
-        "price": "R$ 57,65",
-        "description": "Tomada inteligente com controle via app, compatível com Alexa e Google Assistant.",
-        "details": {
-          "voltage": "110-240V",
-          "current": "16A",
-          "features": [ "Controle Wi-Fi", "Controle por voz", "Função de temporizador" ]
-        },
-        "specifications": {
-          "material": "PC retardante de chama",
-          "size": "60mm x 60mm x 50mm",
-          "weight": "150g"
-        },
-        "category": "outlets",
-        "image_url": "https://example.com/image5.jpg",
-        "product_url": "https://pt.aliexpress.com/item/1005006096933452.html"
-      },
-      {
-        "name": "Tomada USB Dupla",
-        "price": "R$ 8,80",
-        "description": "Tomada com duas portas USB para carregamento rápido.",
-        "details": {
-          "voltage": "110-240V",
-          "current": "10A",
-          "usb_output": "5V 2.1A"
-        },
-        "specifications": {
-          "material": "ABS + PC",
-          "size": "50mm x 90mm",
-          "weight": "140g"
-        },
-        "category": "outlets",
-        "image_url": "https://example.com/image6.jpg",
-        "product_url": "https://pt.aliexpress.com/item/1005005646325220.html"
-      }
-    ],
-    "switches": [
-      {
-        "name": "Interruptor Wi-Fi Touch",
-        "price": "R$ 51,68",
-        "description": "Interruptor de parede Wi-Fi com painel touch, controle via app.",
-        "details": {
-          "voltage": "110-240V",
-          "current": "10A",
-          "features": [ "Controle touch", "Controle por aplicativo", "Controle por voz" ]
-        },
-        "specifications": {
-          "material": "Vidro temperado + ABS",
-          "size": "86mm x 86mm",
-          "weight": "160g"
-        },
-        "category": "switches",
-        "image_url": "https://example.com/image7.jpg",
-        "product_url": "https://pt.aliexpress.com/item/1005005732402318.html"
-      },
-      {
-        "name": "Interruptor Simples",
-        "price": "R$ 10,40",
-        "description": "Interruptor simples de alta durabilidade.",
-        "details": {
-          "voltage": "110-240V",
-          "current": "10A"
-        },
-        "specifications": {
-          "material": "PC",
-          "size": "86mm x 86mm",
-          "weight": "150g"
-        },
-        "category": "switches",
-        "image_url": "https://example.com/image8.jpg",
-        "product_url": "https://pt.aliexpress.com/item/1005005838334573.html"
-      }
-    ]
+[
+  {
+    "id": 1,
+    "name": "Lâmpada LED E27 220V",
+    "price": 1.38,
+    "description": "Lâmpada LED de alta eficiência energética, base E27, adequada para uso em 220V.",
+    "details": {
+      "power": "10W",
+      "voltage": "220V",
+      "luminous_flux": "800 lumens",
+      "color_temperature": "6500K",
+      "lifespan": "25,000 horas"
+    },
+    "specifications": {
+      "material": "Alumínio + PC",
+      "size": "60mm x 110mm",
+      "weight": "100g"
+    },
+    "category": "bulbs",
+    "image_url": "https://example.com/image1.jpg",
+    "product_url": "https://pt.aliexpress.com/item/1005006278228813.html"
+  },
+  {
+    "id": 2,
+    "name": "Lâmpada LED Inteligente RGB",
+    "price": 4.99,
+    "description": "Lâmpada LED inteligente com controle via app, várias cores disponíveis.",
+    "details": {
+      "power": "9W",
+      "voltage": "110-240V",
+      "luminous_flux": "600 lumens",
+      "color_temperature": "2700K-6500K",
+      "lifespan": "20,000 horas",
+      "features": [ "Cores RGB", "Controle por aplicativo", "Controle por voz" ]
+    },
+    "specifications": {
+      "material": "Plástico",
+      "size": "55mm x 105mm",
+      "weight": "90g"
+    },
+    "category": "bulbs",
+    "image_url": "https://example.com/image2.jpg",
+    "product_url": "https://pt.aliexpress.com/item/1005006166412041.html"
+  },
+  {
+    "id": 3,
+    "name": "Bocal E27 com Sensor de Movimento",
+    "price": 32.44,
+    "description": "Bocal E27 com sensor de movimento, ideal para segurança e economia de energia.",
+    "details": {
+      "sensor_range": "5-8 metros",
+      "delay_time": "30-300 segundos",
+      "voltage": "110-240V",
+      "power": "Max 60W"
+    },
+    "specifications": {
+      "material": "Plástico",
+      "size": "70mm x 130mm",
+      "weight": "150g"
+    },
+    "category": "sockets",
+    "image_url": "https://example.com/image3.jpg",
+    "product_url": "https://pt.aliexpress.com/item/1005006313858972.html"
+  },
+  {
+    "id": 4,
+    "name": "Bocal E27 Ajustável",
+    "price": 12.44,
+    "description": "Bocal E27 ajustável para lâmpadas LED e incandescentes.",
+    "details": {
+      "voltage": "110-240V",
+      "power": "Max 60W"
+    },
+    "specifications": {
+      "material": "Cerâmica",
+      "size": "50mm x 100mm",
+      "weight": "120g"
+    },
+    "category": "sockets",
+    "image_url": "https://example.com/image4.jpg",
+    "product_url": "https://pt.aliexpress.com/item/1005005902701040.html"
+  },
+  {
+    "id": 5,
+    "name": "Tomada Inteligente Wi-Fi",
+    "price": 57.65,
+    "description": "Tomada inteligente com controle via app, compatível com Alexa e Google Assistant.",
+    "details": {
+      "voltage": "110-240V",
+      "current": "16A",
+      "features": [ "Controle Wi-Fi", "Controle por voz", "Função de temporizador" ]
+    },
+    "specifications": {
+      "material": "PC retardante de chama",
+      "size": "60mm x 60mm x 50mm",
+      "weight": "150g"
+    },
+    "category": "outlets",
+    "image_url": "https://example.com/image5.jpg",
+    "product_url": "https://pt.aliexpress.com/item/1005006096933452.html"
+  },
+  {
+    "id": 6,
+    "name": "Tomada USB Dupla",
+    "price": 8.80,
+    "description": "Tomada com duas portas USB para carregamento rápido.",
+    "details": {
+      "voltage": "110-240V",
+      "current": "10A",
+      "usb_output": "5V 2.1A"
+    },
+    "specifications": {
+      "material": "ABS + PC",
+      "size": "50mm x 90mm",
+      "weight": "140g"
+    },
+    "category": "outlets",
+    "image_url": "https://example.com/image6.jpg",
+    "product_url": "https://pt.aliexpress.com/item/1005005646325220.html"
+  },
+  {
+    "id": 7,
+    "name": "Interruptor Wi-Fi Touch",
+    "price": 51.68,
+    "description": "Interruptor de parede Wi-Fi com painel touch, controle via app.",
+    "details": {
+      "voltage": "110-240V",
+      "current": "10A",
+      "features": [ "Controle touch", "Controle por aplicativo", "Controle por voz" ]
+    },
+    "specifications": {
+      "material": "Vidro temperado + ABS",
+      "size": "86mm x 86mm",
+      "weight": "160g"
+    },
+    "category": "switches",
+    "image_url": "https://example.com/image7.jpg",
+    "product_url": "https://pt.aliexpress.com/item/1005005732402318.html"
+  },
+  {
+    "id": 8,
+    "name": "Interruptor Simples",
+    "price": 10.40,
+    "description": "Interruptor simples de alta durabilidade.",
+    "details": {
+      "voltage": "110-240V",
+      "current": "10A"
+    },
+    "specifications": {
+      "material": "PC",
+      "size": "86mm x 86mm",
+      "weight": "150g"
+    },
+    "category": "switches",
+    "image_url": "https://example.com/image8.jpg",
+    "product_url": "https://pt.aliexpress.com/item/1005005838334573.html"
   }
-}
+]
