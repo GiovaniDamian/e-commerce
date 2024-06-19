@@ -1,64 +1,93 @@
 import * as React from "react";
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState, ReactNode } from "react";
 import { CartItem, ShoppingCart } from "../../models/Cart";
-
+import Cookies from 'js-cookie';
 
 interface AppContextProps {
-    theme?: string
-    changeTheme?: () => void
-    cart?: ShoppingCart
-    addCart?: (item: CartItem) => void
+    theme?: string;
+    changeTheme?: () => void;
+    cart?: ShoppingCart;
+    addCart?: (item: CartItem) => void;
     removeCart?: (item: CartItem) => void;
 }
 
-const getInitialState = () => {
-    if (typeof window !== "undefined") {
-        const localData = localStorage.getItem('cart');
-        if (localData) {
-            return JSON.parse(localData);
+const AppContext = createContext<AppContextProps>({});
+const getInitialCart = () => {
+    const savedCart = Cookies.get('cart');
+    if (savedCart) {
+        try {
+            return JSON.parse(savedCart);
+        } catch (error) {
+            console.error("Failed to parse cart from cookies", error);
         }
     }
-    const initialState = {
-        items: [],
-        totalPrice: 0,
-        userId: ''
-    };
-
-    return initialState;
+    return { items: [], totalPrice: 0 };
+};
+interface AppProviderProps {
+    children: ReactNode;
 }
 
-const AppContext =  createContext<AppContextProps>({})
-
-export function AppProvider({children}) {
-    const [theme, setTheme] = useState('')
-    const [cart, setCart] = useState(getInitialState)
+export function AppProvider({ children }: AppProviderProps) {
+    const [theme, setTheme] = useState<string>('');
+    const [cart, setCart] = useState<ShoppingCart>(getInitialCart);
 
     function changeTheme() {
-        const newTheme = theme === '' ? 'dark' : ''
-        setTheme(newTheme)
-        localStorage.setItem('theme', newTheme)
-       
+        const newTheme = theme === '' ? 'dark' : '';
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
     }
 
-    const addCart = useCallback((item : CartItem) => {
-        setCart(prevCart => [...prevCart, item])
+    const addCart = useCallback((item: CartItem) => {
+        setCart(prevCart => {
+            const existingItem = prevCart.items.find(cartItem => cartItem.product.name === item.product.name);
+
+            let updatedItems;
+            if (existingItem) {
+                updatedItems = prevCart.items.map(cartItem =>
+                    cartItem.product.name === item.product.name
+                        ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
+                        : cartItem
+                );
+            } else {
+                updatedItems = [...prevCart.items, item];
+            }
+
+            const updatedTotalPrice = updatedItems.reduce((total, cartItem) => {
+                return total + cartItem.product.price * cartItem.quantity;
+            }, 0);
+
+            return { items: updatedItems, totalPrice: updatedTotalPrice };
+        });
     }, []);
 
     const removeCart = useCallback((item: CartItem) => {
-        setCart(prevCart => prevCart.filter(product => product.product !== item.product))
+        setCart(prevCart => {
+            const updatedItems = prevCart.items.filter(cartItem => cartItem.product.name !== item.product.name);
+            const updatedTotalPrice = updatedItems.reduce((total, cartItem) => {
+                return total + cartItem.product.price * cartItem.quantity;
+            }, 0);
+
+            return { items: updatedItems, totalPrice: updatedTotalPrice };
+        });
     }, []);
 
-
     useEffect(() => {
-        const savedTheme = localStorage.getItem('theme')
+        const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
-            setTheme(savedTheme)
-        } 
-    }, [])
+            setTheme(savedTheme);
+        }
+
+        const savedCart = localStorage.getItem('cart');
+        if (savedCart) {
+            setCart(JSON.parse(savedCart));
+        }
+    }, []);
 
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart))
-    }, [cart])
+        Cookies.set('cart', JSON.stringify(cart), {
+            expires: 7
+        });
+    }, [cart]);
 
     return (
         <AppContext.Provider value={{
@@ -70,7 +99,7 @@ export function AppProvider({children}) {
         }}>
             {children}
         </AppContext.Provider>
-    )
+    );
 }
 
-export default AppContext
+export default AppContext;

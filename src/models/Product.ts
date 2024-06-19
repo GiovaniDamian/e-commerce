@@ -34,9 +34,6 @@ export interface Product {
 
 //Interface for a Cart product
 export interface ProductCart {
-    id : number
     name: string
     price: number
-    description: string
-    image_url: string
 }

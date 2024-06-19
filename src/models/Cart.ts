@@ -8,8 +8,6 @@ export interface CartItem {
 
 // Interface for the shopping cart
 export interface ShoppingCart {
-    userId: string
-    cartId: number
     items: CartItem[]
     totalPrice: number
 }
