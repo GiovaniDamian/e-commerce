@@ -11,7 +11,7 @@ import useAuth from '../data/hook/useAuth';
 import route from 'next/router';
 
 export default function Home() {
-    const { theme, changeTheme, cart, addCart, removeCart } = useAppData();
+    const { theme, changeTheme, cart, resetCart, addCart, removeCart } = useAppData();
     const { logout } = useAuth(); 
 
     const [isClient, setIsClient] = useState(false);
@@ -25,6 +25,7 @@ export default function Home() {
             route.push('/autenticacao');
         }
 
+        
         return (
             <div className={`${theme}`}>
                 <Head>
@@ -140,6 +141,8 @@ export default function Home() {
                         ))}
                     </div>
                     <ShoppingCart {...cart} />
+
+                    <button onClick={resetCart}>RESET</button>
                 </main>
 
                 <footer></footer>

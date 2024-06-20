@@ -2,9 +2,9 @@ import { useState } from "react"
 import AuthInput from "../components/auth/AuthInput"
 import { IconeAtencao } from "../icons"
 import useAuth from "../data/hook/useAuth"
+import useAppData from "../data/hook/useAppData"
 
 export default function Autenticacao() {
-
     const { cadastrar, login, loginGoogle } = useAuth()
 
     const [erro, setErro] = useState(null)

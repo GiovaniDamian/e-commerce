@@ -2,16 +2,18 @@ import * as React from "react";
 import { createContext, useCallback, useEffect, useState, ReactNode } from "react";
 import { CartItem, ShoppingCart } from "../../models/Cart";
 import Cookies from 'js-cookie';
+import useAuth from "../hook/useAuth";
 
 interface AppContextProps {
-    theme?: string;
-    changeTheme?: () => void;
-    cart?: ShoppingCart;
-    addCart?: (item: CartItem) => void;
-    removeCart?: (item: CartItem) => void;
+    theme?: string
+    changeTheme?: () => void
+    cart?: ShoppingCart
+    resetCart?: () => void
+    addCart?: (item: CartItem) => void
+    removeCart?: (item: CartItem) => void
 }
 
-const AppContext = createContext<AppContextProps>({});
+const AppContext = createContext<AppContextProps>({})
 const getInitialCart = () => {
     const savedCart = Cookies.get('cart');
     if (savedCart) {
@@ -30,11 +32,14 @@ interface AppProviderProps {
 export function AppProvider({ children }: AppProviderProps) {
     const [theme, setTheme] = useState<string>('');
     const [cart, setCart] = useState<ShoppingCart>(getInitialCart);
-
+    const { usuario } = useAuth()
     function changeTheme() {
         const newTheme = theme === '' ? 'dark' : '';
         setTheme(newTheme);
         localStorage.setItem('theme', newTheme);
+    }
+    function resetCart() {
+        setCart({ items: [], totalPrice: 0 })
     }
 
     const addCart = useCallback((item: CartItem) => {
@@ -94,6 +99,7 @@ export function AppProvider({ children }: AppProviderProps) {
             theme,
             changeTheme,
             cart,
+            resetCart,
             addCart,
             removeCart
         }}>

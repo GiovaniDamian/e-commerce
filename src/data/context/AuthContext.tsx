@@ -1,49 +1,67 @@
-import route from 'next/router'
-import { createContext, useEffect, useState } from 'react'
-import Cookies from 'js-cookie'
-import firebase from '../../firebase/config'
-import { User as Usuario }from '../../models/User'
+import route from 'next/router';
+import { createContext, useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import firebase from '../../firebase/config';
+import Usuario from '../../models/User';
+import UsuarioRepository from '../../models/UserRepository';
+import UserFireBase from '../../db/Client';
 
 interface AuthContextProps {
-    usuario?: Usuario
-    carregando?: boolean
+    usuario?: Usuario;
+    carregando?: boolean;
     cadastrar?: (email: string, senha: string) => Promise<void>
     login?: (email: string, senha: string) => Promise<void>
     loginGoogle?: () => Promise<void>
     logout?: () => Promise<void>
 }
 
-const AuthContext = createContext<AuthContextProps>({})
+const AuthContext = createContext<AuthContextProps>({});
 
-async function usuarioNormalizado(usuarioFirebase: firebase.User): Promise<Usuario> {
-    const token = await usuarioFirebase.getIdToken()
-    return {
-        uid: usuarioFirebase.uid,
-        name: usuarioFirebase.displayName,
-        email: usuarioFirebase.email,
+async function usuarioNormalizado(usuarioFirebase: firebase.User, usuarioExistente?: Usuario): Promise<Usuario> {
+    const token = await usuarioFirebase.getIdToken();
+    return new Usuario(
+        usuarioFirebase.uid,
+        usuarioExistente?.name || usuarioFirebase.displayName || "",
+        usuarioExistente?.email || usuarioFirebase.email || "",
         token,
-        provider: usuarioFirebase.providerData[0].providerId,
-        imageUrl: usuarioFirebase.photoURL
-    }
+        usuarioFirebase.providerData[0]?.providerId || "",
+        usuarioExistente?.imageUrl || usuarioFirebase.photoURL || "",
+        usuarioExistente?.cpf || 0,
+        usuarioExistente?.phone || usuarioFirebase.phoneNumber || "",
+        usuarioExistente?.historic || "",
+        usuarioExistente?.address || {
+            state: "",
+            city: "",
+            neighborhood: "",
+            street: "",
+            houseNumber: 0,
+            adjunct: ""
+        }
+    );
 }
 
 function gerenciarCookie(logado: boolean) {
     if (logado) {
         Cookies.set('iot-ecommerce', logado, {
             expires: 7
-        })
+        });
     } else {
         Cookies.remove('iot-ecommerce')
     }
 }
 
 export function AuthProvider(props) {
-    const [carregando, setCarregando] = useState(true)
-    const [usuario, setUsuario] = useState<Usuario>(null)
+    const [carregando, setCarregando] = useState(true);
+    const [usuario, setUsuario] = useState<Usuario>();
+    const repo = new UserFireBase();
 
     async function configurarSessao(usuarioFirebase) {
         if (usuarioFirebase?.email) {
-            const usuario = await usuarioNormalizado(usuarioFirebase)
+            let usuarioExistente = await repo.obter({ id: usuarioFirebase.uid } as Usuario)
+            let usuario = await usuarioNormalizado(usuarioFirebase, usuarioExistente)
+            if (!usuarioExistente) {
+                await repo.salvar(usuario)
+            }
             setUsuario(usuario)
             gerenciarCookie(true)
             setCarregando(false)
@@ -59,11 +77,9 @@ export function AuthProvider(props) {
     async function login(email, senha) {
         try {
             setCarregando(true)
-            const resp = await firebase.auth()
-                .signInWithEmailAndPassword(email, senha)
-    
+            const resp = await firebase.auth().signInWithEmailAndPassword(email, senha)
             await configurarSessao(resp.user)
-            route.push('/')
+            window.location.href = '/'
         } finally {
             setCarregando(false)
         }
@@ -72,11 +88,9 @@ export function AuthProvider(props) {
     async function cadastrar(email, senha) {
         try {
             setCarregando(true)
-            const resp = await firebase.auth()
-                .createUserWithEmailAndPassword(email, senha)
-    
+            const resp = await firebase.auth().createUserWithEmailAndPassword(email, senha)
             await configurarSessao(resp.user)
-            route.push('/')
+            window.location.href = '/'
         } finally {
             setCarregando(false)
         }
@@ -85,12 +99,9 @@ export function AuthProvider(props) {
     async function loginGoogle() {
         try {
             setCarregando(true)
-            const resp = await firebase.auth().signInWithPopup(
-                new firebase.auth.GoogleAuthProvider()
-            )
-    
+            const resp = await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
             await configurarSessao(resp.user)
-            route.push('/')
+            window.location.href = '/'
         } finally {
             setCarregando(false)
         }
@@ -108,12 +119,12 @@ export function AuthProvider(props) {
 
     useEffect(() => {
         if (Cookies.get('iot-ecommerce')) {
-            const cancelar = firebase.auth().onIdTokenChanged(configurarSessao)
-            return () => cancelar()
+            const cancelar = firebase.auth().onIdTokenChanged(configurarSessao);
+            return () => cancelar();
         } else {
-            setCarregando(false)
+            setCarregando(false);
         }
-    }, [])
+    }, []);
 
     return (
         <AuthContext.Provider value={{
@@ -122,12 +133,11 @@ export function AuthProvider(props) {
             login,
             cadastrar,
             loginGoogle,
-            logout
+            logout,
         }}>
             {props.children}
         </AuthContext.Provider>
-    )
+    );
 }
 
-
-export default AuthContext
+export default AuthContext;
