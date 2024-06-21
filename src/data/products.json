@@ -17,7 +17,7 @@
       "weight": "100g"
     },
     "category": "bulbs",
-    "image_url": "https://example.com/image1.jpg",
+    "image_url": "/images/lamp_01.webp",
     "product_url": "https://pt.aliexpress.com/item/1005006278228813.html"
   },
   {
@@ -39,7 +39,7 @@
       "weight": "90g"
     },
     "category": "bulbs",
-    "image_url": "https://example.com/image2.jpg",
+    "image_url": "/images/lamp_02.webp",
     "product_url": "https://pt.aliexpress.com/item/1005006166412041.html"
   },
   {
@@ -59,7 +59,7 @@
       "weight": "150g"
     },
     "category": "sockets",
-    "image_url": "https://example.com/image3.jpg",
+    "image_url": "/images/sockets_01.jpg",
     "product_url": "https://pt.aliexpress.com/item/1005006313858972.html"
   },
   {
@@ -77,7 +77,7 @@
       "weight": "120g"
     },
     "category": "sockets",
-    "image_url": "https://example.com/image4.jpg",
+    "image_url": "/images/sockets_02.jfif",
     "product_url": "https://pt.aliexpress.com/item/1005005902701040.html"
   },
   {
@@ -96,7 +96,7 @@
       "weight": "150g"
     },
     "category": "outlets",
-    "image_url": "https://example.com/image5.jpg",
+    "image_url": "/images/outlets_01.webp",
     "product_url": "https://pt.aliexpress.com/item/1005006096933452.html"
   },
   {
@@ -115,7 +115,7 @@
       "weight": "140g"
     },
     "category": "outlets",
-    "image_url": "https://example.com/image6.jpg",
+    "image_url": "/images/outlets_02.webp",
     "product_url": "https://pt.aliexpress.com/item/1005005646325220.html"
   },
   {
@@ -134,7 +134,7 @@
       "weight": "160g"
     },
     "category": "switches",
-    "image_url": "https://example.com/image7.jpg",
+    "image_url": "/images/switches_01.webp",
     "product_url": "https://pt.aliexpress.com/item/1005005732402318.html"
   },
   {
@@ -152,7 +152,7 @@
       "weight": "150g"
     },
     "category": "switches",
-    "image_url": "https://example.com/image8.jpg",
+    "image_url": "/images/switches_02.jfif",
     "product_url": "https://pt.aliexpress.com/item/1005005838334573.html"
   }
 ]

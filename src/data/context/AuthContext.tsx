@@ -98,12 +98,17 @@ export function AuthProvider(props) {
 
     async function loginGoogle() {
         try {
-            setCarregando(true)
-            const resp = await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
-            await configurarSessao(resp.user)
-            window.location.href = '/'
+            setCarregando(true);
+            const auth = firebase.auth();
+            const provider = new firebase.auth.GoogleAuthProvider();
+            const resp = await auth.signInWithPopup(provider);
+            await configurarSessao(resp.user);
+
+            window.location.href = '/';
+        } catch (error) {
+            console.error("Erro durante o login:", error);
         } finally {
-            setCarregando(false)
+            setCarregando(false);
         }
     }
 

@@ -36,4 +36,5 @@ export interface Product {
 export interface ProductCart {
     name: string
     price: number
+    image_url: string
 }

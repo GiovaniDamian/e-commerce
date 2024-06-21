@@ -65,6 +65,9 @@ export function AppProvider({ children }: AppProviderProps) {
         });
     }, []);
 
+
+
+
     const removeCart = useCallback((item: CartItem) => {
         setCart(prevCart => {
             const updatedItems = prevCart.items.filter(cartItem => cartItem.product.name !== item.product.name);
