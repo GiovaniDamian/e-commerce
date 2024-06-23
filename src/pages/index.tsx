@@ -1,12 +1,6 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { IconeLua, IconeSol } from '../icons';
-import products from '../data/products.json';
-import ShoppingCart from '../components/ShoppingCart';
-import AvatarUsuario from '../components/AvatarUsuario';
 import useAppData from '../data/hook/useAppData';
-import useAuth from '../data/hook/useAuth';
-import route from 'next/router';
 import Header from '../components/Header';
 
 export default function Home() {

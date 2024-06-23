@@ -11,6 +11,7 @@ interface AppContextProps {
     resetCart?: () => void
     addCart?: (item: CartItem) => void
     removeCart?: (item: CartItem) => void
+    updateCartQuantity?: (productName: string, quantity: number) => void
 }
 
 const AppContext = createContext<AppContextProps>({})
@@ -65,12 +66,25 @@ export function AppProvider({ children }: AppProviderProps) {
         });
     }, []);
 
-
-
-
     const removeCart = useCallback((item: CartItem) => {
         setCart(prevCart => {
             const updatedItems = prevCart.items.filter(cartItem => cartItem.product.name !== item.product.name);
+            const updatedTotalPrice = updatedItems.reduce((total, cartItem) => {
+                return total + cartItem.product.price * cartItem.quantity;
+            }, 0);
+
+            return { items: updatedItems, totalPrice: updatedTotalPrice };
+        });
+    }, []);
+
+    const updateCartQuantity = useCallback((productName: string, quantity: number) => {
+        setCart(prevCart => {
+            const updatedItems = prevCart.items.map(cartItem =>
+                cartItem.product.name === productName
+                    ? { ...cartItem, quantity }
+                    : cartItem
+            ).filter(cartItem => cartItem.quantity > 0);
+
             const updatedTotalPrice = updatedItems.reduce((total, cartItem) => {
                 return total + cartItem.product.price * cartItem.quantity;
             }, 0);
@@ -104,7 +118,8 @@ export function AppProvider({ children }: AppProviderProps) {
             cart,
             resetCart,
             addCart,
-            removeCart
+            removeCart,
+            updateCartQuantity
         }}>
             {children}
         </AppContext.Provider>

@@ -23,7 +23,7 @@ export default function CartIcon() {
                 )}
             </div>
             <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <ShoppingCart {...cart} />
+                <ShoppingCart />
             </Modal>
         </>
     );
