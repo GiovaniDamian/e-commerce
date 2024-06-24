@@ -2,7 +2,9 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import useAppData from '../data/hook/useAppData';
 import Header from '../components/Header';
-
+import { Canvas } from "@react-three/fiber";
+import Scene from '../components/Scene'
+import Offers from '../components/Offers';
 export default function Home() {
     const { theme } = useAppData()
 
@@ -25,6 +27,9 @@ export default function Home() {
 
                 <Header />
                 <main className={`flex flex-row h-screen w-screen bg-gray-300 dark:bg-gray-800`}>
+                    <Canvas>
+                        <Scene />
+                    </Canvas>
                 </main>
 
                 <footer>

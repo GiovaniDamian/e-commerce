@@ -56,7 +56,7 @@ export default function ShoppingCartComponent() {
         }
     };
     return (
-        <div className="max-w-4xl mx-auto p-1 bg-gray-300 dark:bg-gray-800 rounded-lg shadow-lg">
+        <div className="max-w-4xl mx-auto p-3 bg-gray-300 dark:bg-gray-800 rounded-lg shadow-lg">
             <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">Shopping Cart</h1>
             <div className="flex flex-row justify-center space-x-4">
                 <div>
