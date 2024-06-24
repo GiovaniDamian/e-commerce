@@ -140,7 +140,7 @@ export default function Home() {
                             </div>
                         ))}
                     </div>
-                    <ShoppingCart {...cart} />
+                    <ShoppingCart />
 
                     <button onClick={resetCart}>RESET</button>
                 </main>
