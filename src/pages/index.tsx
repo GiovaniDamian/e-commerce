@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 import useAppData from '../data/hook/useAppData';
 import Header from '../components/Header';
 import { Canvas } from "@react-three/fiber";
-import Scene from '../components/Scene'
-import Offers from '../components/Offers';
+import Scene from '../components/Scene';
 export default function Home() {
     const { theme } = useAppData()
 
