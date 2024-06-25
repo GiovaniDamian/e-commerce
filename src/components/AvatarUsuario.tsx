@@ -26,7 +26,7 @@ export default function AvatarUsuario({ className }: AvatarUsuarioProps) {
                 alt="Avatar do Usuário"
                 onError={handleError}
                 className={`
-                    h-10 w-10 rounded-full cursor-pointer mx-4
+                    h-7 w-7 rounded-full cursor-pointer mx-4
                     ${className}
                 `}
             />
@@ -37,7 +37,7 @@ export default function AvatarUsuario({ className }: AvatarUsuarioProps) {
                     alt="Avatar do Usuário"
                     onError={handleError}
                     className={`
-                    h-10 w-10 rounded-full cursor-pointer mx-4
+                    h-67 w-7 rounded-full cursor-pointer mx-4
                     ${className}
                 `}
                 />

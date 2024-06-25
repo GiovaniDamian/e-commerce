@@ -4,9 +4,10 @@ import useAppData from '../data/hook/useAppData';
 import Header from '../components/Header';
 import { Canvas } from "@react-three/fiber";
 import Scene from '../components/Scene';
+import { Scroll, ScrollControls } from '@react-three/drei';
 export default function Home() {
     const { theme } = useAppData()
-
+    const [light, setLight] = useState(1)
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
@@ -25,9 +26,9 @@ export default function Home() {
                 </Head>
 
                 <Header />
-                <main className={`flex flex-row h-screen w-screen bg-gray-300 dark:bg-gray-800`}>
+                <main className={`flex flex-row h-screen w-screen bg-gray-300 dark:bg-gray-800`} onClick={() => light == 0 ? setLight(0.8) : setLight(0)}>
                     <Canvas>
-                        <Scene />
+                        <Scene light={light} setLight={setLight} />
                     </Canvas>
                 </main>
 

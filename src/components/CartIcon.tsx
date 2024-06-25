@@ -6,8 +6,8 @@ import { useState } from "react";
 import ShoppingCart from "./ShoppingCart";
 
 export default function CartIcon() {
-    const { cart } = useAppData()
-    const itemCount = cart.items.length
+    const { cart } = useAppData();
+    const itemCount = cart.items.length;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
@@ -15,9 +15,9 @@ export default function CartIcon() {
     return (
         <>
             <div className="relative cursor-pointer" onClick={openModal}>
-                <FontAwesomeIcon icon={faShoppingCart} size="2x" />
+                <FontAwesomeIcon icon={faShoppingCart} size="lg" />
                 {itemCount > 0 && (
-                    <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full h-2.5 w-2.5 flex items-center justify-center text-xs">
                         {itemCount}
                     </span>
                 )}

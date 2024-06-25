@@ -15,19 +15,20 @@ interface AppContextProps {
 }
 
 const AppContext = createContext<AppContextProps>({})
+
 const getInitialCart = () => {
-    const savedCart = Cookies.get('cart');
+    const savedCart = Cookies.get('cart')
     if (savedCart) {
         try {
-            return JSON.parse(savedCart);
+            return JSON.parse(savedCart)
         } catch (error) {
-            console.error("Failed to parse cart from cookies", error);
+            console.error("Failed to parse cart from cookies", error)
         }
     }
-    return { items: [], totalPrice: 0 };
+    return { items: [], totalPrice: 0 }
 };
 interface AppProviderProps {
-    children: ReactNode;
+    children: ReactNode
 }
 
 export function AppProvider({ children }: AppProviderProps) {
@@ -35,19 +36,19 @@ export function AppProvider({ children }: AppProviderProps) {
     const [cart, setCart] = useState<ShoppingCart>(getInitialCart);
     const { usuario } = useAuth()
     function changeTheme() {
-        const newTheme = theme === '' ? 'dark' : '';
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
+        const newTheme = theme === '' ? 'dark' : ''
+        setTheme(newTheme)
+        localStorage.setItem('theme', newTheme)
     }
     function resetCart() {
         setCart({ items: [], totalPrice: 0 })
     }
 
-    const addCart = useCallback((item: CartItem) => {
+    function addCart (item: CartItem) {
         setCart(prevCart => {
             const existingItem = prevCart.items.find(cartItem => cartItem.product.name === item.product.name);
 
-            let updatedItems;
+            let updatedItems
             if (existingItem) {
                 updatedItems = prevCart.items.map(cartItem =>
                     cartItem.product.name === item.product.name
@@ -55,43 +56,43 @@ export function AppProvider({ children }: AppProviderProps) {
                         : cartItem
                 );
             } else {
-                updatedItems = [...prevCart.items, item];
+                updatedItems = [...prevCart.items, item]
             }
 
             const updatedTotalPrice = updatedItems.reduce((total, cartItem) => {
-                return total + cartItem.product.price * cartItem.quantity;
+                return total + cartItem.product.price * cartItem.quantity
             }, 0);
 
-            return { items: updatedItems, totalPrice: updatedTotalPrice };
+            return { items: updatedItems, totalPrice: updatedTotalPrice }
         });
-    }, []);
+    }
 
-    const removeCart = useCallback((item: CartItem) => {
+    function removeCart (item: CartItem) {
         setCart(prevCart => {
-            const updatedItems = prevCart.items.filter(cartItem => cartItem.product.name !== item.product.name);
+            const updatedItems = prevCart.items.filter(cartItem => cartItem.product.name !== item.product.name)
             const updatedTotalPrice = updatedItems.reduce((total, cartItem) => {
-                return total + cartItem.product.price * cartItem.quantity;
-            }, 0);
+                return total + cartItem.product.price * cartItem.quantity
+            }, 0)
 
-            return { items: updatedItems, totalPrice: updatedTotalPrice };
-        });
-    }, []);
+            return { items: updatedItems, totalPrice: updatedTotalPrice }
+        })
+    }
 
-    const updateCartQuantity = useCallback((productName: string, quantity: number) => {
+    function updateCartQuantity (productName: string, quantity: number) {
         setCart(prevCart => {
             const updatedItems = prevCart.items.map(cartItem =>
                 cartItem.product.name === productName
                     ? { ...cartItem, quantity }
                     : cartItem
-            ).filter(cartItem => cartItem.quantity > 0);
+            ).filter(cartItem => cartItem.quantity > 0)
 
             const updatedTotalPrice = updatedItems.reduce((total, cartItem) => {
                 return total + cartItem.product.price * cartItem.quantity;
-            }, 0);
+            }, 0)
 
-            return { items: updatedItems, totalPrice: updatedTotalPrice };
-        });
-    }, []);
+            return { items: updatedItems, totalPrice: updatedTotalPrice }
+        })
+    }
 
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme');
