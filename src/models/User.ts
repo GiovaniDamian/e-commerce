@@ -20,7 +20,7 @@ export default class Usuario {
     #address: Address
     #historic: string
 
-    constructor(id: string = null, name: string, email: string, token: string, provider: string, imageUrl: string, cpf: number, phone: string, historic: string, address: Address) {
+    constructor(id: string, name: string, email: string, token: string, provider: string, imageUrl: string, cpf: number, phone: string, historic: string, address: Address) {
         this.#id = id
         this.#name = name
         this.#email = email

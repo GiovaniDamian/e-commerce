@@ -5,6 +5,7 @@ import firebase from '../../firebase/config';
 import Usuario from '../../models/User';
 import UsuarioRepository from '../../models/UserRepository';
 import UserFireBase from '../../db/Client';
+import { getInitialValue } from '@testing-library/user-event/dist/types/document/UI';
 
 interface AuthContextProps {
     usuario?: Usuario;
@@ -67,7 +68,7 @@ export function AuthProvider(props) {
             setCarregando(false)
             return usuario.email
         } else {
-            setUsuario(null)
+            setUsuario(undefined)
             gerenciarCookie(false)
             setCarregando(false)
             return false
