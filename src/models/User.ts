@@ -1,4 +1,3 @@
-import { ShoppingCart } from "./Cart"
 
 interface Address {
     state: string

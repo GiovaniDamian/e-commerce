@@ -1,79 +1,67 @@
 import {
-    MeshPortalMaterial,
     Scroll,
     ScrollControls,
     RoundedBox
 } from "@react-three/drei";
 import RoundedBoxWithScroll from './RoundedBoxWithScroll';
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
+import { useSpring, animated } from "@react-spring/three";
 
-const RoundedBoxScroll = ({ scale, setLight }) => {
-    const [active, setActive] = useState(false);
+const AnimatedRoundedBox = animated(RoundedBox);
 
-    useEffect(() => {
-    }, [active])
-    function clickHandler0() {
-        setActive(!active);
-    };
-    function clickHandler1() {
-        setActive(!active);
-    };
-    function clickHandler2() {
-        setActive(!active);
+const RoundedBoxScroll = ({ scale, light, setLight }) => {
+    const [active, setActive] = useState(null);
+
+    const handleClick = (index) => {
+        setActive(active === index ? null : index);
     };
 
-    if (scale == '1') {
-        return (
-            <>
-                <ScrollControls pages={2} damping={0.001} children>
+    const springs = [0, 1, 2].map((i) =>
+        useSpring({
+            scale: active === i ? [3, 3, 1] : [1, 1, 1],
+            position: active === i ? [0, 0, 2]
+                : i === 0 ? [-1, -1, 1]
+                    : i === 1 ? [0, -1, 1]
+                        : [1, -1, 1],
+            opacity: active === i ? 1 : 0
+        })
+    );
+
+    return (
+        <>
+            {scale == '1' ? (
+                <ScrollControls pages={2} damping={0.001}>
                     <Scroll>
-                        <RoundedBoxWithScroll index={0} color='yellow' scale={scale} clickHandler={clickHandler0} >
-
-                        </RoundedBoxWithScroll>
-                        <RoundedBoxWithScroll index={1} color='orange' scale={scale} clickHandler={clickHandler1} >
-
-                        </RoundedBoxWithScroll>
-                        <RoundedBoxWithScroll index={2} color='orange' scale={scale} clickHandler={clickHandler2 } >
-
-                        </RoundedBoxWithScroll>
+                        {[0, 1, 2].map((index) => (
+                            <RoundedBoxWithScroll
+                                key={index}
+                                index={index}
+                                color={index === 0 ? 'yellow' : 'orange'}
+                                scale={scale}
+                                spring={springs[index]}
+                                light={light}
+                                setLight={setLight}
+                            />
+                        ))}
                     </Scroll>
                 </ScrollControls>
-            </>
-        );
-    }
-    else {
-        return (
-            <>
-                <RoundedBox
-                    args={[scale * 2, scale * 2, 0]}
-                    radius={0.05}
-                    smoothness={4}
-                    position={[-1, -1, 1]}
-                    onClick={clickHandler0}
-                ><meshBasicMaterial color="yellow" />
-                </RoundedBox>
-                <RoundedBox args={[scale * 2, scale * 2, 0]}
-                    radius={0.05}
-                    smoothness={4}
-                    position={[0, -1, 1]}
-                    onClick={clickHandler1}
-                ><meshBasicMaterial color="orange" />
-                </RoundedBox>
-                <RoundedBox args={[scale * 2, scale * 2, 0]}
-                    radius={0.05}
-                    smoothness={4}
-                    position={[1, -1, 1]}
-                    onClick={clickHandler2}
-                ><meshBasicMaterial color="#111" />
-                </RoundedBox>
-
-            </>
-        )
-    }
-
-
-
-
+            ) : (
+                springs.map((spring, index) => (
+                    <AnimatedRoundedBox
+                        key={index}
+                        args={[scale * 2, scale * 2, 0]}
+                        radius={0.05}
+                        smoothness={4}
+                        {...spring}
+                        onClick={() => handleClick(index)}
+                        visible={active === null || active === index}
+                    >
+                        <meshBasicMaterial color={index === 0 ? 'yellow' : index === 1 ? 'orange' : '#111'} />
+                    </AnimatedRoundedBox>
+                ))
+            )}
+        </>
+    );
 };
 
 export default RoundedBoxScroll;

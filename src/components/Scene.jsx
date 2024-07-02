@@ -92,7 +92,7 @@ const Scene = ({ light, setLight }) => {
             <primitive object={modelCouch.scene} scale={0.02 * scale} position={positions.couch} />
             <primitive object={modelLamp.scene} scale={1.5 * scale} position={positions.lamp} />
 
-            <RoundedBox scale={scale} setLight={setLight} />
+            <RoundedBox scale={scale} light={light} setLight={setLight} />
         </>
     );
 };
