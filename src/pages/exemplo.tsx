@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { IconeLua, IconeSol } from '../icons';
 import products from '../data/products.json';
+import promos from '../data/promo.json';
 import ShoppingCart from '../components/ShoppingCart';
 import AvatarUsuario from '../components/AvatarUsuario';
 import useAppData from '../data/hook/useAppData';
@@ -131,6 +132,35 @@ export default function Home() {
                                     onClick={() =>
                                         removeCart({
                                             product: { name: product.name, price: product.price, image_url: product.image_url },
+                                            quantity: 1,
+                                        })
+                                    }
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        ))}
+                        {promos.map((product, index) => (
+                            <div key={index}>
+                                <div>
+                                    {index} - {product.products.map((items) => `${items.name} - ${items.quantity}`)}
+                                </div>
+                                <button
+                                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2"
+                                    onClick={() =>
+                                        addCart({
+                                            product: { name: `promo${index}`, price: product.price, image_url: product.image_url },
+                                            quantity: 1,
+                                        })
+                                    }
+                                >
+                                    Add
+                                </button>
+                                <button
+                                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2"
+                                    onClick={() =>
+                                        removeCart({
+                                            product: { name: `promo${index}`, price: product.price, image_url: product.image_url },
                                             quantity: 1,
                                         })
                                     }

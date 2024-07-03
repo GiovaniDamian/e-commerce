@@ -1,0 +1,56 @@
+[
+  {
+    "products": [
+      {
+        "name": "Lâmpada LED E27 220V",
+        "quantity": "1"
+      },
+      {
+        "name": "Bocal E27 com Sensor de Movimento",
+        "quantity": "1"
+      },
+      {
+        "name": "Tomada Inteligente Wi-Fi",
+        "quantity": "1"
+      }
+    ],
+    "price": 82.99,
+    "image_url": "/images/promo.jpg"
+  },
+  {
+    "products": [
+      {
+        "name": "Lâmpada LED Inteligente RGB",
+        "quantity": "1"
+      },
+      {
+        "name": "Bocal E27 Ajustável",
+        "quantity": "1"
+      },
+      {
+        "name": "Tomada USB Dupla",
+        "quantity": "1"
+      }
+    ],
+    "price": 22.99,
+    "image_url": "/images/promo.jpg"
+  },
+  {
+    "products": [
+      {
+        "name": "Lâmpada LED E27 220V",
+        "quantity": "2"
+      },
+      {
+        "name": "Tomada Inteligente Wi-Fi",
+        "quantity": "1"
+      },
+      {
+        "name": "Interruptor Simples",
+        "quantity": "1"
+      }
+    ],
+    "price": 65.99,
+    "image_url": "/images/promo.jpg"
+  }
+]

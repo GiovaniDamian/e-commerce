@@ -1,15 +1,17 @@
 import {
     Scroll,
     ScrollControls,
-    RoundedBox
+    RoundedBox,
+    Text
 } from "@react-three/drei";
 import RoundedBoxWithScroll from './RoundedBoxWithScroll';
 import { useState } from "react";
 import { useSpring, animated } from "@react-spring/three";
+import PromoBox from './PromoBox';
 
 const AnimatedRoundedBox = animated(RoundedBox);
 
-const RoundedBoxScroll = ({ scale, light, setLight }) => {
+const RoundedBoxScroll = ({ scale, setLight }) => {
     const [active, setActive] = useState(null);
 
     const handleClick = (index) => {
@@ -36,10 +38,9 @@ const RoundedBoxScroll = ({ scale, light, setLight }) => {
                             <RoundedBoxWithScroll
                                 key={index}
                                 index={index}
-                                color={index === 0 ? 'yellow' : 'orange'}
+                                color={index === 0 ? '#6c757d' : '#adb5bd'}
                                 scale={scale}
                                 spring={springs[index]}
-                                light={light}
                                 setLight={setLight}
                             />
                         ))}
@@ -56,7 +57,8 @@ const RoundedBoxScroll = ({ scale, light, setLight }) => {
                         onClick={() => handleClick(index)}
                         visible={active === null || active === index}
                     >
-                        <meshBasicMaterial color={index === 0 ? 'yellow' : index === 1 ? 'orange' : '#111'} />
+                        <PromoBox index={index} scale={scale} />
+                        <meshBasicMaterial color={index === 0 ? '#6c757d' : '#adb5bd'} />
                     </AnimatedRoundedBox>
                 ))
             )}

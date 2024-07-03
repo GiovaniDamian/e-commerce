@@ -32,9 +32,14 @@ export interface Product {
     product_url: string
 }
 
-//Interface for a Cart product
 export interface ProductCart {
     name: string
+    price: number
+    image_url: string
+}
+
+export interface ProductPromo {
+    products: [{name: string , quantity: number}]
     price: number
     image_url: string
 }
