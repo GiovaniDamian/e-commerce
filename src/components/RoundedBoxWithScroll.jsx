@@ -23,7 +23,7 @@ export default function RoundedBoxWithScroll({ index, color, scale, spring, setL
 
     const transitions = useTransition(isExpanded, {
         from: { scale: [1, 1, 1], position: [index, -10, 0], opacity: 1 },
-        enter: { scale: [4, 4, 1], position: [0, -7, 1.5], opacity: 1 },
+        enter: { scale: [4, 4, 1], position: [0, -6.5, 1.5], opacity: 1 },
         leave: { scale: [1, 1, 1], position: [index, -10, 0], opacity: 0 },
     });
 

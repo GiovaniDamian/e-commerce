@@ -21,7 +21,7 @@ const RoundedBoxScroll = ({ scale, setLight }) => {
     const springs = [0, 1, 2].map((i) =>
         useSpring({
             scale: active === i ? [3, 3, 1] : [1, 1, 1],
-            position: active === i ? [0, 0, 2]
+            position: active === i ? [0, 1, 2]
                 : i === 0 ? [-1, -1, 1]
                     : i === 1 ? [0, -1, 1]
                         : [1, -1, 1],

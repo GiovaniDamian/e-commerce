@@ -59,67 +59,91 @@ export default function ShoppingCartComponent() {
         <div className="flex flex-col mx-auto bg-gray-300 dark:bg-gray-800 rounded-lg shadow-lg">
             <h1 className="text-xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">Shopping Cart</h1>
             <div className={`grid ${cart.items.length > 4 ? 'grid-cols-2' : 'grid-cols-1'} justify-center`}>
-                    {cart.items.map((item, index) => (
-                        <div key={index} className="flex items-center p-1 m-1 bg-white dark:bg-gray-700 rounded-lg shadow">
+                {cart.items.map((item, index) => (
+                    <div key={index} className="flex items-center p-1 m-1 bg-white dark:bg-gray-700 rounded-lg shadow">
+                        {
+                            window.innerWidth > 450 &&
                             <div className="w-20 h-20 mr-4">
                                 <Image src={item.product.image_url} alt={item.product.name} width={80} height={80} className="rounded-lg object-cover" priority={true} />
                             </div>
-                            <div className="flex flex-col">
-                                <h2 className="font-semibold lg:text-sm text-gray-900 dark:text-gray-100">{item.product.name}</h2>
-                                <div className="flex flex-row">
-                                    <div className="w-full">
-                                        <div className="flex flex-row mt-1 mr-2">
-                                            <p className="text-gray-600 dark:text-gray-300 mr-1">Preço Unitário: ${item.product.price.toFixed(2)}</p>
-                                            <p className="text-gray-600 dark:text-gray-300 ml-1">Preço Total/Item: <strong>${(item.product.price * item.quantity).toFixed(2)}</strong></p>
-                                        </div>
-                                        <div className="flex flex-row items-center">
-                                            <p className="text-gray-600 dark:text-gray-300">Quantidade: {item.quantity} </p>
-                                            <input
-                                                type="number"
-                                                value={quantityInputs[item.product.name] || item.quantity}
-                                                onChange={(e) => handleQuantityChange(item.product.name, parseInt(e.target.value))}
-                                                className="m-2 border dark:bg-gray-300 rounded p-1 w-1/5"
-                                            />
-                                            <div className="relative">
-                                                <button
-                                                    className="bg-transparent hover:bg-transparent text-white font-bold py-1 px-2 h-6 w-6 rounded relative"
-                                                    style={getButtonStyle(item.product.name)}
-                                                    onClick={() => handleUpdateQuantity(item.product.name, item.quantity)}
-                                                    onMouseEnter={() => handleMouseEnter(item.product.name)}
-                                                    onMouseLeave={() => handleMouseLeave(item.product.name)}
-                                                >
-                                                    {quantityInputs[item.product.name] > item.quantity ? (
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                                                            <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
-                                                        </svg>
-                                                    ) : (
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                                                            <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
-                                                        </svg>
-                                                    )}
-                                                </button>
-                                                {tooltipState[item.product.name] && (
-                                                    <div className="absolute bg-black text-white px-2 py-1 rounded mt-2 -ml-8">
-                                                        Atualize a quantidade
-                                                    </div>
-                                                )}
+                        }
+
+                        <div className="flex flex-col">
+                            <h2 className="font-semibold lg:text-sm text-gray-900 dark:text-gray-100">{item.product.name}</h2>
+                            <div className="flex flex-row">
+                                <div className="w-full">
+                                    <div className="flex flex-row mt-1 mr-2">
+                                        <p className="text-gray-600 dark:text-gray-300 mr-1">Preço Unitário: ${item.product.price.toFixed(2)}</p>
+                                        <p className="text-gray-600 dark:text-gray-300 ml-1">Preço Total/Item: <strong>${(item.product.price * item.quantity).toFixed(2)}</strong></p>
+                                    </div>
+                                    <div className="flex flex-row items-center sm:justify-around">
+                                        <p className="text-gray-600 dark:text-gray-300">Quantidade: {item.quantity} </p>
+                                        <input
+                                            type="number"
+                                            value={quantityInputs[item.product.name] || item.quantity}
+                                            onChange={(e) => handleQuantityChange(item.product.name, parseInt(e.target.value))}
+                                            className="m-2 border dark:bg-gray-300 rounded p-1 w-1/5 custom-input"
+                                        />
+                                        {
+                                            window.innerWidth < 890 &&
+                                            <div>
+                                                <div className="flex flex-row place-content-end">
+                                                    <button
+                                                        className="bg-blue-500 text-white font-bold py-1 px-1 rounded-l"
+                                                        onClick={() => handleQuantityChange(item.product.name, (quantityInputs[item.product.name] || item.quantity) - 1)}
+                                                        disabled={(quantityInputs[item.product.name] || item.quantity) <= 1}
+                                                    >
+                                                        -
+                                                    </button>
+                                                    <button
+                                                        className="bg-blue-500 text-white font-bold py-1 px-1 rounded-r"
+                                                        onClick={() => handleQuantityChange(item.product.name, (quantityInputs[item.product.name] || item.quantity) + 1)}
+                                                    >
+                                                        +
+                                                    </button>
+                                                </div>
                                             </div>
+                                        }
+                                        <div className="relative">
+                                            <button
+                                                className="bg-transparent hover:bg-transparent text-white font-bold py-1 px-2 h-6 w-6 rounded relative"
+                                                style={getButtonStyle(item.product.name)}
+                                                onClick={() => handleUpdateQuantity(item.product.name, item.quantity)}
+                                                onMouseEnter={() => handleMouseEnter(item.product.name)}
+                                                onMouseLeave={() => handleMouseLeave(item.product.name)}
+                                            >
+                                                {quantityInputs[item.product.name] > item.quantity ? (
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                                        <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
+                                                    </svg>
+                                                ) : (
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                                        <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
+                                                    </svg>
+                                                )}
+                                            </button>
+                                            {tooltipState[item.product.name] && (
+                                                <div className="absolute bg-black text-white px-2 py-1 rounded mt-2 -ml-8">
+                                                    Atualize a quantidade
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
-                                    <div className="flex flex-col justify-center mt-1">
-                                        <button className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-1 px-2 rounded mb-2" onClick={() =>
-                                            removeCart({
-                                                product: { name: item.product.name, price: item.product.price, image_url: item.product.image_url },
-                                                quantity: 1,
-                                            })
-                                        } >
-                                            Remover
-                                        </button>
-                                    </div>
+                                </div>
+                                <div className="flex flex-col justify-center mt-1 w-20">
+                                    <button className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-1 px-2 rounded mb-2" onClick={() =>
+                                        removeCart({
+                                            product: { name: item.product.name, price: item.product.price, image_url: item.product.image_url },
+                                            quantity: 1,
+                                        })
+                                    } >
+                                        Remover
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    </div>
+                ))}
 
             </div>
             <div className="flex flex-row mt-1 items-center">
