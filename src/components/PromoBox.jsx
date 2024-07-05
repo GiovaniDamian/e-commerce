@@ -46,7 +46,7 @@ export default function PromoBox({ index, scale }) {
                 position-z={0.5}
                 maxWidth={1}
                 textAlign="center"
-                anchorY={-0.6 * adjustedScale}
+                anchorY={-0.56 * adjustedScale}
             >
                 COMBO {index + 1}
             </Text>

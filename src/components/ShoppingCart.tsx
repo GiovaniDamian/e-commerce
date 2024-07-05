@@ -85,7 +85,7 @@ export default function ShoppingCartComponent() {
                                             className="m-2 border dark:bg-gray-300 rounded p-1 w-1/5 custom-input"
                                         />
                                         {
-                                            window.innerWidth < 890 &&
+                                            window.innerWidth < 900 &&
                                             <div>
                                                 <div className="flex flex-row place-content-end">
                                                     <button
