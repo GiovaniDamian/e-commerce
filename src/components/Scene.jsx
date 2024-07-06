@@ -111,6 +111,7 @@ const Scene = ({ light, setLight }) => {
         setSelectedProduct(null);
     };
 
+
     return (
         <>
             <OrbitControls enableZoom={false} enablePan={false} />
@@ -168,7 +169,7 @@ const Scene = ({ light, setLight }) => {
             <primitive object={modelCouch.scene} scale={0.02 * scale} position={positions.couch} />
             <RoundedBox scale={scale} setLight={setLight} />
 
-            {showModal && <ModalProducts product={selectedProduct} onClose={handleCloseModal}/>}
+            {showModal && <ModalProducts product={selectedProduct} onClose={handleCloseModal} />}
         </>
     );
 };
