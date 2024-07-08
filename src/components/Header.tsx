@@ -47,7 +47,7 @@ export default function Header() {
                                         text-white
                                     `}
                             >
-                                <span className="text-xs">Claro</span>
+                                <span className="text-xsm">Claro</span>
                             </div>
                         </div>
                     ) : (
@@ -67,7 +67,7 @@ export default function Header() {
                                         text-gray-300
                                     `}
                             >
-                                    <span className="text-xs">Escuro</span>
+                                    <span className="text-xsm">Escuro</span>
                             </div>
                             <div
                                 className={`

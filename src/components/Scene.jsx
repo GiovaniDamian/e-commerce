@@ -12,7 +12,7 @@ const Scene = ({ light, setLight }) => {
 
     const [scale, setScale] = useState(1);
     const [positions, setPositions] = useState({
-        switches: [-2, 0, -1],
+        switches: [-2.5, 0, -1],
         chandelier: [0, 0.5, 0],
         couch: [5, -1, 0],
         lamp: [3, -0.6, 0]

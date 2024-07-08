@@ -2,15 +2,17 @@
 import React, { useEffect, useState } from 'react';
 import { Html } from '@react-three/drei';
 import products from './../data/products.json';
-import AnimatedProductImage from './AnimatedProductImage'
+import AnimatedProductImage from './AnimatedProductImage';
 
-const ModalProducts = ({ product, onClose}) => {
+const ModalProducts = ({ product, onClose }) => {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
+    const [isMediumScreen, setIsMediumScreen] = useState(false);
     const [expandedProduct, setExpandedProduct] = useState(null);
 
     useEffect(() => {
         const handleResize = () => {
-            setIsSmallScreen(window.innerWidth < 450);
+            setIsSmallScreen(window.innerWidth < 600);
+            setIsMediumScreen(window.innerWidth >= 600 && window.innerWidth <= 1000);
         };
 
         handleResize();
@@ -31,21 +33,21 @@ const ModalProducts = ({ product, onClose}) => {
         switch (product) {
             case "switches":
                 return {
-                    position: isSmallScreen ? [-1.65, 3.5, 0] : [-6, 3.7, 0], // Ajuste para switches
+                    position: isSmallScreen ? [-1.65, 3.5, 0] : isMediumScreen ? [-2.7, 3, 0] : [-6, 3.6, 0], // Ajuste para switches
                     zIndex: 1, // Z-index inicial
-                    xOffset: isSmallScreen ? 0 : -4, // Ajuste para xOffset
-                    yOffset: isSmallScreen ? 0 : -1, // Ajuste para yOffset
+                    xOffset: isSmallScreen ? 0 : isMediumScreen ? -2 : -4, // Ajuste para xOffset
+                    yOffset: isSmallScreen ? 0 : isMediumScreen ? -0.5 : -1, // Ajuste para yOffset
                 };
             case "sockets":
                 return {
-                    position: isSmallScreen ? [-1.5, 3.5, 0] : [1, 3.5, 0],
+                    position: isSmallScreen ? [-1.5, 3.5, 0] : [0.5, 3.5, 0],
                     zIndex: 1,
                     xOffset: 0,
                     yOffset: 0,
                 };
             case "bulbs":
                 return {
-                    position: isSmallScreen ? [-1.5, 3.5, 0] : [3.5, 3, 0],
+                    position: isSmallScreen ? [-1.5, 3.5, 0] : [3, 3, 0],
                     zIndex: 1,
                     xOffset: 0,
                     yOffset: 0,
@@ -61,8 +63,7 @@ const ModalProducts = ({ product, onClose}) => {
         items.map((item, index) => (
             <div
                 key={index}
-                className={`text-center my-2 dark:text-gray-200 ${isSmallScreen ? "m-1" : "m-4"
-                    }`}
+                className={`text-center my-2 dark:text-gray-200 ${isSmallScreen ? "m-1" : "m-4"}`}
             >
                 <AnimatedProductImage
                     imageUrl={item.image_url}
@@ -71,12 +72,14 @@ const ModalProducts = ({ product, onClose}) => {
                     expanded={item.id === expandedProduct}
                     onClick={() => handleOpenProduct(item.id)}
                     style={{
-                        transform: expandedProduct === item.id ? `translate(${xOffset}rem, ${yOffset}rem)` : "",
-                        zIndex: expandedProduct === item.id ? 2 : zIndex,
+                        transform: expandedProduct === item.id ? `translate(0, -6rem)` : "",
+                        zIndex: expandedProduct === item.id ? 2 : 1,
                     }}
+                    isSmallScreen={isSmallScreen}
+                    expandedProduct={expandedProduct} // Passando expandedProduct como prop
                 />
                 <div className="flex w-full items-center">
-                    <p className="text-xs p-1 m-1 grow">
+                    <p className="text-xs p-1 m-1">
                         {product !== "switches"
                             ? item.name.split(" ").slice(0, 4).join(" ")
                             : item.name.split(" ").slice(0, 2).join(" ")}
@@ -122,13 +125,15 @@ const ModalProducts = ({ product, onClose}) => {
                         (pos, index) => (index === 1 ? pos - 1.5 : pos)
                     )}
                 >
-                    <div className="relative bg-transparent pt-5 pb-3 shadow-lg border-black rounded-lg flex">
-                        <button
-                            className="absolute text-xs top-2 right-2 bg-red-500 text-white px-1.5 py-0.5 rounded"
-                            onClick={onClose}
-                        >
-                            X
-                        </button>
+                    <div className={`relative ${!expandedProduct && 'bg-gray-300 bg-opacity-60 dark:bg-gray-800 dark:bg-opacity-50'} pt-5 pb-3 shadow-lg border-black mt-16 rounded-lg flex`}>
+                        {!expandedProduct &&
+                            <button
+                                className="absolute text-xs top-2 right-2 bg-red-500 text-white px-1.5 py-0.5 rounded"
+                                onClick={onClose}
+                            >
+                                X
+                            </button>
+                        }
                         {renderProducts(switchesProducts.slice(2))}
                     </div>
                 </Html>
