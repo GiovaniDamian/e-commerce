@@ -1,5 +1,5 @@
 import { Text } from "@react-three/drei";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import * as THREE from 'three';
 import { useFrame } from "@react-three/fiber";
 import promos from '../data/promo.json';
@@ -51,7 +51,7 @@ export default function PromoBox({ index, scale }) {
                 COMBO {index + 1}
             </Text>
             {promo.products.map((item, idx) => (
-                <>
+                <React.Fragment key={`item-${idx}`}>
                     <Text
                         key={`item-name-${idx}`}
                         fontSize={0.059 * adjustedScale}
@@ -78,7 +78,7 @@ export default function PromoBox({ index, scale }) {
                     >
                         ({item.quantity}un)
                     </Text>
-                </>
+                </React.Fragment>
             ))}
             <Text
                 key={`old-price-${index}`}
@@ -92,7 +92,7 @@ export default function PromoBox({ index, scale }) {
             >
                 {`De: R$${promo.price}`}
             </Text>
-            <line ref={lineRef} position={[-0.45 * adjustedScale, -0.24 * adjustedScale, 0.55]}>
+            <line key={`line-${index}`} ref={lineRef} position={[-0.45 * adjustedScale, -0.24 * adjustedScale, 0.55]}>
                 <bufferGeometry />
                 <lineBasicMaterial color="black" />
             </line>
@@ -120,8 +120,9 @@ export default function PromoBox({ index, scale }) {
             >
                 {`Por: R$${(promo.price * 0.8).toFixed(2)}`}
             </Text>
-            <group position={[0.35 * adjustedScale, -0.3 * adjustedScale, 0.5]}>
+            <group key={`group-key-${index}`} position={[0.35 * adjustedScale, -0.3 * adjustedScale, 0.5]}>
                 <mesh
+                    key={`${index}-mouse-controls`}
                     onPointerOver={() => setHovered(true)}
                     onPointerOut={() => setHovered(false)}
                     onClick={handleAddToCart}
@@ -130,6 +131,7 @@ export default function PromoBox({ index, scale }) {
                     <meshBasicMaterial color={hovered ? "#1E40AF" : "#2563EB"} />
                 </mesh>
                 <Text
+                    key={`add-cart-${index}`}
                     fontSize={0.025 * adjustedScale}
                     color="white"
                     font="./fonts/Inter-Bold.ttf"

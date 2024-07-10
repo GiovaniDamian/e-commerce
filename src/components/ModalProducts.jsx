@@ -1,13 +1,14 @@
-// ModalProducts.js
 import React, { useEffect, useState } from 'react';
 import { Html } from '@react-three/drei';
 import products from './../data/products.json';
 import AnimatedProductImage from './AnimatedProductImage';
+import usePortal from '../data/hook/usePortal';
 
 const ModalProducts = ({ product, onClose }) => {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [isMediumScreen, setIsMediumScreen] = useState(false);
     const [expandedProduct, setExpandedProduct] = useState(null);
+    const { activatePortal } = usePortal();
 
     useEffect(() => {
         const handleResize = () => {
@@ -25,6 +26,10 @@ const ModalProducts = ({ product, onClose }) => {
 
     const handleOpenProduct = (productId) => {
         setExpandedProduct(productId === expandedProduct ? null : productId);
+    };
+
+    const handleView3DModel = (modelPath) => {
+        activatePortal(modelPath);
     };
 
     if (!product) return null;
@@ -57,26 +62,25 @@ const ModalProducts = ({ product, onClose }) => {
         }
     };
 
-    const { position, zIndex, xOffset, yOffset } = getProductDetails(product);
+    const { position } = getProductDetails(product);
 
     const renderProducts = (items) =>
         items.map((item, index) => (
-            <div
-                key={index}
-                className={`text-center my-2 dark:text-gray-200 ${isSmallScreen ? "m-1" : "m-4"}`}
-            >
-                <AnimatedProductImage
+            <div key={index}>
+                <button onClick={() => handleView3DModel(item.modelPath)}>View 3D Model</button>
+               <AnimatedProductImage
                     imageUrl={item.image_url}
                     altText={item.name}
                     productId={item.id}
+                    scale={2}
                     expanded={item.id === expandedProduct}
                     onClick={() => handleOpenProduct(item.id)}
                     style={{
-                        transform: expandedProduct === item.id ? `translate(0, -6rem)` : "",
+                        transform: expandedProduct === item.id ? "translate(0, -6rem)" : "",
                         zIndex: expandedProduct === item.id ? 2 : 1,
                     }}
                     isSmallScreen={isSmallScreen}
-                    expandedProduct={expandedProduct} // Passando expandedProduct como prop
+                    expandedProduct={expandedProduct}
                 />
                 <div className="flex w-full items-center">
                     <p className="text-xs p-1 m-1">
@@ -99,8 +103,7 @@ const ModalProducts = ({ product, onClose }) => {
         <>
             <Html position={position}>
                 <div
-                    className={`relative bg-transparent pt-5 pb-3 shadow-lg border-black rounded-lg ${product == "sockets" && "flex"
-                        } ${isSmallScreen && "flex"}`}
+                    className={`relative bg-transparent pt-5 pb-3 shadow-lg border-black rounded-lg ${product == "sockets" && "flex"} ${isSmallScreen && "flex"}`}
                 >
                     <button
                         className="absolute text-xs top-2 right-2 bg-red-500 text-white px-1.5 py-0.5 rounded"
@@ -125,7 +128,7 @@ const ModalProducts = ({ product, onClose }) => {
                         (pos, index) => (index === 1 ? pos - 1.5 : pos)
                     )}
                 >
-                    <div className={`relative ${!expandedProduct && 'bg-gray-300 bg-opacity-60 dark:bg-gray-800 dark:bg-opacity-50'} pt-5 pb-3 shadow-lg border-black mt-16 rounded-lg flex`}>
+                    <div className={`relative ${!expandedProduct && 'bg-gray-300 bg-opacity-90 dark:bg-gray-800 dark:bg-opacity-80'} pt-5 pb-3 shadow-lg border-black mt-16 rounded-lg flex`}>
                         {!expandedProduct &&
                             <button
                                 className="absolute text-xs top-2 right-2 bg-red-500 text-white px-1.5 py-0.5 rounded"
