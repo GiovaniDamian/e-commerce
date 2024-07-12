@@ -30,6 +30,7 @@ export interface Product {
     category: string
     image_url: string
     product_url: string
+    images: []
 }
 
 export interface ProductCart {

@@ -8,7 +8,7 @@ const ModalProducts = ({ product, onClose }) => {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [isMediumScreen, setIsMediumScreen] = useState(false);
     const [expandedProduct, setExpandedProduct] = useState(null);
-    const { activatePortal } = usePortal();
+    const { portalState, activatePortal } = usePortal();
 
     useEffect(() => {
         const handleResize = () => {
@@ -28,8 +28,8 @@ const ModalProducts = ({ product, onClose }) => {
         setExpandedProduct(productId === expandedProduct ? null : productId);
     };
 
-    const handleView3DModel = (modelPath) => {
-        activatePortal(modelPath);
+    const handleView3DModel = (itemSelected) => {
+        activatePortal(itemSelected);
     };
 
     if (!product) return null;
@@ -67,7 +67,7 @@ const ModalProducts = ({ product, onClose }) => {
     const renderProducts = (items) =>
         items.map((item, index) => (
             <div key={index}>
-                <button onClick={() => handleView3DModel(item.modelPath)}>View 3D Model</button>
+                <button onClick={() => handleView3DModel(item)}>View 3D Model</button>
                <AnimatedProductImage
                     imageUrl={item.image_url}
                     altText={item.name}

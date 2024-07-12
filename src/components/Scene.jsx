@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { animated, useSpring } from '@react-spring/three';
-import { OrbitControls, useGLTF } from '@react-three/drei';
+import { OrbitControls, useGLTF, CameraControls } from '@react-three/drei';
 import RoundedBox from './RoundedBox';
 import ModalProducts from './ModalProducts';
 import PortalMesh from './PortalMesh';
@@ -31,7 +31,6 @@ const Scene = ({ light, setLight }) => {
     const [showModal, setShowModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const { portalState, deactivatePortal } = usePortal();
-    const [showMainItems, setShowMainItems] = useState(true);
 
     const shakeAnimation = (initialRotation) => {
         return useSpring({
@@ -109,28 +108,36 @@ const Scene = ({ light, setLight }) => {
     const handleProductClick = (productName) => {
         setSelectedProduct(productName);
         setShowModal(true);
-        setShowMainItems(false);
     };
 
-    function handleCloseModal() {
+    const handleCloseModal = () => {
         setShowModal(false);
         setSelectedProduct(null);
-        setShowMainItems(true);
-    }
+    };
 
     const handleClosePortalMesh = () => {
         deactivatePortal();
         setSelectedProduct(null);
-        setShowMainItems(true);
     };
 
     useEffect(() => {
-        console.log(portalState);
+        cameraControlsRef.current.setLookAt(0, 2, 14, 0, 0, 0, false)
+        if (portalState) {
+            if (cameraControlsRef.current) {
+                cameraControlsRef.current.moveTo(0, 3.5, 4, 0, 0, 0, true);
+            }
+        } else {
+            cameraControlsRef.current.update();
+        }
     }, [portalState]);
 
     return (
         <>
             <OrbitControls enableZoom={false} enablePan={false} />
+            <CameraControls
+                enabled={portalState}
+                ref={cameraControlsRef}
+                />
             <ambientLight intensity={light} />
             <pointLight position={[5, 5, 5]} intensity={1} castShadow />
             <directionalLight
@@ -157,58 +164,53 @@ const Scene = ({ light, setLight }) => {
                 target-position={[0, 0, -0.8]}
             />
 
+            <>
+                <animated.primitive
+                    object={modelSwitches.scene}
+                    scale={0.04 * scale}
+                    position={positions.switches}
+                    rotation={
+                        animationIndex === 0
+                            ? animations[0].rotation
+                            : initialRotations.switches
+                    }
+                    onPointerEnter={() => handleMouseEnter('switches')}
+                    onClick={() => handleProductClick('switches')}
+                />
+                <animated.primitive
+                    object={modelChandelier.scene}
+                    scale={1 * scale}
+                    position={positions.chandelier}
+                    rotation={
+                        animationIndex === 1
+                            ? animations[1].rotation
+                            : initialRotations.chandelier
+                    }
+                    onPointerEnter={() => handleMouseEnter('sockets')}
+                    onClick={() => handleProductClick('sockets')}
+                />
+                <animated.primitive
+                    object={modelLamp.scene}
+                    scale={1.5 * scale}
+                    position={positions.lamp}
+                    rotation={
+                        animationIndex === 2
+                            ? animations[2].rotation
+                            : initialRotations.lamp
+                    }
+                    onPointerEnter={() => handleMouseEnter('bulbs')}
+                    onClick={() => handleProductClick('bulbs')}
+                />
+                <primitive object={modelCouch.scene} scale={0.02 * scale} position={positions.couch} />
+            </>
             <RoundedBox scale={scale} setLight={setLight} />
 
             {showModal && <ModalProducts product={selectedProduct} onClose={handleCloseModal} />}
-            {portalState.active ? (
+            {portalState && (
                 <PortalMesh
-                    modelPath={portalState.modelPath}
+                    scale={scale }
                     onClose={handleClosePortalMesh}
-                    cameraControlsRef={cameraControlsRef}
-                    showMainItems={showMainItems}
                 />
-            ) : (
-                showMainItems && (
-                    <>
-                        <animated.primitive
-                            object={modelSwitches.scene}
-                            scale={0.04 * scale}
-                            position={positions.switches}
-                            rotation={
-                                animationIndex === 0
-                                    ? animations[0].rotation
-                                    : initialRotations.switches
-                            }
-                            onPointerEnter={() => handleMouseEnter('switches')}
-                            onClick={() => handleProductClick('switches')}
-                        />
-                        <animated.primitive
-                            object={modelChandelier.scene}
-                            scale={1 * scale}
-                            position={positions.chandelier}
-                            rotation={
-                                animationIndex === 1
-                                    ? animations[1].rotation
-                                    : initialRotations.chandelier
-                            }
-                            onPointerEnter={() => handleMouseEnter('sockets')}
-                            onClick={() => handleProductClick('sockets')}
-                        />
-                        <animated.primitive
-                            object={modelLamp.scene}
-                            scale={1.5 * scale}
-                            position={positions.lamp}
-                            rotation={
-                                animationIndex === 2
-                                    ? animations[2].rotation
-                                    : initialRotations.lamp
-                            }
-                            onPointerEnter={() => handleMouseEnter('bulbs')}
-                            onClick={() => handleProductClick('bulbs')}
-                        />
-                        <primitive object={modelCouch.scene} scale={0.02 * scale} position={positions.couch} />
-                    </>
-                )
             )}
         </>
     );

@@ -3,18 +3,20 @@ import React, { createContext, useState, useContext } from 'react';
 const PortalContext = createContext();
 
 export function PortalProvider ({ children }) {
-    const [portalState, setPortalState] = useState({ active: false, modelPath: '' });
+    const [portalState, setPortalState] = useState(false);
+    const [product, setProduct] = useState(false);
 
-    const activatePortal = (modelPath) => {
-        setPortalState({ active: true, modelPath });
+    const activatePortal = (item) => {
+        setProduct(item)
+        setPortalState(true);
     };
 
     const deactivatePortal = () => {
-        setPortalState({ active: false, modelPath: '' });
+        setPortalState(false);
     };
 
     return (
-        <PortalContext.Provider value={{ portalState, activatePortal, deactivatePortal }}>
+        <PortalContext.Provider value={{ portalState, activatePortal, deactivatePortal, product }}>
             {children}
         </PortalContext.Provider>
     );

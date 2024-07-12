@@ -18,7 +18,6 @@ export default function Home() {
 
     function renderClientContent() {
 
-
         return (
             <div className={`${theme} h-screen w-screen bg-gray-300 dark:bg-gray-800 overflow-hidden`}>
                 <Head>
@@ -30,7 +29,7 @@ export default function Home() {
                 <Header />
                 <main className={`flex flex-row h-screen w-screen bg-gray-300 dark:bg-gray-800`} onClick={() => light == 0 ? setLight(0.8) : setLight(0)}>
                     <PortalProvider>
-                        <Canvas camera={{ position: [0, 2, 14], fov: 30 }}>
+                        <Canvas camera={{ position: [0, 2, 14], fov: 30 }} >
                             <Scene light={light} setLight={setLight} />
                         </Canvas>
                     </PortalProvider>
