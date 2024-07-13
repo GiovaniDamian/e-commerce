@@ -1,38 +1,72 @@
-import { useGLTF, RoundedBox, CameraControls, Html } from "@react-three/drei";
+import { RoundedBox, Image,Html } from "@react-three/drei";
+import { useSpring, animated, config } from "@react-spring/three";
 import usePortal from '../data/hook/usePortal';
-import { useSpring, animated } from '@react-spring/three';
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const AnimatedBox = animated(RoundedBox);
+const AnimatedImage = animated(Image);
+const AnimatedRoundedBox = animated(RoundedBox);
 
 const PortalMesh = ({ scale, onClose }) => {
     const { product } = usePortal();
-    const ref = useRef();
-    const {images, setImages} = useState([])
+    const [images, setImages] = useState([]);
+    const [expandedImage, setExpandedImage] = useState(null);
+
     useEffect(() => {
-        setImages(product.images)
-    console.log(images)
-    }, [product])
+        if (product && product.images) {
+            setImages(product.images);
+        }
+    }, [product]);
+
+    const handleClick = (index) => {
+        if (expandedImage === index) {
+            setExpandedImage(null);
+        } else {
+            setExpandedImage(index);
+        }
+    };
+
+    const imageProps = useSpring({
+        scale: expandedImage !== null ? [4 * scale, 4 * scale, 1] : [1, 1, 1],
+        config: config.stiff,
+    });
+
+    const isSmallScreen = scale < 1;
+
     return (
         <group>
-            {product && product.images && product.images.map((image, index) => (
-                <AnimatedBox
-                    key={index}
-                    imageUrl={`./images/products/${image}.webp`}
-                    args={[1, 1, 0]}
-                    position={[4.5-(index * 1.5 ), 5.2, 0]} // Ajuste a posição conforme necessário
-                    scale={scale * 2}
-                >
-                </AnimatedBox>
+            {images.map((image, index) => (
+                <group key={index} position={[
+                    isSmallScreen ? 1.5 + (index * scale * -1.5) : 4 + (index * scale * -1.5),
+                    isSmallScreen ? (index % 2 === 0 ? 5.2 : 3.2) : 5.2,
+                    0
+                ]}>
+                    <AnimatedRoundedBox
+                        args={[1.1, 1.1, 0.1]}
+                        scale={imageProps.scale}
+                        onClick={() => handleClick(index)}
+                        visible={expandedImage === null || expandedImage === index}
+                    >
+                        <meshStandardMaterial color="gray-300" />
+                    </AnimatedRoundedBox>
+                    <AnimatedImage
+                        url={`/images/products/${image}.webp`}
+                        scale={imageProps.scale}
+                        onClick={() => handleClick(index)}
+                        visible={expandedImage === null || expandedImage === index}
+                        position={[0, 0, 0.06]} // Slight offset to bring the image in front of the RoundedBox
+                    />
+                </group>
             ))}
-            <Html position={[3, 4.5, 0]}>
-                <button
-                    onClick={onClose}
-                    className="absolute text-xs top-2 right-2 bg-red-500 text-white px-6 py-0.5 rounded"
-                >
-                    Fechar
-                </button>
-            </Html>
+            {expandedImage === null && (
+                <Html position={[4 * scale, 4 * scale, 0]}>
+                    <button
+                        onClick={onClose}
+                        className="absolute text-xs top-2 right-2 bg-red-500 text-white px-6 py-0.5 rounded"
+                    >
+                        Fechar
+                    </button>
+                </Html>
+            )}
         </group>
     );
 };

@@ -19,7 +19,7 @@
     "category": "bulbs",
     "image_url": "/images/products/lamp_01.webp",
     "product_url": "https://pt.aliexpress.com/item/1005006278228813.html",
-    "images": [ "lamp_01_01", "lamp_01_02", "lamp_01_03", "lamp_01_04", "lamp_01_05", "lamp_01_06" ]
+    "images": [ "lamp_01_01", "lamp_01_02", "lamp_01_03", "lamp_01_04", "lamp_01_05", "lamp_01_06"]
   },
   {
     "id": 2,
@@ -41,7 +41,8 @@
     },
     "category": "bulbs",
     "image_url": "/images/products/lamp_02.webp",
-    "product_url": "https://pt.aliexpress.com/item/1005006166412041.html"
+    "product_url": "https://pt.aliexpress.com/item/1005006166412041.html",
+    "images": [ "lamp_02_01", "lamp_02_02", "lamp_02_03", "lamp_02_04", "lamp_02_05", "lamp_02" ]
   },
   {
     "id": 3,
@@ -61,7 +62,8 @@
     },
     "category": "sockets",
     "image_url": "/images/products/sockets_01.jpg",
-    "product_url": "https://pt.aliexpress.com/item/1005006313858972.html"
+    "product_url": "https://pt.aliexpress.com/item/1005006313858972.html",
+    "images": [ "sockets_01_01", "sockets_01_02", "sockets_01_03", "sockets_01_04", "sockets_01_05", "sockets_01_06" ]
   },
   {
     "id": 4,
@@ -79,7 +81,8 @@
     },
     "category": "sockets",
     "image_url": "/images/products/sockets_02.jfif",
-    "product_url": "https://pt.aliexpress.com/item/1005005902701040.html"
+    "product_url": "https://pt.aliexpress.com/item/1005005902701040.html",
+    "images": [ "sockets_02_01", "sockets_02_02", "sockets_02_03", "sockets_02_04", "sockets_02_05", "sockets_02_06" ]
   },
   {
     "id": 5,
@@ -98,7 +101,8 @@
     },
     "category": "switches",
     "image_url": "/images/products/outlets_01.webp",
-    "product_url": "https://pt.aliexpress.com/item/1005006096933452.html"
+    "product_url": "https://pt.aliexpress.com/item/1005006096933452.html",
+    "images": [ "outlets_01", "outlets_01_02", "outlets_01_03", "outlets_01_04", "outlets_01_05", "outlets_01_06" ]
   },
   {
     "id": 6,
@@ -117,7 +121,8 @@
     },
     "category": "switches",
     "image_url": "/images/products/outlets_02.webp",
-    "product_url": "https://pt.aliexpress.com/item/1005005646325220.html"
+    "product_url": "https://pt.aliexpress.com/item/1005005646325220.html",
+    "images": [ "outlets_02_01", "outlets_02_02", "outlets_02_03", "outlets_02_04", "outlets_02_05", "outlets_02_06" ]
   },
   {
     "id": 7,
@@ -136,7 +141,8 @@
     },
     "category": "switches",
     "image_url": "/images/products/switches_01.webp",
-    "product_url": "https://pt.aliexpress.com/item/1005005732402318.html"
+    "product_url": "https://pt.aliexpress.com/item/1005005732402318.html",
+    "images": [ "switches_01_01", "switches_01_02", "switches_01_03", "switches_01_04", "switches_01_05", "switches_01_06" ]
   },
   {
     "id": 8,
@@ -153,7 +159,8 @@
       "weight": "150g"
     },
     "category": "switches",
-    "image_url": "/images/products/switches_02.jfif",
-    "product_url": "https://pt.aliexpress.com/item/1005005838334573.html"
+    "image_url": "/images/products/switches_02.webp",
+    "product_url": "https://pt.aliexpress.com/item/1005005838334573.html",
+    "images": [ "switches_02", "switches_02_02", "switches_02_03", "switches_02_04", "switches_02_05", "switches_02_06" ]
   }
 ]
