@@ -16,6 +16,9 @@
       "size": "60mm x 110mm",
       "weight": "100g"
     },
+    "options": {
+      "power": [ "15W", "29W", "315W" ]
+    },
     "category": "bulbs",
     "image_url": "/images/products/lamp_01.webp",
     "product_url": "https://pt.aliexpress.com/item/1005006278228813.html",
@@ -38,6 +41,9 @@
       "material": "Plástico",
       "size": "55mm x 105mm",
       "weight": "90g"
+    },
+    "options": {
+      "power": [ "7W", "9W", "12W" ]
     },
     "category": "bulbs",
     "image_url": "/images/products/lamp_02.webp",
@@ -99,6 +105,9 @@
       "size": "60mm x 60mm x 50mm",
       "weight": "150g"
     },
+    "options": {
+      "power": [ "16A", "20A" ]
+    },
     "category": "switches",
     "image_url": "/images/products/outlets_01.webp",
     "product_url": "https://pt.aliexpress.com/item/1005006096933452.html",
@@ -139,6 +148,10 @@
       "size": "86mm x 86mm",
       "weight": "160g"
     },
+    "options": {
+      "color": [ "Branco", "Preto" ],
+      "switches": [ 1, 2 ]
+    },
     "category": "switches",
     "image_url": "/images/products/switches_01.webp",
     "product_url": "https://pt.aliexpress.com/item/1005005732402318.html",
@@ -157,6 +170,10 @@
       "material": "PC",
       "size": "86mm x 86mm",
       "weight": "150g"
+    },
+    "options": {
+      "color": [ "Branco", "Preto" ],
+      "switches": [ 1, 2 ]
     },
     "category": "switches",
     "image_url": "/images/products/switches_02.webp",

@@ -1,4 +1,4 @@
-// Interface for product details
+
 interface ProductDetails {
     power?: string;
     voltage?: string;
@@ -12,14 +12,14 @@ interface ProductDetails {
     usb_output?: string;
 }
 
-// Interface for product specifications
+
 interface ProductSpecifications {
     material: string
     size: string
     weight: string
 }
 
-// Interface for a product
+
 export interface Product {
     id: number
     name: string
@@ -31,6 +31,7 @@ export interface Product {
     image_url: string
     product_url: string
     images: []
+    options?: ProductOptions
 }
 
 export interface ProductCart {
@@ -43,4 +44,10 @@ export interface ProductPromo {
     products: [{name: string , quantity: number}]
     price: number
     image_url: string
+}
+
+interface ProductOptions {
+    color?: string;
+    power?: string;
+    num_switches?: number;
 }

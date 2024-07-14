@@ -9,6 +9,7 @@ const ModalProducts = ({ product, onClose }) => {
     const [isMediumScreen, setIsMediumScreen] = useState(false);
     const [expandedProduct, setExpandedProduct] = useState(null);
     const { portalState, activatePortal } = usePortal();
+    const [selectedOptions, setSelectedOptions] = useState({});
 
     useEffect(() => {
         const handleResize = () => {
@@ -38,10 +39,10 @@ const ModalProducts = ({ product, onClose }) => {
         switch (product) {
             case "switches":
                 return {
-                    position: isSmallScreen ? [-1.65, 3.5, 0] : isMediumScreen ? [-2.7, 3, 0] : [-6, 3.6, 0], // Ajuste para switches
-                    zIndex: 1, // Z-index inicial
-                    xOffset: isSmallScreen ? 0 : isMediumScreen ? -2 : -4, // Ajuste para xOffset
-                    yOffset: isSmallScreen ? 0 : isMediumScreen ? -0.5 : -1, // Ajuste para yOffset
+                    position: isSmallScreen ? [-1.65, 3.5, 0] : isMediumScreen ? [-2.7, 3, 0] : [-6, 3.6, 0],
+                    zIndex: 1,
+                    xOffset: isSmallScreen ? 0 : isMediumScreen ? -2 : -4,
+                    yOffset: isSmallScreen ? 0 : isMediumScreen ? -0.5 : -1,
                 };
             case "sockets":
                 return {
@@ -63,33 +64,98 @@ const ModalProducts = ({ product, onClose }) => {
     };
 
     const { position } = getProductDetails(product);
+    const handleOptionSelect = (productId, optionType, optionValue) => {
+        setSelectedOptions({
+            ...selectedOptions,
+            [productId]: {
+                ...selectedOptions[productId],
+                [optionType]: optionValue,
+            }
+        });
+    };
+
+    const translateOption = (optionType) => {
+        switch (optionType) {
+            case "color":
+                return "cor";
+            case "power":
+                return "potência";
+            case "switches":
+                return "tomadas";
+            default:
+                return optionType;
+        }
+    };
+
+    const renderOptions = (item) => {
+        const options = item.options;
+
+        if (!options) return null;
+
+        return (
+            <div className="m-1 text-xsm">
+                {Object.keys(options).map((optionType, index) => (
+                    <div key={index} className="mb-2">
+                        <strong>{translateOption(optionType.replace(/_/g, ' '))}</strong>
+                        <div className={`flex ${isSmallScreen && 'flex-col'}`}>
+                            {options[optionType].map((optionValue, idx) => (
+                                <button
+                                    key={idx}
+                                    className={`px-1 m-0.5 rounded ${selectedOptions[item.id]?.[optionType] === optionValue
+                                        ? "bg-blue-500 text-white"
+                                        : "bg-gray-300 text-gray-700"
+                                        }`}
+                                    onClick={() => handleOptionSelect(item.id, optionType, optionValue)}
+                                >
+                                    {optionValue}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
+    };
 
     const renderProducts = (items) =>
         items.map((item, index) => (
-            <div key={index}>
-                <button onClick={() => handleView3DModel(item)}>View 3D Model</button>
-               <AnimatedProductImage
-                    imageUrl={item.image_url}
-                    altText={item.name}
-                    productId={item.id}
-                    scale={2}
-                    expanded={item.id === expandedProduct}
-                    onClick={() => handleOpenProduct(item.id)}
-                    style={{
-                        transform: expandedProduct === item.id ? "translate(0, -6rem)" : "",
-                        zIndex: expandedProduct === item.id ? 2 : 1,
-                    }}
-                    isSmallScreen={isSmallScreen}
-                    expandedProduct={expandedProduct}
-                />
-                <div className="flex w-full items-center">
-                    <p className="text-xs p-1 m-1">
+            <div key={index} className="relative my-3 mx-0.5">
+                <div className={`flex`}>
+                    <div className="flex flex-col items-center m-2 bg-gray-400 dark:bg-gray-900 rounded">
+                        {item.images.map((img, i) => (
+                            <img
+                                key={i}
+                                src={`/images/products/${img}.webp`}
+                                alt={`Thumbnail ${i + 1}`}
+                                className="w-2.5 h-2.5 object-cover m-0.5 cursor-pointer"
+                                onClick={() => handleView3DModel(item)}
+                            />
+                        ))}
+                    </div>
+                    <AnimatedProductImage
+                        imageUrl={item.image_url}
+                        altText={item.name}
+                        productId={item.id}
+                        scale={2}
+                        expanded={item.id === expandedProduct}
+                        onClick={() => handleOpenProduct(item.id)}
+                        style={{
+                            transform: expandedProduct === item.id ? "translate(0, -6rem)" : "",
+                            zIndex: expandedProduct === item.id ? 2 : 1,
+                        }}
+                        isSmallScreen={isSmallScreen}
+                        expandedProduct={expandedProduct}
+                    />
+                    {renderOptions(item)}
+                </div>
+                <div className="flex flex-col w-full items-center">
+                    <p className={`${isSmallScreen ? 'text-xsm' : 'text-xs'} p-0.5 w-full mx-3 text-center truncate bg-gray-400 dark:bg-gray-700 rounded dark:text-white"`}>
                         {product !== "switches"
                             ? item.name.split(" ").slice(0, 4).join(" ")
                             : item.name.split(" ").slice(0, 2).join(" ")}
                     </p>
                     <p className="text-xs font-semibold align-center p-1 m-1">
-                        R${item.price}
+                        R${item.price.toFixed(2)}
                     </p>
                 </div>
             </div>
@@ -103,7 +169,7 @@ const ModalProducts = ({ product, onClose }) => {
         <>
             <Html position={position}>
                 <div
-                    className={`relative bg-transparent pt-5 pb-3 shadow-lg border-black rounded-lg ${product == "sockets" && "flex"} ${isSmallScreen && "flex"}`}
+                    className={`relative bg-gray-300/75 dark:bg-gray-700/50 dark:text-gray-400 pt-5 pb-3 shadow-lg border-black rounded-lg ${product == "sockets" && "flex"} ${isSmallScreen && "flex"}`}
                 >
                     <button
                         className="absolute text-xs top-2 right-2 bg-red-500 text-white px-1.5 py-0.5 rounded"

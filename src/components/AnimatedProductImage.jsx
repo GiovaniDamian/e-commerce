@@ -12,6 +12,33 @@ const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick,
 
     const isMediumScreen = window.innerWidth > 450 && window.innerWidth <= 1300;
 
+    const translateDetail = (key) => {
+        const translations = {
+            power: 'Potência',
+            voltage: 'Voltagem',
+            luminous_flux: 'Fluxo Luminoso',
+            color_temperature: 'Temperatura de Cor',
+            lifespan: 'Duração',
+            features: 'Características',
+            sensor_range: 'Alcance do Sensor',
+            delay_time: 'Tempo de Atraso',
+            current: 'Corrente',
+            usb_output: 'Saída USB',
+        };
+
+        return translations[key] || key;
+    };
+
+    const translateSpecification = (key) => {
+        const translations = {
+            material: 'Material',
+            size: 'Tamanho',
+            weight: 'Peso',
+        };
+
+        return translations[key] || key;
+    };
+
     useEffect(() => {
         const element = document.getElementById(`product-${productId}`);
         if (expanded && element) {
@@ -82,7 +109,7 @@ const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick,
                                         <ul>
                                             {Object.keys(product.details).map((key, index) => (
                                                 <li key={index} className="mt-0.5">
-                                                    <strong>{key.replace(/_/g, ' ')}:</strong> {Array.isArray(product.details[key]) ? product.details[key].join(', ') : product.details[key]}
+                                                    <strong>{translateDetail(key)}</strong>: {Array.isArray(product.details[key]) ? product.details[key].join(', ') : product.details[key]}
                                                 </li>
                                             ))}
                                         </ul>
@@ -94,7 +121,7 @@ const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick,
                                         <ul>
                                             {Object.keys(product.specifications).map((key, index) => (
                                                 <li key={index} className="mt-0.5">
-                                                    <strong>{key.replace(/_/g, ' ')}:</strong> {product.specifications[key]}
+                                                    <strong>{translateSpecification(key)}</strong>: {product.specifications[key]}
                                                 </li>
                                             ))}
                                         </ul>

@@ -46,14 +46,14 @@ const PortalMesh = ({ scale, onClose }) => {
                         onClick={() => handleClick(index)}
                         visible={expandedImage === null || expandedImage === index}
                     >
-                        <meshStandardMaterial color="gray-300" />
+                        <meshStandardMaterial color="#cbd5e1" />
                     </AnimatedRoundedBox>
                     <AnimatedImage
                         url={`/images/products/${image}.webp`}
                         scale={imageProps.scale}
                         onClick={() => handleClick(index)}
                         visible={expandedImage === null || expandedImage === index}
-                        position={[0, 0, 0.06]} // Slight offset to bring the image in front of the RoundedBox
+                        position={[0, 0, 0.06]}
                     />
                 </group>
             ))}
