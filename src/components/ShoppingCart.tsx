@@ -56,7 +56,7 @@ export default function ShoppingCartComponent() {
         }
     };
     return (
-        <div className="flex flex-col mx-auto bg-gray-300 dark:bg-gray-800 rounded-lg shadow-lg">
+        <div className="flex flex-col mx-auto bg-gray-300 dark:bg-gray-800 rounded-lg shadow-lg text-xsm">
             <h1 className="text-xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">Shopping Cart</h1>
             <div className={`grid ${cart.items.length > 4 ? 'grid-cols-2' : 'grid-cols-1'} justify-center`}>
                 {cart.items.map((item, index) => (
@@ -64,16 +64,26 @@ export default function ShoppingCartComponent() {
                         {
                             window.innerWidth > 450 &&
                             <div className="w-20 h-20 mr-4">
-                                <Image src={item.product.image_url} alt={item.product.name} width={80} height={80} className="rounded-lg object-cover" priority={true} />
+                                <Image src={item.product.image_url} alt={item.product.name} width={70} height={70} className="rounded-lg object-cover" priority={true} />
                             </div>
                         }
 
                         <div className="flex flex-col">
-                            <h2 className="font-semibold lg:text-sm text-gray-900 dark:text-gray-100">{item.product.name}</h2>
+                            <div className="flex flex-row justify-between">
+                                <h2 className="font-semibold lg:text-sm text-gray-900 dark:text-gray-100">{item.product.name}</h2>
+                                {item.product.options &&
+                                    <div className="flex items-center">
+                                        <p className="text-black dark:text-gray-300 mr-1 text-xms"><strong>Opções: </strong></p>
+                                        {item.product.options.color && <p className="text-gray-600 dark:text-gray-300 mr-1 text-xsm">Cor: {item.product.options.color}</p>}
+                                        {item.product.options.power && <p className="text-gray-600 dark:text-gray-300 mr-1 text-xsm">Potência: {item.product.options.power}</p>}
+                                        {item.product.options.switches && <p className="text-gray-600 dark:text-gray-300 mr-1 text-xsm">Tomadas: {item.product.options.switches}</p>}
+                                    </div>
+                                }
+                            </div>
                             <div className="flex flex-row">
                                 <div className="w-full">
                                     <div className="flex flex-row mt-1 mr-2">
-                                        <p className="text-gray-600 dark:text-gray-300 mr-1">Preço Unitário: ${item.product.price.toFixed(2)}</p>
+                                        <p className="text-gray-600 dark:text-gray-300 mr-1">Preço Unitário: ${item.product.price}</p>
                                         <p className="text-gray-600 dark:text-gray-300 ml-1">Preço Total/Item: <strong>${(item.product.price * item.quantity).toFixed(2)}</strong></p>
                                     </div>
                                     <div className="flex flex-row items-center sm:justify-around">
@@ -167,7 +177,7 @@ export default function ShoppingCartComponent() {
                         )}
                     </button>
                 </div>
-                <p className="lg:text-xl font-bold text-gray-900 dark:text-gray-100">Total: R${cart.totalPrice.toFixed(2)}</p>
+                <p className="text-lg font-bold text-gray-900 dark:text-gray-100"><strong>Total: R${cart.totalPrice.toFixed(2)}</strong></p>
             </div>
         </div>
     )

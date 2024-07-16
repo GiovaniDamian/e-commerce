@@ -58,7 +58,7 @@ const PortalMesh = ({ scale, onClose }) => {
                 </group>
             ))}
             {expandedImage === null && (
-                <Html position={[4 * scale, 4 * scale, 0]}>
+                <Html position={[4 * scale, scale * 0.3 *product.id, 0]}>
                     <button
                         onClick={onClose}
                         className="absolute text-xs top-2 right-2 bg-red-500 text-white px-6 py-0.5 rounded"

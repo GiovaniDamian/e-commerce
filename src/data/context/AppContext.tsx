@@ -46,7 +46,7 @@ export function AppProvider({ children }: AppProviderProps) {
 
     function addCart (item: CartItem) {
         setCart(prevCart => {
-            const existingItem = prevCart.items.find(cartItem => cartItem.product.name === item.product.name);
+            const existingItem = prevCart.items.find(cartItem => cartItem.product.name === item.product.name && cartItem.product.options === item.product.options);
 
             let updatedItems
             if (existingItem) {

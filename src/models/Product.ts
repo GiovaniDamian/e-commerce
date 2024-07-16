@@ -38,6 +38,7 @@ export interface ProductCart {
     name: string
     price: number
     image_url: string
+    options?: ProductOptions
 }
 
 export interface ProductPromo {
@@ -49,5 +50,5 @@ export interface ProductPromo {
 interface ProductOptions {
     color?: string;
     power?: string;
-    num_switches?: number;
+    switches?: number;
 }
