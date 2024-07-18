@@ -36,6 +36,7 @@ const ModalProducts = ({ product, onClose }) => {
 
     const handleView3DModel = (itemSelected) => {
         activatePortal(itemSelected);
+        onClose()
     };
 
     const handleOptionSelect = (productId, optionType, optionValue) => {
@@ -78,21 +79,21 @@ const ModalProducts = ({ product, onClose }) => {
         switch (product) {
             case "switches":
                 return {
-                    position: isSmallScreen ? [-2, 3.5, 0] : isMediumScreen ? [-2.7, 3, 0] : [-6, 3.6, 0],
+                    position: isSmallScreen ? [-1.5, 3.5, 0] : isMediumScreen ? [-2.7, 3, 0] : [-6, 3.6, 0],
                     zIndex: 1,
                     xOffset: isSmallScreen ? 0 : isMediumScreen ? -2 : -4,
                     yOffset: isSmallScreen ? 0 : isMediumScreen ? -0.5 : -1,
                 };
             case "sockets":
                 return {
-                    position: isSmallScreen ? [-2, 3.5, 0] : [0.5, 3.5, 0],
+                    position: isSmallScreen ? [-1.5, 3.5, 0] : [0.5, 3.5, 0],
                     zIndex: 1,
                     xOffset: 0,
                     yOffset: 0,
                 };
             case "bulbs":
                 return {
-                    position: isSmallScreen ? [-2, 3.5, 0] : [3, 3, 0],
+                    position: isSmallScreen ? [-1.5, 3.5, 0] : [3, 3, 0],
                     zIndex: 1,
                     xOffset: 0,
                     yOffset: 0,

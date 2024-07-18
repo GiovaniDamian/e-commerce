@@ -11,7 +11,7 @@ interface AppContextProps {
     resetCart?: () => void
     addCart?: (item: CartItem) => void
     removeCart?: (item: CartItem) => void
-    updateCartQuantity?: (productName: string, quantity: number) => void
+    updateCartQuantity?: (productName: string, options: any, quantity: number) => void
 }
 
 const AppContext = createContext<AppContextProps>({})
@@ -44,14 +44,15 @@ export function AppProvider({ children }: AppProviderProps) {
         setCart({ items: [], totalPrice: 0 })
     }
 
-    function addCart (item: CartItem) {
+    function addCart(item: CartItem) {
         setCart(prevCart => {
-            const existingItem = prevCart.items.find(cartItem => cartItem.product.name === item.product.name && cartItem.product.options === item.product.options);
+            const existingItem = prevCart.items.find(cartItem => cartItem.product.name === item.product.name && JSON.stringify(cartItem.product.options) === JSON.stringify(item.product.options));
 
             let updatedItems
             if (existingItem) {
                 updatedItems = prevCart.items.map(cartItem =>
                     cartItem.product.name === item.product.name
+                        && JSON.stringify(cartItem.product.options) === JSON.stringify(item.product.options)
                         ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
                         : cartItem
                 );
@@ -67,31 +68,37 @@ export function AppProvider({ children }: AppProviderProps) {
         });
     }
 
-    function removeCart (item: CartItem) {
+    function removeCart(item: CartItem) {
         setCart(prevCart => {
-            const updatedItems = prevCart.items.filter(cartItem => cartItem.product.name !== item.product.name)
+            const updatedItems = prevCart.items.filter(cartItem =>
+                !(cartItem.product.name === item.product.name &&
+                    cartItem.product.options === item.product.options)
+            );
             const updatedTotalPrice = updatedItems.reduce((total, cartItem) => {
-                return total + cartItem.product.price * cartItem.quantity
-            }, 0)
+                return total + cartItem.product.price * cartItem.quantity;
+            }, 0);
 
-            return { items: updatedItems, totalPrice: updatedTotalPrice }
-        })
+            return { items: updatedItems, totalPrice: updatedTotalPrice };
+        });
     }
 
-    function updateCartQuantity (productName: string, quantity: number) {
+    function updateCartQuantity(productName: string, options: any, quantity: number) {
         setCart(prevCart => {
-            const updatedItems = prevCart.items.map(cartItem =>
-                cartItem.product.name === productName
-                    ? { ...cartItem, quantity }
-                    : cartItem
-            ).filter(cartItem => cartItem.quantity > 0)
+            const updatedItems = prevCart.items.map(cartItem => {
+                if (cartItem.product.name === productName &&
+                    cartItem.product.options === options) {
+                    return { ...cartItem, quantity: quantity };
+                }
+
+                return cartItem;
+            }).filter(cartItem => cartItem.quantity > 0);
 
             const updatedTotalPrice = updatedItems.reduce((total, cartItem) => {
                 return total + cartItem.product.price * cartItem.quantity;
-            }, 0)
+            }, 0);
 
-            return { items: updatedItems, totalPrice: updatedTotalPrice }
-        })
+            return { items: updatedItems, totalPrice: updatedTotalPrice };
+        });
     }
 
     useEffect(() => {

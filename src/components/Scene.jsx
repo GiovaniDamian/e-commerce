@@ -124,7 +124,7 @@ const Scene = ({ light, setLight }) => {
         cameraControlsRef.current.setLookAt(0, 2, 14, 0, 0, 0, false)
         if (portalState) {
             if (cameraControlsRef.current) {
-                cameraControlsRef.current.moveTo(0, 3.5, 4, 0, 0, 0, true);
+                cameraControlsRef.current.moveTo(0, 2, 4, 0, 0, 0, true);
             }
         } else {
             cameraControlsRef.current.update();

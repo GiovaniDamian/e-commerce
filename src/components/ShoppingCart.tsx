@@ -9,6 +9,9 @@ export default function ShoppingCartComponent() {
     const [tooltipState, setTooltipState] = useState<{ [key: string]: boolean }>({});
     const [resetTooltipState, setResetTooltipState] = useState<{ [key: string]: boolean }>({ restoreCart: false });
 
+    const generateProductKey = (productName: string, options: any) => {
+        return `${productName}-${options?.color || 'default'}-${options?.power || 'default'}-${options?.switches || 'default'}`;
+    };
     const handleMouseEnter = (productName: string) => {
         setTooltipState({ ...tooltipState, [productName]: true });
     };
@@ -30,20 +33,21 @@ export default function ShoppingCartComponent() {
         return <div>Loading...</div>;
     }
 
-    const handleQuantityChange = (productName: string, quantity: number) => {
-        setQuantityInputs({ ...quantityInputs, [productName]: quantity });
+    const handleQuantityChange = (productKey: string, quantity: number) => {
+        setQuantityInputs({ ...quantityInputs, [productKey]: quantity });
     };
 
-    const handleUpdateQuantity = (productName: string, currentQuantity: number) => {
-        const newQuantity = quantityInputs[productName] || currentQuantity;
+    const handleUpdateQuantity = (productName: string, options: any, currentQuantity: number) => {
+        const productKey = generateProductKey(productName, options);
+        const newQuantity = quantityInputs[productKey] || currentQuantity;
         if (newQuantity !== currentQuantity) {
-            updateCartQuantity(productName, newQuantity);
+            updateCartQuantity(productName, options, newQuantity);
         }
     };
 
-    const getButtonStyle = (productName: string) => {
-        const currentQuantity = quantityInputs[productName] || cart.items.find(item => item.product.name === productName)?.quantity || 0;
-        const originalQuantity = cart.items.find(item => item.product.name === productName)?.quantity || 0;
+    const getButtonStyle = (productKey: string) => {
+        const currentQuantity = quantityInputs[productKey] || cart.items.find(item => generateProductKey(item.product.name, item.product.options) === productKey)?.quantity || 0;
+        const originalQuantity = cart.items.find(item => generateProductKey(item.product.name, item.product.options) === productKey)?.quantity || 0;
         if (currentQuantity !== originalQuantity) {
             return {
                 display: 'block',
@@ -59,12 +63,13 @@ export default function ShoppingCartComponent() {
         <div className="flex flex-col mx-auto bg-gray-300 dark:bg-gray-800 rounded-lg shadow-lg text-xsm">
             <h1 className="text-xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">Shopping Cart</h1>
             <div className={`grid ${cart.items.length > 4 ? 'grid-cols-2' : 'grid-cols-1'} justify-center`}>
-                {cart.items.map((item, index) => (
-                    <div key={index} className="flex items-center p-1 m-1 bg-white dark:bg-gray-700 rounded-lg shadow">
+                {cart.items.map((item, index) => {
+                    const productKey = generateProductKey(item.product.name, item.product.options);
+                    return (<div key={index} className="flex items-center p-1 m-1 bg-white dark:bg-gray-700 rounded-lg shadow">
                         {
                             window.innerWidth > 450 &&
                             <div className="w-20 h-20 mr-4">
-                                <Image src={item.product.image_url} alt={item.product.name} width={70} height={70} className="rounded-lg object-cover" priority={true} />
+                                <Image src={item.product.image_url} alt={`${item.product.name}-${index}`} width={70} height={70} className="rounded-lg object-cover" priority={true} />
                             </div>
                         }
 
@@ -90,8 +95,8 @@ export default function ShoppingCartComponent() {
                                         <p className="text-gray-600 dark:text-gray-300">Quantidade: {item.quantity} </p>
                                         <input
                                             type="number"
-                                            value={quantityInputs[item.product.name] || item.quantity}
-                                            onChange={(e) => handleQuantityChange(item.product.name, parseInt(e.target.value))}
+                                            value={quantityInputs[productKey] || item.quantity}
+                                            onChange={(e) => handleQuantityChange(productKey, parseInt(e.target.value))}
                                             className="m-2 border dark:bg-gray-300 rounded p-1 w-1/5 custom-input"
                                         />
                                         {
@@ -100,14 +105,14 @@ export default function ShoppingCartComponent() {
                                                 <div className="flex flex-row place-content-end">
                                                     <button
                                                         className="bg-blue-500 text-white font-bold py-1 px-1 rounded-l"
-                                                        onClick={() => handleQuantityChange(item.product.name, (quantityInputs[item.product.name] || item.quantity) - 1)}
-                                                        disabled={(quantityInputs[item.product.name] || item.quantity) <= 1}
+                                                            onClick={() => handleQuantityChange(productKey, (quantityInputs[productKey] || item.quantity) - 1)}
+                                                            disabled={(quantityInputs[productKey] || item.quantity) <= 1}
                                                     >
                                                         -
                                                     </button>
                                                     <button
                                                         className="bg-blue-500 text-white font-bold py-1 px-1 rounded-r"
-                                                        onClick={() => handleQuantityChange(item.product.name, (quantityInputs[item.product.name] || item.quantity) + 1)}
+                                                            onClick={() => handleQuantityChange(productKey, (quantityInputs[productKey] || item.quantity) + 1)}
                                                     >
                                                         +
                                                     </button>
@@ -117,12 +122,12 @@ export default function ShoppingCartComponent() {
                                         <div className="relative">
                                             <button
                                                 className="bg-transparent hover:bg-transparent text-white font-bold py-1 px-2 h-6 w-6 rounded relative"
-                                                style={getButtonStyle(item.product.name)}
-                                                onClick={() => handleUpdateQuantity(item.product.name, item.quantity)}
-                                                onMouseEnter={() => handleMouseEnter(item.product.name)}
-                                                onMouseLeave={() => handleMouseLeave(item.product.name)}
+                                                style={getButtonStyle(productKey)}
+                                                onClick={() => handleUpdateQuantity(item.product.name, item.product.options, item.quantity)}
+                                                onMouseEnter={() => handleMouseEnter(productKey)}
+                                                onMouseLeave={() => handleMouseLeave(productKey)}
                                             >
-                                                {quantityInputs[item.product.name] > item.quantity ? (
+                                                {quantityInputs[productKey] > item.quantity ? (
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                                                         <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
                                                     </svg>
@@ -132,7 +137,7 @@ export default function ShoppingCartComponent() {
                                                     </svg>
                                                 )}
                                             </button>
-                                            {tooltipState[item.product.name] && (
+                                            {tooltipState[productKey] && (
                                                 <div className="absolute bg-black text-white px-2 py-1 rounded mt-2 -ml-8">
                                                     Atualize a quantidade
                                                 </div>
@@ -143,7 +148,7 @@ export default function ShoppingCartComponent() {
                                 <div className="flex flex-col justify-center mt-1 w-20">
                                     <button className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-1 px-2 rounded mb-2" onClick={() =>
                                         removeCart({
-                                            product: { name: item.product.name, price: item.product.price, image_url: item.product.image_url },
+                                            product: { name: item.product.name, price: item.product.price, image_url: item.product.image_url, options: item.product.options },
                                             quantity: 1,
                                         })
                                     } >
@@ -153,7 +158,8 @@ export default function ShoppingCartComponent() {
                             </div>
                         </div>
                     </div>
-                ))}
+                    )
+                })}
 
             </div>
             <div className="flex flex-row mt-1 items-center">

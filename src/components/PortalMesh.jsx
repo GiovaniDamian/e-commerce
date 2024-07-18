@@ -37,9 +37,10 @@ const PortalMesh = ({ scale, onClose }) => {
             {images.map((image, index) => (
                 <group key={index} position={[
                     isSmallScreen ? 1.5 + (index * scale * -1.5) : 4 + (index * scale * -1.5),
-                    isSmallScreen ? (index % 2 === 0 ? 5.2 : 3.2) : 5.2,
+                    isSmallScreen ? (index % 2 === 0 ? 5.2 : 3.2) : 4.2,
                     0
-                ]}>
+                ]}
+                >
                     <AnimatedRoundedBox
                         args={[1.1, 1.1, 0.1]}
                         scale={imageProps.scale}
@@ -57,8 +58,7 @@ const PortalMesh = ({ scale, onClose }) => {
                     />
                 </group>
             ))}
-            {expandedImage === null && (
-                <Html position={[4 * scale, scale * 0.3 *product.id, 0]}>
+            <Html position={[4 * scale, scale * 0.3 * (0.03 * product.id), 0]}>
                     <button
                         onClick={onClose}
                         className="absolute text-xs top-2 right-2 bg-red-500 text-white px-6 py-0.5 rounded"
@@ -66,7 +66,7 @@ const PortalMesh = ({ scale, onClose }) => {
                         Fechar
                     </button>
                 </Html>
-            )}
+            )
         </group>
     );
 };
