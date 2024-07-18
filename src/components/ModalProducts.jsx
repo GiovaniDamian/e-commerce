@@ -11,9 +11,9 @@ const ModalProducts = ({ product, onClose }) => {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [isMediumScreen, setIsMediumScreen] = useState(false);
     const [expandedProduct, setExpandedProduct] = useState(null);
-    const { portalState, activatePortal } = usePortal();
+    const { activatePortal } = usePortal();
     const [selectedOptions, setSelectedOptions] = useState({});
-    const { addCart, updateCartQuantity } = useAppData();
+    const { addCart} = useAppData();
     const [quantities, setQuantities] = useState({});
 
     useEffect(() => {

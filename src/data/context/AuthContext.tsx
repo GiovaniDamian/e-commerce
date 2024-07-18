@@ -1,11 +1,8 @@
-import route from 'next/router';
 import { createContext, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import firebase from '../../firebase/config';
 import Usuario from '../../models/User';
-import UsuarioRepository from '../../models/UserRepository';
 import UserFireBase from '../../db/Client';
-import { getInitialValue } from '@testing-library/user-event/dist/types/document/UI';
 
 interface AuthContextProps {
     usuario?: Usuario;
@@ -18,7 +15,7 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps>({});
 
-async function usuarioNormalizado(usuarioFirebase: firebase.User, usuarioExistente?: Usuario): Promise<Usuario> {
+async function usuarioNormalizado(usuarioFirebase: firebase.User, usuarioExistente?: Usuario| null): Promise < Usuario > {
     const token = await usuarioFirebase.getIdToken();
     return new Usuario(
         usuarioFirebase.uid,

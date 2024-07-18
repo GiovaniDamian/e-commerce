@@ -5,7 +5,6 @@ import AvatarUsuario from "./AvatarUsuario";
 import route from 'next/router';
 import CartIcon from "./CartIcon";
 import { useState } from "react";
-import Modal from "./Modal";
 
 
 export default function Header() {

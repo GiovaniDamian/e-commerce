@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { ShoppingCart, CartItem } from '../models/Cart'
 import Image from 'next/image'
 import useAppData from '../data/hook/useAppData'
 
@@ -7,7 +6,6 @@ export default function ShoppingCartComponent() {
     const { cart, removeCart, updateCartQuantity, resetCart } = useAppData()
     const [quantityInputs, setQuantityInputs] = useState<{ [key: string]: number }>({})
     const [tooltipState, setTooltipState] = useState<{ [key: string]: boolean }>({});
-    const [resetTooltipState, setResetTooltipState] = useState<{ [key: string]: boolean }>({ restoreCart: false });
 
     const generateProductKey = (productName: string, options: any) => {
         return `${productName}-${options?.color || 'default'}-${options?.power || 'default'}-${options?.switches || 'default'}`;

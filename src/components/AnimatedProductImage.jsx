@@ -1,10 +1,9 @@
-// AnimatedProductImage.js
-import React, { useState, useEffect } from 'react';
-import { useSpring, animated } from '@react-spring/web';
-import products from './../data/products.json';
+import React, { useState, useEffect } from 'react'
+import { useSpring, animated } from '@react-spring/web'
+import products from './../data/products.json'
 
 const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick, style, isSmallScreen, expandedProduct }) => {
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false)
     const [springProps, api] = useSpring(() => ({
         transform: 'scale(1)',
         zIndex: 1,
@@ -40,7 +39,7 @@ const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick,
     };
 
     useEffect(() => {
-        const element = document.getElementById(`product-${productId}`);
+        const element = document.getElementById(`product-${productId}`)
         if (expanded && element) {
             const rect = element.getBoundingClientRect();
             const xOffset = (rect.width / 200) * (-productId * 2);

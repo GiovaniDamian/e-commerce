@@ -1,5 +1,5 @@
 import { useSpring, animated, useTransition } from '@react-spring/three';
-import { RoundedBox, Text } from '@react-three/drei';
+import { RoundedBox } from '@react-three/drei';
 import { useScroll } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';

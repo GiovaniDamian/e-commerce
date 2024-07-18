@@ -10,13 +10,14 @@ interface AvatarUsuarioProps {
 export default function AvatarUsuario({ className }: AvatarUsuarioProps) {
     const { usuario } = useAuth()
     const [imageSrc, setImageSrc] = useState(usuario?.imageUrl ?? '/images/avatar.svg')
-    const [ModalOpen, setModalOpen] = useState(false);
+    const [ModalOpen, setModalOpen] = useState(false)
 
     const handleError = () => {
         setImageSrc('/images/avatar.svg')
     }
-    const openModal = () => setModalOpen(true);
-    const closeModal = () => setModalOpen(false);
+
+    const openModal = () => setModalOpen(true)
+    const closeModal = () => setModalOpen(false)
 
     return (
         usuario?.email ? (

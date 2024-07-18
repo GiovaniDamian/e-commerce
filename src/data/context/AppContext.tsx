@@ -1,5 +1,4 @@
-import * as React from "react";
-import { createContext, useCallback, useEffect, useState, ReactNode } from "react";
+import { createContext, useEffect, useState } from "react";
 import { CartItem, ShoppingCart } from "../../models/Cart";
 import Cookies from 'js-cookie';
 import useAuth from "../hook/useAuth";
@@ -13,7 +12,6 @@ interface AppContextProps {
     removeCart?: (item: CartItem) => void
     updateCartQuantity?: (productName: string, options: any, quantity: number) => void
 }
-
 const AppContext = createContext<AppContextProps>({})
 
 const getInitialCart = () => {
@@ -27,11 +25,8 @@ const getInitialCart = () => {
     }
     return { items: [], totalPrice: 0 }
 };
-interface AppProviderProps {
-    children: ReactNode
-}
 
-export function AppProvider({ children }: AppProviderProps) {
+export function AppProvider({ children }) {
     const [theme, setTheme] = useState<string>('');
     const [cart, setCart] = useState<ShoppingCart>(getInitialCart);
     const { usuario } = useAuth()
