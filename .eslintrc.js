@@ -1,6 +1,6 @@
 module.exports = {
   extends: ['next', 'prettier'],
-  plugins: [],
+  plugins: ['unicorn'],
   rules: {
     'no-unused-vars': [
       'error',
