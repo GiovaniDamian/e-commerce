@@ -19,9 +19,9 @@ export default function Autenticacao() {
     async function submeter() {
         try {
             if (modo === 'login') {
-                await login(email, senha)
+                if (login) await login(email, senha)
             } else {
-                await cadastrar(email, senha)
+                if (cadastrar) await cadastrar(email, senha)
             }
         } catch (e) {
             exibirErro(e?.message ?? 'Erro desconhecido!')
