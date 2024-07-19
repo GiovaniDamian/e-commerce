@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { CartItem, ShoppingCart } from "../../models/Cart";
 import Cookies from 'js-cookie';
-import useAuth from "../hook/useAuth";
 
 interface AppContextProps {
     theme?: string
