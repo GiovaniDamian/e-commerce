@@ -29,7 +29,7 @@ const RoundedBoxScroll = ({ scale, setLight }) => {
     );
 
     return (
-        <>
+        <mesh {...springs}>
             {scale == '1' ? (
                 <ScrollControls pages={2} damping={0.001}>
                     <Scroll>
@@ -61,7 +61,7 @@ const RoundedBoxScroll = ({ scale, setLight }) => {
                     </AnimatedRoundedBox>
                 ))
             )}
-        </>
+        </mesh>
     );
 };
 

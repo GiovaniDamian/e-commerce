@@ -26,7 +26,9 @@ export default function AvatarUsuario({ className }: AvatarUsuarioProps) {
             <Image
                 src={imageSrc}
                 alt="Avatar do Usuário"
-                onError={handleError}
+                    onError={handleError}
+                    width={500}
+                    height={500}
                 className={`
                     h-7 w-7 rounded-full cursor-pointer mx-4
                     ${className}
@@ -37,6 +39,8 @@ export default function AvatarUsuario({ className }: AvatarUsuarioProps) {
                     onClick={openModal}
                     src={imageSrc}
                     alt="Avatar do Usuário"
+                    width={500}
+                    height={500}
                     onError={handleError}
                     className={`
                     h-67 w-7 rounded-full cursor-pointer mx-4

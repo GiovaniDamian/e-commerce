@@ -34,6 +34,8 @@ export default function Autenticacao() {
                 <Image
                     src="https://picsum.photos/500/800"
                     alt="Imagem da Tela de Autenticação"
+                    width={500}
+                    height={500}
                     className="h-screen w-full object-cover" />
             </div>
             <div className="m-10 w-full md:w-1/2 lg:w-1/3">

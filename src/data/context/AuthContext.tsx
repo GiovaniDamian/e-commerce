@@ -55,8 +55,8 @@ export function AuthProvider(props) {
 
     async function configurarSessao(usuarioFirebase) {
         if (usuarioFirebase?.email) {
-            let usuarioExistente = await repo.obter({ id: usuarioFirebase.uid } as Usuario)
-            let usuario = await usuarioNormalizado(usuarioFirebase, usuarioExistente)
+            const usuarioExistente = await repo.obter({ id: usuarioFirebase.uid } as Usuario)
+            const usuario = await usuarioNormalizado(usuarioFirebase, usuarioExistente)
             if (!usuarioExistente) {
                 await repo.salvar(usuario)
             }

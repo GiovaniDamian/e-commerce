@@ -132,7 +132,7 @@ const Scene = ({ light, setLight }) => {
     }, [portalState]);
 
     return (
-        <>
+        <mesh {...shakeAnimation}>
             <OrbitControls enableZoom={false} enablePan={false} />
             <CameraControls
                 enabled={portalState}
@@ -212,7 +212,7 @@ const Scene = ({ light, setLight }) => {
                     onClose={handleClosePortalMesh}
                 />
             )}
-        </>
+        </mesh>
     );
 };
 

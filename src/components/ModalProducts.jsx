@@ -159,6 +159,8 @@ const ModalProducts = ({ product, onClose }) => {
                                 key={i}
                                 src={`/images/products/${img}.webp`}
                                 alt={`Thumbnail ${i + 1}`}
+                                width={500}
+                                height={500}
                                 className="w-2.5 h-2.5 object-cover m-0.5 cursor-pointer"
                                 onClick={() => handleView3DModel(item)}
                             />
