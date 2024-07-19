@@ -1,9 +1,7 @@
-import useAppData from "../data/hook/useAppData";
 import useAuth from "../data/hook/useAuth"
 
-export default function AvatarUsuario(props: any) {
+export default function AvatarUsuario() {
     const { usuario } = useAuth()
-    const { cart } = useAppData();
     return (<>
         <h1>{usuario?.name}</h1>
         <p>{usuario?.id}</p>

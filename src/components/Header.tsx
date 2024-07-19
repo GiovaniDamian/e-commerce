@@ -10,10 +10,9 @@ import { useState } from "react";
 export default function Header() {
     const { theme, changeTheme } = useAppData();
     const { logout, carregando } = useAuth();
-    const [ ModalOpen, setModalOpen] = useState(false);
+    const [ modalOpen, setModalOpen] = useState(false);
 
-    const openModal = () => setModalOpen(true);
-    const closeModal = () => setModalOpen(false);
+    const openModal = () => setModalOpen(!modalOpen);
     function login() {
         route.push('/autenticacao');
     }

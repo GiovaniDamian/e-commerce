@@ -4,7 +4,6 @@ import useAppData from '../data/hook/useAppData';
 import Header from '../components/Header';
 import { Canvas } from "@react-three/fiber";
 import Scene from '../components/Scene';
-import { Scroll, ScrollControls } from '@react-three/drei';
 import { PortalProvider } from '../data/context/PortalProvider';
 
 export default function Home() {

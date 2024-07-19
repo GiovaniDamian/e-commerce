@@ -1,8 +1,7 @@
 import {
     Scroll,
     ScrollControls,
-    RoundedBox,
-    Text
+    RoundedBox
 } from "@react-three/drei";
 import RoundedBoxWithScroll from './RoundedBoxWithScroll';
 import { useState } from "react";
