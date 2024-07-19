@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSpring, animated } from '@react-spring/web'
 import products from './../data/products.json'
+import Image from 'next/image';
 
 const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick, style, isSmallScreen, expandedProduct }) => {
     const [showModal, setShowModal] = useState(false)
@@ -84,9 +85,10 @@ const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick,
                 style={{ ...style, ...springProps }}
             >
                 {!expandedProduct && (
-                    <img
+                    <Image
                         src={imageUrl}
                         alt={altText}
+                        width={500} height={500}
                         className="w-full h-full object-cover"
                     />
                 )}

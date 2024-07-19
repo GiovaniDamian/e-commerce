@@ -2,6 +2,7 @@ import Link from 'next/link'
 import useAuth from '../data/hook/useAuth'
 import { useState } from 'react'
 import Modal from './Modal'
+import Image from 'next/image';
 
 interface AvatarUsuarioProps {
     className?: string
@@ -22,7 +23,7 @@ export default function AvatarUsuario({ className }: AvatarUsuarioProps) {
     return (
         usuario?.email ? (
         <Link href="/perfil">
-            <img
+            <Image
                 src={imageSrc}
                 alt="Avatar do Usuário"
                 onError={handleError}
@@ -32,7 +33,7 @@ export default function AvatarUsuario({ className }: AvatarUsuarioProps) {
                 `}
             />
             </Link>) : (<>
-                <img
+                <Image
                     onClick={openModal}
                     src={imageSrc}
                     alt="Avatar do Usuário"

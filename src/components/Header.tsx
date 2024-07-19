@@ -5,7 +5,7 @@ import AvatarUsuario from "./AvatarUsuario";
 import route from 'next/router';
 import CartIcon from "./CartIcon";
 import { useState } from "react";
-
+import Image from 'next/image';
 
 export default function Header() {
     const { theme, changeTheme } = useAppData();
@@ -83,7 +83,7 @@ export default function Header() {
                     <div className="p-2" onClick={openModal}>
                         <CartIcon />
                     </div>
-                    {carregando ? <img src='/images/loading.gif' alt="Avatar do Usuário" className={` h-10 w-10`} /> : <AvatarUsuario />}
+                    {carregando ? <Image src='/images/loading.gif' alt="Avatar do Usuário" className={` h-10 w-10`} /> : <AvatarUsuario />}
                     <button                                                                                                           
                         className="flex h-3/4 items-center justify-center bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-3 rounded ml-1"
                         onClick={login}

@@ -2,12 +2,12 @@ import { useSpring, animated, useTransition } from '@react-spring/three';
 import { RoundedBox } from '@react-three/drei';
 import { useScroll } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import PromoBox from './PromoBox';
 
 const AnimatedBox = animated(RoundedBox);
 
-export default function RoundedBoxWithScroll({ index, color, scale, spring, setLight }) {
+export default function RoundedBoxWithScroll({ index, color, scale, spring }) {
     const scroll = useScroll();
     const ref = useRef();
     const [isExpanded, setIsExpanded] = useState(false);
@@ -17,9 +17,6 @@ export default function RoundedBoxWithScroll({ index, color, scale, spring, setL
         opacity: 0,
     }));
 
-    useEffect(() => {
-        setLight(1)
-    }, [isExpanded])
 
     const transitions = useTransition(isExpanded, {
         from: { scale: [1, 1, 1], position: [index, -10, 0], opacity: 1 },

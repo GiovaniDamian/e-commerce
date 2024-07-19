@@ -2,7 +2,7 @@ import { useState } from "react"
 import AuthInput from "../components/auth/AuthInput"
 import { IconeAtencao } from "../icons"
 import useAuth from "../data/hook/useAuth"
-
+import Image from 'next/image';
 export default function Autenticacao() {
     const { cadastrar, login, loginGoogle } = useAuth()
 
@@ -31,7 +31,7 @@ export default function Autenticacao() {
     return (
         <div className="flex h-screen items-center justify-center">
             <div className="hidden md:block md:w-1/2 lg:w-2/3">
-                <img
+                <Image
                     src="https://picsum.photos/500/800"
                     alt="Imagem da Tela de Autenticação"
                     className="h-screen w-full object-cover" />

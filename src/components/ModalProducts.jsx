@@ -6,6 +6,7 @@ import usePortal from '../data/hook/usePortal';
 import useAppData from '../data/hook/useAppData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/image';
 
 const ModalProducts = ({ product, onClose }) => {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -154,7 +155,7 @@ const ModalProducts = ({ product, onClose }) => {
                 <div className={`flex`}>
                     <div className="flex flex-col items-center m-2 bg-gray-400 dark:bg-gray-900 rounded">
                         {item.images.map((img, i) => (
-                            <img
+                            <Image
                                 key={i}
                                 src={`/images/products/${img}.webp`}
                                 alt={`Thumbnail ${i + 1}`}

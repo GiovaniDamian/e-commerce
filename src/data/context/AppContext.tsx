@@ -29,7 +29,6 @@ const getInitialCart = () => {
 export function AppProvider({ children }) {
     const [theme, setTheme] = useState<string>('');
     const [cart, setCart] = useState<ShoppingCart>(getInitialCart);
-    const { usuario } = useAuth()
     function changeTheme() {
         const newTheme = theme === '' ? 'dark' : ''
         setTheme(newTheme)
