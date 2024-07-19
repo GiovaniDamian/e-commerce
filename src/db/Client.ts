@@ -32,9 +32,9 @@ export default class UserFireBase implements UserRepository {
         }
     }
 
-    async obter(cliente: Usuario): Promise<Usuario | null> {
+    async obter(cliente: Usuario): Promise<Usuario> {
         const doc = await this.colecao().doc(cliente.id).get();
-        return doc.exists ? this.#conversor.fromFirestore(doc as firebase.firestore.QueryDocumentSnapshot, {}) : null;
+        return this.#conversor.fromFirestore(doc as firebase.firestore.QueryDocumentSnapshot, {})
     }
 
     private colecao() {
