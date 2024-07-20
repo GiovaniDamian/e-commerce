@@ -1,7 +1,7 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 import Cookies from 'js-cookie';
 import firebase from '../../firebase/config';
-import Usuario from '../../models/User'
+import Usuario from '../../models/User';
 import UserFireBase from '../../db/Client';
 
 interface AuthContextProps {
@@ -15,7 +15,7 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps>({});
 
-async function usuarioNormalizado(usuarioFirebase: firebase.User, usuarioExistente?: Usuario): Promise < Usuario > {
+async function usuarioNormalizado(usuarioFirebase: firebase.User, usuarioExistente?: Usuario): Promise<Usuario> {
     const token = await usuarioFirebase.getIdToken();
     return new Usuario(
         usuarioFirebase.uid,
@@ -44,53 +44,54 @@ function gerenciarCookie(logado: boolean) {
             expires: 7
         });
     } else {
-        Cookies.remove('iot-ecommerce')
+        Cookies.remove('iot-ecommerce');
     }
 }
 
 export function AuthProvider(props) {
     const [carregando, setCarregando] = useState(true);
     const [usuario, setUsuario] = useState<Usuario>();
-    const repo = new UserFireBase();
 
-    async function configurarSessao(usuarioFirebase) {
+    const repo = useMemo(() => new UserFireBase(), []);
+
+    const configurarSessao = useCallback(async (usuarioFirebase) => {
         if (usuarioFirebase?.email) {
-            const usuarioExistente = await repo.obter({ id: usuarioFirebase.uid } as Usuario)
-            const usuario = await usuarioNormalizado(usuarioFirebase, usuarioExistente)
+            const usuarioExistente = await repo.obter({ id: usuarioFirebase.uid } as Usuario);
+            const usuario = await usuarioNormalizado(usuarioFirebase, usuarioExistente);
             if (!usuarioExistente) {
-                await repo.salvar(usuario)
+                await repo.salvar(usuario);
             }
-            setUsuario(usuario)
-            gerenciarCookie(true)
-            setCarregando(false)
-            return usuario.email
+            setUsuario(usuario);
+            gerenciarCookie(true);
+            setCarregando(false);
+            return usuario.email;
         } else {
-            setUsuario(undefined)
-            gerenciarCookie(false)
-            setCarregando(false)
-            return false
+            setUsuario(undefined);
+            gerenciarCookie(false);
+            setCarregando(false);
+            return false;
         }
-    }
+    }, [repo]);
 
     async function login(email, senha) {
         try {
-            setCarregando(true)
-            const resp = await firebase.auth().signInWithEmailAndPassword(email, senha)
-            await configurarSessao(resp.user)
-            window.location.href = '/'
+            setCarregando(true);
+            const resp = await firebase.auth().signInWithEmailAndPassword(email, senha);
+            await configurarSessao(resp.user);
+            window.location.href = '/';
         } finally {
-            setCarregando(false)
+            setCarregando(false);
         }
     }
 
     async function cadastrar(email, senha) {
         try {
-            setCarregando(true)
-            const resp = await firebase.auth().createUserWithEmailAndPassword(email, senha)
-            await configurarSessao(resp.user)
-            window.location.href = '/'
+            setCarregando(true);
+            const resp = await firebase.auth().createUserWithEmailAndPassword(email, senha);
+            await configurarSessao(resp.user);
+            window.location.href = '/';
         } finally {
-            setCarregando(false)
+            setCarregando(false);
         }
     }
 
@@ -101,7 +102,6 @@ export function AuthProvider(props) {
             const provider = new firebase.auth.GoogleAuthProvider();
             const resp = await auth.signInWithPopup(provider);
             await configurarSessao(resp.user);
-
             window.location.href = '/';
         } catch (error) {
             console.error("Erro durante o login:", error);
@@ -112,11 +112,11 @@ export function AuthProvider(props) {
 
     async function logout() {
         try {
-            setCarregando(true)
-            await firebase.auth().signOut()
-            await configurarSessao(null)
+            setCarregando(true);
+            await firebase.auth().signOut();
+            await configurarSessao(null);
         } finally {
-            setCarregando(false)
+            setCarregando(false);
         }
     }
 
@@ -127,7 +127,7 @@ export function AuthProvider(props) {
         } else {
             setCarregando(false);
         }
-    }, []);
+    }, [configurarSessao]);
 
     return (
         <AuthContext.Provider value={{

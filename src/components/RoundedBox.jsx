@@ -1,8 +1,4 @@
-import {
-    Scroll,
-    ScrollControls,
-    RoundedBox
-} from "@react-three/drei";
+import { Scroll, ScrollControls, RoundedBox } from "@react-three/drei";
 import RoundedBoxWithScroll from './RoundedBoxWithScroll';
 import { useState } from "react";
 import { useSpring, animated } from "@react-spring/three";
@@ -17,19 +13,26 @@ const RoundedBoxScroll = ({ scale, setLight }) => {
         setActive(active === index ? null : index);
     };
 
-    const springs = [0, 1, 2].map((i) =>
-        useSpring({
-            scale: active === i ? [3, 3, 1] : [1, 1, 1],
-            position: active === i ? [0, 1, 2]
-                : i === 0 ? [-1, -1, 1]
-                    : i === 1 ? [0, -1, 1]
-                        : [1, -1, 1],
-            opacity: active === i ? 1 : 0
+    const springs = {
+        0: useSpring({
+            scale: active === 0 ? [3, 3, 1] : [1, 1, 1],
+            position: active === 0 ? [0, 1, 2] : [-1, -1, 1],
+            opacity: active === 0 ? 1 : 0
+        }),
+        1: useSpring({
+            scale: active === 1 ? [3, 3, 1] : [1, 1, 1],
+            position: active === 1 ? [0, 1, 2] : [0, -1, 1],
+            opacity: active === 1 ? 1 : 0
+        }),
+        2: useSpring({
+            scale: active === 2 ? [3, 3, 1] : [1, 1, 1],
+            position: active === 2 ? [0, 1, 2] : [1, -1, 1],
+            opacity: active === 2 ? 1 : 0
         })
-    );
+    };
 
     return (
-        <mesh {...springs}>
+        <group>
             {scale == '1' ? (
                 <ScrollControls pages={2} damping={0.001}>
                     <Scroll>
@@ -46,13 +49,13 @@ const RoundedBoxScroll = ({ scale, setLight }) => {
                     </Scroll>
                 </ScrollControls>
             ) : (
-                springs.map((spring, index) => (
+                [0, 1, 2].map((index) => (
                     <AnimatedRoundedBox
                         key={index}
                         args={[scale * 2, scale * 2, 0]}
                         radius={0.05}
                         smoothness={4}
-                        {...spring}
+                        {...springs[index]}
                         onClick={() => handleClick(index)}
                         visible={active === null || active === index}
                     >
@@ -61,7 +64,7 @@ const RoundedBoxScroll = ({ scale, setLight }) => {
                     </AnimatedRoundedBox>
                 ))
             )}
-        </mesh>
+        </group>
     );
 };
 

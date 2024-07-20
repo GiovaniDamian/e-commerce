@@ -32,7 +32,7 @@ const Scene = ({ light, setLight }) => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const { portalState, deactivatePortal } = usePortal();
 
-    const shakeAnimation = (initialRotation) => {
+    const useShakeAnimation = (initialRotation) => {
         return useSpring({
             from: { rotation: initialRotation },
             to: async (next) => {
@@ -50,9 +50,9 @@ const Scene = ({ light, setLight }) => {
     };
 
     const animations = [
-        shakeAnimation(initialRotations.switches),
-        shakeAnimation(initialRotations.chandelier),
-        shakeAnimation(initialRotations.lamp),
+        useShakeAnimation(initialRotations.switches),
+        useShakeAnimation(initialRotations.chandelier),
+        useShakeAnimation(initialRotations.lamp),
     ];
 
     useEffect(() => {
@@ -132,7 +132,7 @@ const Scene = ({ light, setLight }) => {
     }, [portalState]);
 
     return (
-        <mesh {...shakeAnimation}>
+        <mesh {...useShakeAnimation}>
             <OrbitControls enableZoom={false} enablePan={false} />
             <CameraControls
                 enabled={portalState}
