@@ -1,3 +1,4 @@
+import Image from "next/image"
 import useAuth from "../../data/hook/useAuth"
 export default function PerflWeb() {
     const { usuario } = useAuth()
@@ -5,7 +6,7 @@ export default function PerflWeb() {
         <div className='flex flex-row m-2 h-full'>
             <div className='flex-col bg-transparent border-4 border-gray-600 rounded-lg p-2 flex space-x-4'>
                 <div className="flex flex-row space-x-4">
-                    <img src="./images/profile.jpg" alt="Foto de perfil" className="w-32 h-32 rounded-full object-cover border-4 border-gray-600" />
+                    <Image src="./images/profile.jpg" alt="Foto de perfil" className="w-32 h-32 rounded-full object-cover border-4 border-gray-600" />
                     <div className={`flex flex-col justify-start rounded-lg px-2 h-3/4 bg-transparent`}>
                         <h1 className="text-2xl font-bold text-gray-800">Informações Gerais</h1>
                         <p className="text-gray-600">Nome: {usuario?.name}</p>

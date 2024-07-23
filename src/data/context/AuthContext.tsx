@@ -26,7 +26,7 @@ async function usuarioNormalizado(usuarioFirebase: firebase.User, usuarioExisten
         usuarioExistente?.imageUrl || usuarioFirebase.photoURL || "",
         usuarioExistente?.cpf || 0,
         usuarioExistente?.phone || usuarioFirebase.phoneNumber || "",
-        usuarioExistente?.historic || "",
+        usuarioExistente?.historic || [],
         usuarioExistente?.address || {
             state: "",
             city: "",

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import FormGeneral from "./FormGeneral";
 import FormPersonal from "./FormPersonal";
 import FormPayment from "./FormPayment";
+import Image from "next/image";
 
 export default function PerfilWeb() {
     const { usuario } = useAuth();
@@ -84,7 +85,7 @@ export default function PerfilWeb() {
                 <div className="bg-transparent border-4 border-gray-600 rounded-lg p-1 relative flex flex-col ">
                     <h1 className="text-2xl font-bold text-gray-800 self-center">Histórico</h1>
                     <ul className="list-disc mx-1 px-1 text-xsm px-4">
-                        {usuario?.historic.map((item) => <li>{item}</li>)}
+                        {usuario?.historic.map((item) => <li key={`${usuario}-${item}` }>{item}</li>)}
                     </ul>
                 </div>
             )
@@ -96,7 +97,7 @@ export default function PerfilWeb() {
         <div className='flex flex-row m-2 h-full'>
             <div className='flex-col bg-transparent border-4 border-gray-600 rounded-lg p-2 flex space-x-4'>
                 <div className="flex flex-row space-x-4">
-                    <img src="./images/profile.jpg" alt="Foto de perfil" className="w-32 h-32 rounded-full object-cover border-4 border-gray-600" />
+                    <Image src="./images/profile.jpg" alt="Foto de perfil" className="w-32 h-32 rounded-full object-cover border-4 border-gray-600" />
                     <div className="flex flex-col justify-between">
                         <div className={`flex flex-col justify-start rounded-lg px-2 h-3/4 cursor-pointer ${getBackgroundColor(isHoveredGeneral)}`}
                             onMouseEnter={() => setIsHoveredGeneral(true)}
