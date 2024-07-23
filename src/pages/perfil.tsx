@@ -39,7 +39,7 @@ export default function Profile() {
     }
 
     return (
-        <main className={`${theme} flex flex-col h-screen w-screen bg-zinc-400`}>
+        <main className={`${theme} flex flex-col h-screen w-full bg-zinc-400`}>
             <div className='text-gray-500 text-xs p-2' >
                 <button onClick={home}><FontAwesomeIcon icon={faArrowLeft} /> Voltar</button>
             </div>

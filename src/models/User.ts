@@ -17,9 +17,9 @@ export default class Usuario {
     #cpf: number
     #phone: string
     #address: Address
-    #historic: string
+    #historic: Array<String>
 
-    constructor(id: string, name: string, email: string, token: string, provider: string, imageUrl: string, cpf: number, phone: string, historic: string, address: Address) {
+    constructor(id: string, name: string, email: string, token: string, provider: string, imageUrl: string, cpf: number, phone: string, historic: Array<String>, address: Address) {
         this.#id = id
         this.#name = name
         this.#email = email
