@@ -35,5 +35,3 @@ yarn-error.log*
 
 #VS
 .vs/
-/package.json
-/package-lock.json
