@@ -7,7 +7,7 @@ import PromoBox from './PromoBox';
 
 const AnimatedBox = animated(RoundedBox);
 
-export default function RoundedBoxWithScroll({ index, color, scale, spring }) {
+export default function RoundedBoxWithScroll({ index, color, scale, spring}) {
     const scroll = useScroll();
     const ref = useRef();
     const [isExpanded, setIsExpanded] = useState(false);

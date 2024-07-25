@@ -72,4 +72,10 @@ export default class Usuario {
         return this.#historic
     }
 
+    updateInfo(name: string, phone: string, address: Address, cpf: number) {
+        this.#name = name;
+        this.#phone = phone;
+        this.#address = address;
+        this.#cpf = cpf;
+    }
 }

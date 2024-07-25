@@ -6,7 +6,7 @@ import ModalProducts from './ModalProducts';
 import PortalMesh from './PortalMesh';
 import usePortal from '../data/hook/usePortal';
 
-const Scene = ({ light, setLight }) => {
+export default function Scene () {
     const modelCouch = useGLTF('./model/couch2.glb');
     const modelLamp = useGLTF('./model/lamp.glb');
     const modelChandelier = useGLTF('./model/lamp_02_lowpoly.glb');
@@ -138,7 +138,7 @@ const Scene = ({ light, setLight }) => {
                 enabled={portalState}
                 ref={cameraControlsRef}
                 />
-            <ambientLight intensity={light} />
+            <ambientLight intensity={1} />
             <pointLight position={[5, 5, 5]} intensity={1} castShadow />
             <directionalLight
                 position={[0, 10, 10]}
@@ -203,7 +203,7 @@ const Scene = ({ light, setLight }) => {
                 />
                 <primitive object={modelCouch.scene} scale={0.02 * scale} position={positions.couch} />
             </>
-            <RoundedBox scale={scale} setLight={setLight} />
+            <RoundedBox scale={scale} />
 
             {showModal && <ModalProducts product={selectedProduct} onClose={handleCloseModal} />}
             {portalState && (
@@ -215,5 +215,3 @@ const Scene = ({ light, setLight }) => {
         </mesh>
     );
 };
-
-export default Scene;

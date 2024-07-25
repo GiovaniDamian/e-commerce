@@ -11,9 +11,14 @@ interface AuthContextProps {
     login?: (email: string, senha: string) => Promise<void>
     loginGoogle?: () => Promise<void>
     logout?: () => Promise<void>
+    salvarUsuario: (suario: Usuario) => Promise<void>
 }
 
-const AuthContext = createContext<AuthContextProps>({});
+const AuthContext = createContext<AuthContextProps>({
+    salvarUsuario: function(usuario: Usuario): Promise<void> {
+        throw new Error('Function not implemented.');
+    }
+});
 
 async function usuarioNormalizado(usuarioFirebase: firebase.User, usuarioExistente?: Usuario): Promise<Usuario> {
     const token = await usuarioFirebase.getIdToken();
@@ -129,6 +134,16 @@ export function AuthProvider(props) {
         }
     }, [configurarSessao]);
 
+    async function salvarUsuario(usuario: Usuario) {
+        try {
+            setCarregando(true)
+            await repo.salvar(usuario)
+        }finally {
+            setCarregando(false)
+        }
+    }
+
+
     return (
         <AuthContext.Provider value={{
             usuario,
@@ -137,6 +152,7 @@ export function AuthProvider(props) {
             cadastrar,
             loginGoogle,
             logout,
+            salvarUsuario,
         }}>
             {props.children}
         </AuthContext.Provider>

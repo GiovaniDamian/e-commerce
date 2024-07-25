@@ -6,7 +6,7 @@ import PromoBox from './PromoBox';
 
 const AnimatedRoundedBox = animated(RoundedBox);
 
-const RoundedBoxScroll = ({ scale, setLight }) => {
+const RoundedBoxScroll = ({ scale }) => {
     const [active, setActive] = useState(null);
 
     const handleClick = (index) => {
@@ -43,7 +43,6 @@ const RoundedBoxScroll = ({ scale, setLight }) => {
                                 color={index === 0 ? '#6c757d' : '#adb5bd'}
                                 scale={scale}
                                 spring={springs[index]}
-                                setLight={setLight}
                             />
                         ))}
                     </Scroll>
