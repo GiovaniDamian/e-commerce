@@ -47,9 +47,9 @@ export default function PerfilWeb() {
                     adjunct: usuario.address.adjunct || '',
                 },
                 cpf: usuario.cpf || '',
-                cardNumber: '',  // Assuming you will handle card details separately
-                cardExpiry: '',  // Assuming you will handle card details separately
-                cardCVV: ''      // Assuming you will handle card details separately
+                cardNumber: '',  
+                cardExpiry: '',  
+                cardCVV: ''      
             });
         }
     }, [usuario]);
@@ -58,10 +58,10 @@ export default function PerfilWeb() {
         return isHovered ? 'bg-gray-600/50' : 'bg-transparent';
     };
     function isValidCPF(cpf: string): boolean {
-        cpf = cpf.replace(/[^\d]/g, ""); 
+        cpf = cpf.replace(/[^\d]/g, "");
 
         if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
-            return false; 
+            return false;
         }
 
         let sum = 0;
@@ -113,20 +113,17 @@ export default function PerfilWeb() {
     function handleSave() {
         const { name, phone, address, cpf } = formData
 
-        if (!name || !phone || !address.state || !address.city || !address.neighborhood || !address.street || !address.houseNumber || !cpf) {
-            setIsModalOpen(!isModalOpen)
-        }
-
         if (!isValidCPF(cpf)) {
             setCpfError("CPF inválido");
             setIsModalOpen(!isModalOpen)
-        } else {
-            setCpfError(null);
+        } else if (!name || !phone || !address.state || !address.city || !address.neighborhood || !address.street || !address.houseNumber || !cpf) {
+            setIsModalOpen(!isModalOpen)
         }
-
-
-        usuario?.updateInfo(name, phone, address, cpf)
-        if (usuario && cpfError == null) salvarUsuario(usuario)
+        else {
+            setCpfError(null);
+            usuario?.updateInfo(name, phone, address, cpf)
+            if (usuario) salvarUsuario(usuario)
+        }
     };
 
     const handleClose = () => {
@@ -151,6 +148,7 @@ export default function PerfilWeb() {
             return (
                 <div className="bg-transparent border-4 border-gray-600 rounded-lg p-1 relative flex flex-col ">
                     <h1 className="text-2xl font-bold text-gray-800 self-center">Histórico</h1>
+                    <h4 className="flex justify-center text-xsm text-gray-600">Dia/Mês/Ano - Hora - Valor(R$) - Items</h4>
                     <ul className="list-disc mx-1 px-1 text-xsm px-4">
                         {usuario?.historic.map((item) => <li key={`${usuario}-${item}`}>{item}</li>)}
                     </ul>

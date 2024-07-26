@@ -8,7 +8,7 @@ export default function FormPayment({ title, formData, handleChange, handleClose
     return (
         <div className="bg-transparent border-4 border-gray-600 rounded-lg p-4 relative text-xsm">
                 <button
-                    className="absolute top-2 right-2 bg-red-500 text-white rounded px-1.5 py-0.5 text-xsm"
+                className={`absolute top-2 right-2 bg-red-500 text-white rounded px-1.5 py-0.5 text-xsm`}
                     onClick={handleClose}
                 >
                     X

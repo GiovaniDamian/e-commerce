@@ -3,13 +3,14 @@ interface FormPersonalProps {
     formData: any
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     handleClose?: () => void
+    mobile?: boolean
 }
 
-export default function FormPersonal({ title, formData, handleChange, handleClose }: FormPersonalProps) {
+export default function FormPersonal({ title, formData, handleChange, handleClose, mobile }: FormPersonalProps) {
     return (
         <div className="bg-transparent border-4 border-gray-600 rounded-lg p-4 relative text-xsm">
             <button
-                className="absolute top-2 right-2 bg-red-500 text-white rounded px-1.5 py-0.5 text-xsm"
+                className={`absolute top-2 right-2 bg-red-500 text-white rounded px-1.5 py-0.5 text-xsm  ${mobile ? 'hidden': ''}`}
                 onClick={handleClose}
             >
                 X
