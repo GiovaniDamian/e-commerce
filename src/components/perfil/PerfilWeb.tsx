@@ -126,7 +126,7 @@ export default function PerfilWeb() {
 
 
         usuario?.updateInfo(name, phone, address, cpf)
-        if (usuario && setCpfError == null) salvarUsuario(usuario)
+        if (usuario && cpfError == null) salvarUsuario(usuario)
     };
 
     const handleClose = () => {
@@ -136,11 +136,11 @@ export default function PerfilWeb() {
     function renderSelectedSection() {
         switch (selectedSection) {
             case "general":
-                return <FormGeneral formData={formData} handleChange={handleChange} handleClose={handleClose} usuario={usuario ?? usuario} />;
+                return <FormGeneral title={"Editar Informações Gerais"} formData={formData} handleChange={handleChange} handleClose={handleClose} usuario={usuario ?? usuario} />;
             case "personal":
-                return <FormPersonal formData={formData} handleChange={handleChange} handleClose={handleClose} />;
+                return <FormPersonal title={"Editar Informações Pessoais"} formData={formData} handleChange={handleChange} handleClose={handleClose} />;
             case "payment":
-                return <FormPayment formData={formData} handleChange={handleChange} handleClose={handleClose} />;
+                return <FormPayment title={"Editar Informações de Pagamento"} formData={formData} handleChange={handleChange} handleClose={handleClose} />;
             default:
                 return <div className="bg-transparent border-4 border-gray-600 rounded-lg p-4">Selecione uma seção para editar</div>;
         }

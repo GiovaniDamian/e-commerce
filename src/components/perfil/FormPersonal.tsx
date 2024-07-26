@@ -1,10 +1,11 @@
 interface FormPersonalProps {
-    formData: any;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleClose: () => void;
+    title: string
+    formData: any
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    handleClose?: () => void
 }
 
-export default function FormPersonal({ formData, handleChange, handleClose }: FormPersonalProps) {
+export default function FormPersonal({ title, formData, handleChange, handleClose }: FormPersonalProps) {
     return (
         <div className="bg-transparent border-4 border-gray-600 rounded-lg p-4 relative text-xsm">
             <button
@@ -13,7 +14,7 @@ export default function FormPersonal({ formData, handleChange, handleClose }: Fo
             >
                 X
             </button>
-            <h2 className="text-2xl font-bold text-gray-800">Editar Informações Pessoais</h2>
+            <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
             <form className='mb-8'>
                 <div className="mb-4">
                     <label className="block text-gray-600">Estado: <span className='text-red-700'>*</span></label>
