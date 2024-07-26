@@ -3,13 +3,14 @@ import useAuth from '../data/hook/useAuth'
 import { useState } from 'react'
 import Modal from './Modal'
 import Image from 'next/image';
-
+import useAppData from '../data/hook/useAppData';
 interface AvatarUsuarioProps {
     className?: string
 }
 
 export default function AvatarUsuario({ className }: AvatarUsuarioProps) {
     const { usuario } = useAuth()
+    const { theme } = useAppData()
     const [imageSrc, setImageSrc] = useState(usuario?.imageUrl ?? '/images/avatar.svg')
     const [ModalOpen, setModalOpen] = useState(false)
 
@@ -48,9 +49,9 @@ export default function AvatarUsuario({ className }: AvatarUsuarioProps) {
                 `}
                 />
                 <Modal isOpen={ModalOpen} onClose={closeModal}>
-                    <div className="p-6">
+                    <div className={`p-6 ${theme} dark:text-white`}>
                         <h2 className="text-2xl font-semibold mb-4">Você precisa estar logado!</h2>
-                        <p className="text-xl text-gray-600">
+                        <p className="text-xl text-gray-600 ${theme} dark:text-white">
                             Para acessar esta funcionalidade, você precisa estar logado. Por favor, faça o login para continuar.
                         </p>
                     </div>

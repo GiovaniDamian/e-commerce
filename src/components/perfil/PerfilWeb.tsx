@@ -5,8 +5,10 @@ import FormPersonal from "./FormPersonal";
 import FormPayment from "./FormPayment";
 import Image from "next/image";
 import Modal from "../Modal";
+import useAppData from '../../data/hook/useAppData';
 export default function PerfilWeb() {
     const { usuario, salvarUsuario } = useAuth();
+    const { theme } = useAppData()
     const [isHoveredGeneral, setIsHoveredGeneral] = useState(false)
     const [isHoveredPersonal, setIsHoveredPersonal] = useState(false)
     const [isHoveredPayment, setIsHoveredPayment] = useState(false)
@@ -215,8 +217,8 @@ export default function PerfilWeb() {
             </div>
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <div>
-                    <h2 className="text-[1.5rem] font-semibold mb-4">Campos com * são obrigatórios!</h2>
-                    <p className="text-2xl text-gray-600">
+                    <h2 className={`text-[1.5rem] font-semibold mb-4 ${theme} dark:text-white`}>Campos com * são obrigatórios!</h2>
+                    <p className={`text-2xl text-gray-600 ${theme} dark:text-white`}>
                         {cpfError ? cpfError : 'Por favor, preencha todos os campos obrigatórios.'}
                     </p>
                 </div>

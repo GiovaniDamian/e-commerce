@@ -41,9 +41,10 @@ export default function Profile() {
     }
 
     return (
-        carregando ? <div>
-            <Image src='/images/loading.gif' alt="Home" width={500} height={500}  />
-        </div>
+        carregando ?
+            <div>
+                <Image src='/images/loading.gif' alt="Home" width={500} height={500} />
+            </div>
             :
             <main className={`${theme} flex flex-col h-full w-full bg-zinc-400`}>
                 <div className='text-gray-500 text-xs p-2' >

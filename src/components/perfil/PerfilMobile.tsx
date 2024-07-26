@@ -2,12 +2,12 @@ import Image from "next/image"
 import useAuth from "../../data/hook/useAuth"
 import FormGeneral from "./FormGeneral"
 import FormPersonal from "./FormPersonal";
-import FormPayment from "./FormPayment";
 import { useEffect, useState } from "react";
 import Modal from "../Modal";
+import useAppData from '../../data/hook/useAppData';
 export default function PerflWeb() {
     const { usuario, salvarUsuario } = useAuth();
-
+    const { theme } = useAppData()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const closeModal = () => setIsModalOpen(false);
     const [cpfError, setCpfError] = useState<string | null>(null);
@@ -118,8 +118,6 @@ export default function PerflWeb() {
         }
     };
 
-
-
    
     return (
         <div className='flex flex-row justify-center h-full'>
@@ -148,8 +146,8 @@ export default function PerflWeb() {
                 </button>
                 <Modal isOpen={isModalOpen} onClose={closeModal}>
                     <div>
-                        <h2 className="text-[1.5rem] font-semibold mb-4">Campos com * são obrigatórios!</h2>
-                        <p className="text-2xl text-gray-600">
+                        <h2 className={`text-[1.5rem] font-semibold mb-4 ${theme} dark:text-white`}>Campos com * são obrigatórios!</h2>
+                        <p className={`text-2xl text-gray-600 ${theme} dark:text-white`}>
                             {cpfError ? cpfError : 'Por favor, preencha todos os campos obrigatórios.'}
                         </p>
                     </div>
