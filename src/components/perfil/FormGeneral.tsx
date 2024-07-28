@@ -40,7 +40,7 @@ export default function FormGeneral({ title, formData, handleChange, handleClose
                         className="border rounded w-full py-2 px-3 text-gray-700"
                     />
                 </div>
-                <div className={`mb-4 ${mobile ?? 'hidden'}`}>
+                <div className={`mb-4`}>
                     <label className="block text-gray-600">CPF: <span className='text-red-700'>*</span></label>
                     <input
                         type="number"

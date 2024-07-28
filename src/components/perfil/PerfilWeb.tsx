@@ -173,6 +173,7 @@ export default function PerfilWeb() {
                             <h1 className="text-2xl font-bold text-gray-800">Informações Gerais</h1>
                             <p className="text-gray-600">Nome: {usuario?.name}</p>
                             <p className="text-gray-600">Email: {usuario?.email.slice(0, 2)}******@***</p>
+                            <p className="text-gray-600">CPF: {usuario?.cpf.toString().slice(0, 3)}******</p>
                             <p className="text-gray-600">Telefone: {usuario?.phone.slice(0, 4)}*****</p>
                         </div>
                         <div className="flex justify-center m-2">
