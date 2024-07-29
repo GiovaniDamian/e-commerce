@@ -15,7 +15,7 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 export default function Home() {
     const { cart } = useAppData()
     
-    const amount = cart?.totalPrice.toFixed(2);
+    const amount = cart?.totalPrice ? parseFloat(cart.totalPrice.toFixed(2)) : 0;
 
     return (
         <main className="max-w-6xl mx-auto p-10 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-blue-500 to-purple-500">
