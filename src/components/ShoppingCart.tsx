@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import useAppData from '../data/hook/useAppData'
+import route from 'next/router'
 
 export default function ShoppingCartComponent() {
     const { cart, removeCart, updateCartQuantity, resetCart } = useAppData()
@@ -162,7 +163,7 @@ export default function ShoppingCartComponent() {
             </div>
             <div className="flex flex-row mt-1 items-center">
                 <div className="mt-1 mr-3 grow flex">
-                    <button className="grow bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mr-4">
+                    <button className="grow bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mr-4" onClick={() => route.push('/payment') }>
                         Ir para o pagamento
                     </button>
                     <button
