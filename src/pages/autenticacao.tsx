@@ -3,6 +3,9 @@ import AuthInput from "../components/auth/AuthInput"
 import { IconeAtencao } from "../icons"
 import useAuth from "../data/hook/useAuth"
 import Image from 'next/image';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import route from 'next/router';
 export default function Autenticacao() {
     const { cadastrar, login, loginGoogle } = useAuth()
 
@@ -11,6 +14,9 @@ export default function Autenticacao() {
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
 
+    function home() {
+        route.push('/')
+    }
     function exibirErro(msg, tempoEmSegundos = 5) {
         setErro(msg)
         setTimeout(() => setErro(null), tempoEmSegundos * 1000)
@@ -39,6 +45,9 @@ export default function Autenticacao() {
                     className="h-screen w-full object-cover" />
             </div>
             <div className="m-10 w-full md:w-1/2 lg:w-1/3">
+                <div className='text-gray-500 text-xs p-2' >
+                    <button onClick={home}><FontAwesomeIcon icon={faArrowLeft} /> Voltar</button>
+                </div>
                 <h1 className={`text-3xl font-bold mb-5`}>
                     {modo === 'login' ? 'Entre com a Sua Conta' : 'Cadastre-se na Plataforma'}
                 </h1>
