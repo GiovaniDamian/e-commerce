@@ -1,14 +1,14 @@
 "use client";
 
-import CheckoutPage from "../components/payment/CheckoutPage";
-import convertToSubcurrency from "../lib/convertToSubcurrency";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import CheckoutPage from "../components/payment/CheckoutPage"
+import convertToSubcurrency from "../lib/convertToSubcurrency"
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
 import useAppData from '../data/hook/useAppData'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import route from 'next/router';
-import useAuth from "../data/hook/useAuth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import route from 'next/router'
+import useAuth from "../data/hook/useAuth"
 
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
     throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined");
