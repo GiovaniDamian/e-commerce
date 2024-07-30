@@ -1,6 +1,15 @@
 module.exports = {
     reactStrictMode: true,
     images: {
-        domains: ['picsum.photos', 'lh3.googleusercontent.com'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'picsum.photos',
+            },
+            {
+                protocol: 'https',
+                hostname: 'lh3.googleusercontent.com',
+            },
+        ],
     },
-}
+};
