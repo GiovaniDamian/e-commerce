@@ -10,10 +10,12 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import route from 'next/router';
 import useAuth from "../data/hook/useAuth";
 
+let stripePromise
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
     throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined");
+} else {
+     stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 }
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 export default function Home() {
     const { cart } = useAppData()
