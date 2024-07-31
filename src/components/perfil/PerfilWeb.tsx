@@ -2,7 +2,6 @@ import useAuth from "../../data/hook/useAuth";
 import { useState, useEffect } from "react";
 import FormGeneral from "./FormGeneral";
 import FormPersonal from "./FormPersonal";
-import FormPayment from "./FormPayment";
 import Image from "next/image";
 import Modal from "../Modal";
 import useAppData from '../../data/hook/useAppData';
@@ -11,7 +10,6 @@ export default function PerfilWeb() {
     const { theme } = useAppData()
     const [isHoveredGeneral, setIsHoveredGeneral] = useState(false)
     const [isHoveredPersonal, setIsHoveredPersonal] = useState(false)
-    const [isHoveredPayment, setIsHoveredPayment] = useState(false)
     const [selectedSection, setSelectedSection] = useState<string>('')
     const [selectedHistoric, setSelectedHistoric] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,6 +19,7 @@ export default function PerfilWeb() {
     const [formData, setFormData] = useState<any>({
         name: '',
         phone: '',
+        cpf: '',
         address: {
             state: '',
             city: '',
@@ -29,10 +28,6 @@ export default function PerfilWeb() {
             houseNumber: 0,
             adjunct: '',
         },
-        cpf: '',
-        cardNumber: '',
-        cardExpiry: '',
-        cardCVV: ''
     });
 
     useEffect(() => {
@@ -40,6 +35,7 @@ export default function PerfilWeb() {
             setFormData({
                 name: usuario.name || '',
                 phone: usuario.phone || '',
+                cpf: usuario.cpf || '',     
                 address: {
                     state: usuario.address.state || '',
                     city: usuario.address.city || '',
@@ -48,10 +44,6 @@ export default function PerfilWeb() {
                     houseNumber: usuario.address.houseNumber || 0,
                     adjunct: usuario.address.adjunct || '',
                 },
-                cpf: usuario.cpf || '',
-                cardNumber: '',  
-                cardExpiry: '',  
-                cardCVV: ''      
             });
         }
     }, [usuario]);
@@ -138,8 +130,6 @@ export default function PerfilWeb() {
                 return <FormGeneral title={"Editar Informações Gerais"} formData={formData} handleChange={handleChange} handleClose={handleClose} usuario={usuario ?? usuario} />;
             case "personal":
                 return <FormPersonal title={"Editar Informações Pessoais"} formData={formData} handleChange={handleChange} handleClose={handleClose} />;
-            case "payment":
-                return <FormPayment title={"Editar Informações de Pagamento"} formData={formData} handleChange={handleChange} handleClose={handleClose} />;
             default:
                 return <div className="bg-transparent border-4 border-gray-600 rounded-lg p-4">Selecione uma seção para editar</div>;
         }
@@ -181,7 +171,7 @@ export default function PerfilWeb() {
                         </div>
                     </div>
                 </div>
-                <div className={`flex flex-col justify-start rounded-lg m-1 px-2 h-3/4 cursor-pointer ${getBackgroundColor(isHoveredPersonal)}`}
+                <div className={`flex flex-col justify-start rounded-lg m-1 mb-8 px-2 h-3/4 cursor-pointer ${getBackgroundColor(isHoveredPersonal)}`}
                     onMouseEnter={() => setIsHoveredPersonal(true)}
                     onMouseLeave={() => setIsHoveredPersonal(false)}
                     onClick={() => setSelectedSection("personal")}>
@@ -192,16 +182,6 @@ export default function PerfilWeb() {
                     <p className="text-gray-600">Endereço: {usuario?.address.street.slice(0, 4)}*****</p>
                     <p className="text-gray-600">Número: {usuario?.address.houseNumber === null ? '*****' : usuario?.address.houseNumber}</p>
                     <p className="text-gray-600">Complemento: {usuario?.address.adjunct.slice(0, 4)}*****</p>
-                </div>
-                <div className={`flex flex-col justify-start rounded-lg m-1 px-2 h-3/4 cursor-pointer ${getBackgroundColor(isHoveredPayment)}`}
-                    onMouseEnter={() => setIsHoveredPayment(true)}
-                    onMouseLeave={() => setIsHoveredPayment(false)}
-                    onClick={() => setSelectedSection("payment")}>
-                    <h1 className="text-2xl font-bold text-gray-800">Informações de Pagamento</h1>
-                    <p className="text-gray-600">CPF: {usuario?.cpf.toString().slice(0, 3)} . *** . *** - **</p>
-                    <p className="text-gray-600">Número do Cartão: ******</p>
-                    <p className="text-gray-600">Data de Validade: ** / ** </p>
-                    <p className="text-gray-600">CVV: ***</p>
                 </div>
                 <button
                     className="bg-blue-500 w-20 self-end text-white rounded p-2"
