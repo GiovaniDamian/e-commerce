@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import useAppData from '../data/hook/useAppData'
 import Link from 'next/link'
+import useAuth from '../data/hook/useAuth'
 
 export default function ShoppingCartComponent() {
+    const { usuario } = useAuth()
     const { cart, removeCart, updateCartQuantity, resetCart } = useAppData()
     const [quantityInputs, setQuantityInputs] = useState<{ [key: string]: number }>({})
     const [tooltipState, setTooltipState] = useState<{ [key: string]: boolean }>({});
@@ -58,6 +60,23 @@ export default function ShoppingCartComponent() {
             };
         }
     };
+    function renderRedirect() {
+        if (usuario?.email && usuario.cpf && usuario.address.state) {
+            return <Link href="/payment" className="grow bg-blue-600 text-center hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mr-4">
+                Ir para o pagamento
+            </Link>
+
+        } else if (usuario?.email) {
+            return <Link href="/perfil" className="grow bg-blue-600 text-center hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mr-4">
+                Finalize seu cadastro para ir ao pagamento
+            </Link>
+        } else {
+            return <Link href="/autenticacao" className="grow bg-blue-600 text-center hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mr-4">
+                Você precisa estar logado e preencher as informações para ir ao pagamento
+            </Link>
+        }
+    }
+
     return (
         <div className="flex flex-col mx-auto bg-gray-300 dark:bg-gray-800 rounded-lg shadow-lg text-xsm">
             <h1 className="text-xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">Shopping Cart</h1>
@@ -104,14 +123,14 @@ export default function ShoppingCartComponent() {
                                                 <div className="flex flex-row place-content-end">
                                                     <button
                                                         className="bg-blue-500 text-white font-bold py-1 px-1 rounded-l"
-                                                            onClick={() => handleQuantityChange(productKey, (quantityInputs[productKey] || item.quantity) - 1)}
-                                                            disabled={(quantityInputs[productKey] || item.quantity) <= 1}
+                                                        onClick={() => handleQuantityChange(productKey, (quantityInputs[productKey] || item.quantity) - 1)}
+                                                        disabled={(quantityInputs[productKey] || item.quantity) <= 1}
                                                     >
                                                         -
                                                     </button>
                                                     <button
                                                         className="bg-blue-500 text-white font-bold py-1 px-1 rounded-r"
-                                                            onClick={() => handleQuantityChange(productKey, (quantityInputs[productKey] || item.quantity) + 1)}
+                                                        onClick={() => handleQuantityChange(productKey, (quantityInputs[productKey] || item.quantity) + 1)}
                                                     >
                                                         +
                                                     </button>
@@ -163,9 +182,8 @@ export default function ShoppingCartComponent() {
             </div>
             <div className="flex flex-row mt-1 items-center">
                 <div className="mt-1 mr-3 grow flex">
-                    <Link href="/payment" className="grow bg-blue-600 text-center hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mr-4">
-                        Ir para o pagamento
-                    </Link>
+                    {renderRedirect()}
+
                     <button
                         className="bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold pl-4 py-2 pr-3 rounded flex items-center"
                         onMouseEnter={handleMouseEnterRestore}
