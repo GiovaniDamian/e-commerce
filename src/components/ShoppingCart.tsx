@@ -61,7 +61,7 @@ export default function ShoppingCartComponent() {
         }
     };
     function renderRedirect() {
-        if (usuario?.email && usuario.cpf && usuario.address.state) {
+        if (usuario?.email && usuario.cpf && usuario.address.state && usuario.address.city && usuario.address.neighborhood && usuario.address.street) {
             return <Link href="/payment" className="grow bg-blue-600 text-center hover:bg-blue-800 text-white font-bold py-2 px-4 rounded mr-4">
                 Ir para o pagamento
             </Link>
