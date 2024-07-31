@@ -33,7 +33,7 @@ export default function Home() {
                 <h2 className="text-sm">
                     Esta é a seção de pagamento, adicione um cartão de crédito à sua carteira e prossiga com a seleção do método.
                 </h2>
-                <div className="mt-2 font-bold">Valor de sua compra: ${amount}</div>
+                <div className="mt-2 font-bold">Valor de sua compra: R${amount.toFixed(2)}</div>
             </div>
             <div className="flex justify-center">
                 <div className="border border-gray-700 border-4 rounded-lg">

@@ -46,7 +46,10 @@ export default function Autenticacao() {
             </div>
             <div className="m-10 w-full md:w-1/2 lg:w-1/3">
                 <div className='text-gray-500 text-xs p-2' >
-                    <button onClick={home}><FontAwesomeIcon icon={faArrowLeft} /> Voltar</button>
+                    <button onClick={home}>
+                        <FontAwesomeIcon icon={faArrowLeft} />
+                        Voltar
+                    </button>
                 </div>
                 <h1 className={`text-3xl font-bold mb-5`}>
                     {modo === 'login' ? 'Entre com a Sua Conta' : 'Cadastre-se na Plataforma'}
