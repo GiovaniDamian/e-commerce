@@ -46,7 +46,7 @@ export default function Profile() {
                 <Image src='/images/loading.gif' alt="Home" width={500} height={500} unoptimized />
             </div>
             :
-            <main className={`${theme} flex flex-col h-full w-full bg-zinc-400`}>
+            <main className={`${theme} flex flex-col h-screen w-full bg-zinc-400`}>
                 <div className='text-gray-500 text-xs p-2' >
                     <button onClick={home}><FontAwesomeIcon icon={faArrowLeft} /> Voltar</button>
                 </div>
