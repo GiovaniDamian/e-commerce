@@ -7,13 +7,19 @@ import {
     PaymentElement,
 } from "@stripe/react-stripe-js";
 import convertToSubcurrency from "../../lib/convertToSubcurrency";
+import Usuario from "../../models/User";
 
-const CheckoutPage = ({ amount }: { amount: number }) => {
+interface CheckoutPageProps {
+    amount: number,
+    usuario?: Usuario
+}
+const CheckoutPage = ({ amount, usuario }: CheckoutPageProps) => {
     const stripe = useStripe();
     const elements = useElements();
     const [errorMessage, setErrorMessage] = useState<string>();
     const [clientSecret, setClientSecret] = useState("");
     const [loading, setLoading] = useState(false);
+    
 
     useEffect(() => {
         fetch("/api/createPaymentIntent", {
@@ -21,11 +27,11 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ amount: convertToSubcurrency(amount) }),
+            body: JSON.stringify({ amount: convertToSubcurrency(amount), usuario: usuario }),
         })
             .then((res) => res.json())
             .then((data) => setClientSecret(data.clientSecret));
-    }, [amount]);
+    }, [amount, usuario]);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -88,7 +94,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
                 disabled={!stripe || loading}
                 className="text-white w-full p-5 bg-black mt-2 rounded-md font-bold disabled:opacity-50 disabled:animate-pulse"
             >
-                {!loading ? `Pay $${amount}` : "Processing..."}
+                {!loading ? `Pague R$${amount}` : "Processing..."}
             </button>
         </form>
     );

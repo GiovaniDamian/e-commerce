@@ -6,6 +6,7 @@ interface Address {
     street: string
     houseNumber: number
     adjunct: string
+    postalCode: string
 }
 export default class Usuario {
     #id: string

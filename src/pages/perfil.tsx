@@ -43,7 +43,7 @@ export default function Profile() {
     return (
         carregando ?
             <div>
-                <Image src='/images/loading.gif' alt="Home" width={500} height={500} unoptimized />
+                <Image src='/images/loading.gif' alt="Home" className="flex justify-center" width={500} height={500} unoptimized />
             </div>
             :
             <main className={`${theme} flex flex-col h-screen w-full bg-zinc-400`}>

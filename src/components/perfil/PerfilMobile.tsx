@@ -14,6 +14,7 @@ export default function PerflWeb() {
     const [formData, setFormData] = useState<any>({
         name: '',
         phone: '',
+        cpf: '',
         address: {
             state: '',
             city: '',
@@ -21,11 +22,8 @@ export default function PerflWeb() {
             street: '',
             houseNumber: 0,
             adjunct: '',
+            postalCode: ''
         },
-        cpf: '',
-        cardNumber: '',
-        cardExpiry: '',
-        cardCVV: ''
     });
 
     useEffect(() => {
@@ -33,6 +31,7 @@ export default function PerflWeb() {
             setFormData({
                 name: usuario.name || '',
                 phone: usuario.phone || '',
+                cpf: usuario.cpf || '',
                 address: {
                     state: usuario.address.state || '',
                     city: usuario.address.city || '',
@@ -40,11 +39,8 @@ export default function PerflWeb() {
                     street: usuario.address.street || '',
                     houseNumber: usuario.address.houseNumber || 0,
                     adjunct: usuario.address.adjunct || '',
+                    postalCode: usuario.address.postalCode || ''
                 },
-                cpf: usuario.cpf || '',
-                cardNumber: '',  
-                cardExpiry: '',  
-                cardCVV: ''      
             });
         }
     }, [usuario]);
@@ -108,7 +104,7 @@ export default function PerflWeb() {
         if (!isValidCPF(cpf)) {
             setCpfError("CPF inválido");
             setIsModalOpen(!isModalOpen)
-        } else if (!name || !phone || !address.state || !address.city || !address.neighborhood || !address.street || !address.houseNumber || !cpf) {
+        } else if (!name || !phone || !address.state || !address.city || !address.neighborhood || !address.street || !address.houseNumber || !cpf || !address.postalCode) {
             setIsModalOpen(!isModalOpen)
         }
         else {

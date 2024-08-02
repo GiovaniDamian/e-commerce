@@ -42,10 +42,10 @@ export default function Home() {
                         options={{
                             mode: "payment",
                             amount: convertToSubcurrency(amount),
-                            currency: "usd",
+                            currency: "brl",
                         }}
                     >
-                        <CheckoutPage amount={amount} />
+                        <CheckoutPage amount={amount} usuario={usuario} />
                     </Elements>
                 </div>
             </div>

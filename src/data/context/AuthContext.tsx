@@ -38,7 +38,8 @@ async function usuarioNormalizado(usuarioFirebase: firebase.User, usuarioExisten
             neighborhood: "",
             street: "",
             houseNumber: 0,
-            adjunct: ""
+            adjunct: "",
+            postalCode: ""
         }
     );
 }

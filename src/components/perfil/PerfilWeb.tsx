@@ -27,6 +27,7 @@ export default function PerfilWeb() {
             street: '',
             houseNumber: 0,
             adjunct: '',
+            postalCode: ''
         },
     });
 
@@ -43,6 +44,7 @@ export default function PerfilWeb() {
                     street: usuario.address.street || '',
                     houseNumber: usuario.address.houseNumber || 0,
                     adjunct: usuario.address.adjunct || '',
+                    postalCode: usuario.address.postalCode || ''
                 },
             });
         }
@@ -110,7 +112,7 @@ export default function PerfilWeb() {
         if (!isValidCPF(cpf)) {
             setCpfError("CPF inválido");
             setIsModalOpen(!isModalOpen)
-        } else if (!name || !phone || !address.state || !address.city || !address.neighborhood || !address.street || !address.houseNumber || !cpf) {
+        } else if (!name || !phone || !address.state || !address.city || !address.neighborhood || !address.street || !address.houseNumber || !cpf || !address.postalCode) {
             setIsModalOpen(!isModalOpen)
         }
         else {
@@ -179,6 +181,7 @@ export default function PerfilWeb() {
                     <p className="text-gray-600">Estado: {usuario?.address.state.slice(0, 4)}*****</p>
                     <p className="text-gray-600">Cidade: {usuario?.address.city.slice(0, 4)}*****</p>
                     <p className="text-gray-600">Bairro: {usuario?.address.neighborhood.slice(0, 4)}*****</p>
+                    <p className="text-gray-600">CEP: {usuario?.address.postalCode.slice(0, 4)}*****</p>
                     <p className="text-gray-600">Endereço: {usuario?.address.street.slice(0, 4)}*****</p>
                     <p className="text-gray-600">Número: {usuario?.address.houseNumber === null ? '*****' : usuario?.address.houseNumber}</p>
                     <p className="text-gray-600">Complemento: {usuario?.address.adjunct.slice(0, 4)}*****</p>
