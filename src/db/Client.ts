@@ -1,3 +1,4 @@
+import { snap } from "gsap/all";
 import firebase from "../firebase/config";
 import Usuario from "../models/User";
 import UserRepository from "../models/UserRepository";
@@ -7,7 +8,7 @@ export default class UserFireBase implements UserRepository {
     #conversor = {
         toFirestore(cliente: Usuario) {
             return {
-                nome: cliente.name,
+                name: cliente.name,
                 email: cliente.email,
                 cpf: cliente.cpf,
                 phone: cliente.phone,
@@ -17,7 +18,7 @@ export default class UserFireBase implements UserRepository {
         },
         fromFirestore(snapshot: firebase.firestore.QueryDocumentSnapshot, options: firebase.firestore.SnapshotOptions): Usuario {
             const dados = snapshot.data(options);
-            return new Usuario(snapshot.id, dados.nome, dados.email, dados.token, dados.provider, dados.imageUrl, dados.cpf, dados.phone, dados.historic, dados.address);
+            return new Usuario(snapshot.id, dados?.name, dados?.email, dados?.token, dados?.provider, dados?.imageUrl, dados?.cpf, dados?.phone, dados?.historic, dados?.address)
         }
     }
 
@@ -34,7 +35,8 @@ export default class UserFireBase implements UserRepository {
 
     async obter(cliente: Usuario): Promise<Usuario> {
         const doc = await this.colecao().doc(cliente.id).get();
-        return this.#conversor.fromFirestore(doc as firebase.firestore.QueryDocumentSnapshot, {})
+        const result = this.#conversor.fromFirestore(doc as firebase.firestore.QueryDocumentSnapshot, {})
+        return result
     }
 
     private colecao() {

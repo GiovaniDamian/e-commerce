@@ -67,24 +67,24 @@ export function AuthProvider(props) {
             if (!usuarioExistente) {
                 await repo.salvar(usuario);
             }
-            setUsuario(usuario);
-            gerenciarCookie(true);
-            setCarregando(false);
-            return usuario.email;
+            setUsuario(usuario)
+            gerenciarCookie(true)
+            setCarregando(false)
+            return usuario.email
         } else {
-            setUsuario(undefined);
-            gerenciarCookie(false);
-            setCarregando(false);
+            setUsuario(undefined)
+            gerenciarCookie(false)
+            setCarregando(false)
             return false;
         }
     }, [repo]);
 
     async function login(email, senha) {
         try {
-            setCarregando(true);
-            const resp = await firebase.auth().signInWithEmailAndPassword(email, senha);
-            await configurarSessao(resp.user);
-            window.location.href = '/';
+            setCarregando(true)
+            const resp = await firebase.auth().signInWithEmailAndPassword(email, senha)
+            await configurarSessao(resp.user)
+            window.location.href = '/'
         } finally {
             setCarregando(false);
         }
@@ -92,46 +92,46 @@ export function AuthProvider(props) {
 
     async function cadastrar(email, senha) {
         try {
-            setCarregando(true);
-            const resp = await firebase.auth().createUserWithEmailAndPassword(email, senha);
-            await configurarSessao(resp.user);
-            window.location.href = '/';
+            setCarregando(true)
+            const resp = await firebase.auth().createUserWithEmailAndPassword(email, senha)
+            await configurarSessao(resp.user)
+            window.location.href = '/'
         } finally {
-            setCarregando(false);
+            setCarregando(false)
         }
     }
 
     async function loginGoogle() {
         try {
-            setCarregando(true);
-            const auth = firebase.auth();
-            const provider = new firebase.auth.GoogleAuthProvider();
-            const resp = await auth.signInWithPopup(provider);
-            await configurarSessao(resp.user);
-            window.location.href = '/';
+            setCarregando(true)
+            const auth = firebase.auth()
+            const provider = new firebase.auth.GoogleAuthProvider()
+            const resp = await auth.signInWithPopup(provider)
+            await configurarSessao(resp.user)
+            window.location.href = '/'
         } catch (error) {
-            console.error("Erro durante o login:", error);
+            console.error("Erro durante o login:", error)
         } finally {
-            setCarregando(false);
+            setCarregando(false)
         }
     }
 
     async function logout() {
         try {
-            setCarregando(true);
-            await firebase.auth().signOut();
-            await configurarSessao(null);
+            setCarregando(true)
+            await firebase.auth().signOut()
+            await configurarSessao(null)
         } finally {
-            setCarregando(false);
+            setCarregando(false)
         }
     }
 
     useEffect(() => {
         if (Cookies.get('iot-ecommerce')) {
-            const cancelar = firebase.auth().onIdTokenChanged(configurarSessao);
-            return () => cancelar();
+            const cancelar = firebase.auth().onIdTokenChanged(configurarSessao)
+            return () => cancelar()
         } else {
-            setCarregando(false);
+            setCarregando(false)
         }
     }, [configurarSessao]);
 
