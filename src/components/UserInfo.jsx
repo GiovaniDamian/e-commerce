@@ -11,7 +11,7 @@ export default function UserInfo() {
                 height={500}
                 className="w-12 h-12 object-cover m-0.5 cursor-pointer"
             />
-            <div className='absolute top-30 text-xss hidden' title="3d ícones">3d ícones criados por Khoirul Huda - Flaticon acessível em 'https://www.flaticon.com/br/icones-gratis/3d'</div>
+            <div className='absolute top-30 text-xss hidden' title="3d ícones">3d ícones criados por Khoirul Huda - Flaticon acessível em https://www.flaticon.com/br/icones-gratis/3d</div>
             
             <div className="pl-2 m-1">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
