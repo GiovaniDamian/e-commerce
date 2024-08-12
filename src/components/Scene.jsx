@@ -163,7 +163,6 @@ export default function Scene () {
                 shadow-camera-far={50}
                 target-position={[0, 0, -0.8]}
             />
-
             <>
                 <animated.primitive
                     object={modelSwitches.scene}

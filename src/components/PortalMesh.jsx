@@ -1,4 +1,4 @@
-import { RoundedBox, Image,Html } from "@react-three/drei";
+import { RoundedBox, Image, Html } from "@react-three/drei";
 import { useSpring, animated, config } from "@react-spring/three";
 import usePortal from '../data/hook/usePortal';
 import { useEffect, useState } from 'react';
@@ -59,13 +59,13 @@ const PortalMesh = ({ scale, onClose }) => {
                 </group>
             ))}
             <Html position={[4 * scale, scale * 0.3 * (0.03 * product.id), 0]}>
-                    <button
-                        onClick={onClose}
-                        className="absolute text-xs top-2 right-2 bg-red-500 text-white px-6 py-0.5 rounded"
-                    >
-                        Fechar
-                    </button>
-                </Html>
+                <button
+                    onClick={onClose}
+                    className="absolute text-xs top-2 right-2 bg-red-500 text-white px-6 py-0.5 rounded"
+                >
+                    Fechar
+                </button>
+            </Html>
             )
         </group>
     );

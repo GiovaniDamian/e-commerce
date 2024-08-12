@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import { Canvas } from "@react-three/fiber";
 import Scene from '../components/Scene';
 import { PortalProvider } from '../data/context/PortalProvider';
+import UserInfo from '../components/UserInfo';
 
 export default function Home() {
     const { theme } = useAppData()
@@ -27,6 +28,9 @@ export default function Home() {
 
                 <Header />
                 <main className={`flex flex-row h-screen w-screen bg-gray-300 dark:bg-gray-800`} onClick={() => light == 0 ? setLight(0.8) : setLight(0)}>
+                    <div className='absolute'>
+                        <UserInfo />
+                    </div>
                     <PortalProvider>
                         <Canvas camera={{ position: [0, 2, 14], fov: 30 }} >
                             <Scene light={light} setLight={setLight} />

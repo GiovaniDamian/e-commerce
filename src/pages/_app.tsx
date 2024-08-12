@@ -6,8 +6,8 @@ import StripeContext from '../data/context/StripeContext';
 function MyApp({ Component, pageProps }) {
     return (
         <AuthProvider>
-            <AppProvider>
-                <StripeContext>
+            <AppProvider {...pageProps}>
+                <StripeContext {...pageProps}>
                     <Component {...pageProps} />
                 </StripeContext>
             </AppProvider>
