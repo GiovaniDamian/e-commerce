@@ -5,6 +5,7 @@ import FormPersonal from "./FormPersonal";
 import Image from "next/image";
 import Modal from "../Modal";
 import useAppData from '../../data/hook/useAppData';
+import Link from "next/link";
 export default function PerfilWeb() {
     const { usuario, salvarUsuario } = useAuth();
     const { theme } = useAppData()
@@ -13,8 +14,12 @@ export default function PerfilWeb() {
     const [selectedSection, setSelectedSection] = useState<string>('')
     const [selectedHistoric, setSelectedHistoric] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalSaveOpen, setIsModalSaveOpen] = useState(false);
     const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+    const closeModal = () => {
+        setIsModalOpen(false)
+        setIsModalSaveOpen(false);
+    }
     const [cpfError, setCpfError] = useState<string | null>(null);
     const [formData, setFormData] = useState<any>({
         name: '',
@@ -84,9 +89,9 @@ export default function PerfilWeb() {
         return true;
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
-        const regex = /^[a-zA-Z0-9\s]*$/;
+        const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ0-9\s]*$/;
 
         if (regex.test(value)) {
             if (name in formData.address) {
@@ -119,6 +124,7 @@ export default function PerfilWeb() {
             setCpfError(null);
             usuario?.updateInfo(name, phone, address, cpf)
             if (usuario) salvarUsuario(usuario)
+            setIsModalSaveOpen(!isModalSaveOpen)
         }
     };
 
@@ -205,6 +211,20 @@ export default function PerfilWeb() {
                     <p className={`text-2xl text-gray-600 ${theme} dark:text-white`}>
                         {cpfError ? cpfError : 'Por favor, preencha todos os campos obrigatórios.'}
                     </p>
+                </div>
+            </Modal>
+            <Modal isOpen={isModalSaveOpen} onClose={closeModal}>
+                <div>
+                    <h2 className={`text-[1.5rem] font-semibold mb-4 ${theme} dark:text-white`}>Suas Informações foram Salvas!</h2>
+                    <Link href="/"
+                        className="bg-blue-500 w-20 self-end text-white rounded p-2 m-2"
+                    > Voltar a pagina inicial
+                    </Link>
+                    <Link
+                        href="/payment"
+                        className="bg-blue-500 w-20 self-end text-white rounded p-2"
+                    > Ir aos pagamentos
+                    </Link>
                 </div>
             </Modal>
         </div>

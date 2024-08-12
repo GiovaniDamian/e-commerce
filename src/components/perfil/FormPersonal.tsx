@@ -1,7 +1,7 @@
 interface FormPersonalProps {
     title: string
     formData: any
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    handleChange: (e) => void
     handleClose?: () => void
     mobile?: boolean
 }

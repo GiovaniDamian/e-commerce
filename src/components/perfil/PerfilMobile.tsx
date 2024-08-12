@@ -5,11 +5,16 @@ import FormPersonal from "./FormPersonal";
 import { useEffect, useState } from "react";
 import Modal from "../Modal";
 import useAppData from '../../data/hook/useAppData';
+import Link from "next/link";
 export default function PerflWeb() {
     const { usuario, salvarUsuario } = useAuth();
     const { theme } = useAppData()
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const closeModal = () => setIsModalOpen(false);
+    const [isModalSaveOpen, setIsModalSaveOpen] = useState(false);
+    const closeModal = () => {
+        setIsModalOpen(false)
+        setIsModalSaveOpen(false)
+    }
     const [cpfError, setCpfError] = useState<string | null>(null);
     const [formData, setFormData] = useState<any>({
         name: '',
@@ -76,9 +81,9 @@ export default function PerflWeb() {
         return true;
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
-        const regex = /^[a-zA-Z0-9\s]*$/;
+        const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ0-9\s]*$/;
 
         if (regex.test(value)) {
             if (name in formData.address) {
@@ -111,6 +116,7 @@ export default function PerflWeb() {
             setCpfError(null);
             usuario?.updateInfo(name, phone, address, cpf)
             if (usuario) salvarUsuario(usuario)
+            setIsModalSaveOpen(!isModalSaveOpen)
         }
     };
 
@@ -146,6 +152,20 @@ export default function PerflWeb() {
                         <p className={`text-2xl text-gray-600 ${theme} dark:text-white`}>
                             {cpfError ? cpfError : 'Por favor, preencha todos os campos obrigatórios.'}
                         </p>
+                    </div>
+                </Modal>
+                <Modal isOpen={isModalSaveOpen} onClose={closeModal}>
+                    <div>
+                        <h2 className={`text-[1.5rem] font-semibold mb-4 ${theme} dark:text-white`}>Suas Informações foram Salvas!</h2>
+                        <Link href="/"
+                            className="bg-blue-500 w-20 self-end text-white rounded p-2 m-1"
+                        > Voltar a pagina inicial
+                        </Link>
+                        <Link
+                            href="/payment"
+                            className="bg-blue-500 w-20 self-end text-white rounded p-2"
+                        > Ir aos pagamentos
+                        </Link>
                     </div>
                 </Modal>
             </div>
