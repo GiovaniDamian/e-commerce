@@ -47,7 +47,9 @@ async function usuarioNormalizado(usuarioFirebase: firebase.User, usuarioExisten
 function gerenciarCookie(logado: boolean) {
     if (logado) {
         Cookies.set('iot-ecommerce', logado, {
-            expires: 7
+            expires: 7,
+            sameSite: 'None',
+            secure: true     
         });
     } else {
         Cookies.remove('iot-ecommerce');

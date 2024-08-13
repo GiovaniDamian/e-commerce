@@ -10,6 +10,7 @@ export default function UserInfo() {
                 width={500}
                 height={500}
                 className="w-12 h-12 object-cover m-0.5 cursor-pointer"
+                priority={true}
             />
             <div className='absolute top-30 text-xss hidden' title="3d ícones">3d ícones criados por Khoirul Huda - Flaticon acessível em https://www.flaticon.com/br/icones-gratis/3d</div>
             

@@ -108,7 +108,9 @@ export function AppProvider({ children }) {
 
     useEffect(() => {
         Cookies.set('cart', JSON.stringify(cart), {
-            expires: 7
+            expires: 7,
+            sameSite: 'None', 
+            secure: true     
         });
     }, [cart]);
 

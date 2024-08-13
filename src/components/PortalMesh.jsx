@@ -62,11 +62,8 @@ const PortalMesh = ({ scale, onClose }) => {
                 <button
                     onClick={onClose}
                     className="absolute text-xs top-2 right-2 bg-red-500 text-white px-6 py-0.5 rounded"
-                >
-                    Fechar
-                </button>
+                >Fechar</button>
             </Html>
-            )
         </group>
     );
 };
