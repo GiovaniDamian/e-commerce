@@ -48,7 +48,7 @@ function gerenciarCookie(logado: boolean) {
     if (logado) {
         Cookies.set('iot-ecommerce', logado, {
             expires: 7,
-            sameSite: 'none',
+            sameSite: 'Lax',
             secure: true
         });
     } else {
