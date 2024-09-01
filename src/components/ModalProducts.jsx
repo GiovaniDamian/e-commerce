@@ -77,7 +77,7 @@ const ModalProducts = ({ product, onClose, positionY }) => {
     if (!product) return null;
 
     const getProductDetails = (product) => {
-        let positionYAdjustment = isSmallScreen ? 0.5 : isMediumScreen ? 0.2 : 0;
+        const positionYAdjustment = isSmallScreen ? 0.5 : isMediumScreen ? 0.2 : 0;
         switch (product) {
             case "switches":
                 return {

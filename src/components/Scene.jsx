@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useMemo } from 'react';
 import { animated, useSpring } from '@react-spring/three';
 import { OrbitControls, useGLTF, CameraControls } from '@react-three/drei';
 import RoundedBox from './RoundedBox';
@@ -34,7 +34,7 @@ export default function Scene() {
         bulbs: false,
     });
 
-    const productsList = ['switches', 'sockets', 'bulbs'];
+    const productsList = useMemo(() => ['switches', 'sockets', 'bulbs'], []);
 
     const { portalState, deactivatePortal } = usePortal();
 
@@ -69,13 +69,14 @@ export default function Scene() {
         return () => clearInterval(interval);
     }, []);
 
+
     useEffect(() => {
         const initialShowModals = {};
         productsList.forEach(product => {
             initialShowModals[product] = true;
         });
         setShowModals(initialShowModals);
-    }, []);
+    }, [productsList]);
 
     useEffect(() => {
         const handleResize = () => {

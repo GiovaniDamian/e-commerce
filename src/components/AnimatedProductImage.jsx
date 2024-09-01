@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useSpring, animated } from '@react-spring/web'
 import products from './../data/products.json'
 import Image from 'next/image';
-import { IconeInfo } from '../icons';
 
 const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick, style, isSmallScreen, expandedProduct }) => {
     const [showModal, setShowModal] = useState(false)
