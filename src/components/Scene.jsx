@@ -6,7 +6,7 @@ import ModalProducts from './ModalProducts';
 import PortalMesh from './PortalMesh';
 import usePortal from '../data/hook/usePortal';
 
-export default function Scene () {
+export default function Scene() {
     const modelCouch = useGLTF('./model/couch2.glb');
     const modelLamp = useGLTF('./model/lamp.glb');
     const modelChandelier = useGLTF('./model/lamp_02_lowpoly.glb');
@@ -28,8 +28,14 @@ export default function Scene () {
     };
 
     const [animationIndex, setAnimationIndex] = useState(0);
-    const [showModal, setShowModal] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [showModals, setShowModals] = useState({
+        switches: false,
+        sockets: false,
+        bulbs: false,
+    });
+
+    const productsList = ['switches', 'sockets', 'bulbs'];
+
     const { portalState, deactivatePortal } = usePortal();
 
     const useShakeAnimation = (initialRotation) => {
@@ -61,6 +67,14 @@ export default function Scene () {
         }, 2500);
 
         return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        const initialShowModals = {};
+        productsList.forEach(product => {
+            initialShowModals[product] = true;
+        });
+        setShowModals(initialShowModals);
     }, []);
 
     useEffect(() => {
@@ -101,23 +115,19 @@ export default function Scene () {
     }, []);
 
     const handleMouseEnter = (productName) => {
-        setSelectedProduct(productName);
-        setShowModal(true);
+        setShowModals(prev => ({ ...prev, [productName]: true }));
     };
 
     const handleProductClick = (productName) => {
-        setSelectedProduct(productName);
-        setShowModal(true);
+        setShowModals(prev => ({ ...prev, [productName]: true }));
     };
 
-    const handleCloseModal = () => {
-        setShowModal(false);
-        setSelectedProduct(null);
+    const handleCloseModal = (productName) => {
+        setShowModals(prev => ({ ...prev, [productName]: false }));
     };
 
     const handleClosePortalMesh = () => {
         deactivatePortal();
-        setSelectedProduct(null);
     };
 
     useEffect(() => {
@@ -137,7 +147,7 @@ export default function Scene () {
             <CameraControls
                 enabled={portalState}
                 ref={cameraControlsRef}
-                />
+            />
             <ambientLight intensity={1} />
             <pointLight position={[5, 5, 5]} intensity={1} castShadow />
             <directionalLight
@@ -204,13 +214,23 @@ export default function Scene () {
             </>
             <RoundedBox scale={scale} />
 
-            {showModal && <ModalProducts product={selectedProduct} onClose={handleCloseModal} />}
+            {productsList.map((product, index) => (
+                showModals[product] && (
+                    <ModalProducts
+                        key={product}
+                        product={product}
+                        onClose={() => handleCloseModal(product)}
+                        positionY={index * -80} 
+                    />
+                )
+            ))}
+
             {portalState && (
                 <PortalMesh
-                    scale={scale }
+                    scale={scale}
                     onClose={handleClosePortalMesh}
                 />
             )}
         </mesh>
     );
-};
+}

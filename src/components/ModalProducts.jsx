@@ -8,13 +8,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 
-const ModalProducts = ({ product, onClose }) => {
+const ModalProducts = ({ product, onClose, positionY }) => {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [isMediumScreen, setIsMediumScreen] = useState(false);
     const [expandedProduct, setExpandedProduct] = useState(null);
     const { activatePortal } = usePortal();
     const [selectedOptions, setSelectedOptions] = useState({});
-    const { addCart} = useAppData();
+    const { addCart } = useAppData();
     const [quantities, setQuantities] = useState({});
 
     useEffect(() => {
@@ -37,7 +37,7 @@ const ModalProducts = ({ product, onClose }) => {
 
     const handleView3DModel = (itemSelected) => {
         activatePortal(itemSelected);
-        onClose()
+        onClose();
     };
 
     const handleOptionSelect = (productId, optionType, optionValue) => {
@@ -77,24 +77,25 @@ const ModalProducts = ({ product, onClose }) => {
     if (!product) return null;
 
     const getProductDetails = (product) => {
+        let positionYAdjustment = isSmallScreen ? 0.5 : isMediumScreen ? 0.2 : 0;
         switch (product) {
             case "switches":
                 return {
-                    position: isSmallScreen ? [-1.5, 3.5, 0] : isMediumScreen ? [-2.7, 3, 0] : [-6, 3.6, 0],
+                    position: isSmallScreen ? [-1.5, 3.5 + positionYAdjustment, 0] : isMediumScreen ? [-2.7, 2.0 + positionYAdjustment, 0] : [-6, 2.5 + positionYAdjustment, 0],
                     zIndex: 1,
                     xOffset: isSmallScreen ? 0 : isMediumScreen ? -2 : -4,
                     yOffset: isSmallScreen ? 0 : isMediumScreen ? -0.5 : -1,
                 };
             case "sockets":
                 return {
-                    position: isSmallScreen ? [-1.5, 3.5, 0] : [0.5, 3.5, 0],
+                    position: isSmallScreen ? [-1.5, 1 + positionYAdjustment, 0] : [0.5, 4.5 + positionYAdjustment, 0],
                     zIndex: 1,
                     xOffset: 0,
                     yOffset: 0,
                 };
             case "bulbs":
                 return {
-                    position: isSmallScreen ? [-1.5, 3.5, 0] : [3, 3, 0],
+                    position: isSmallScreen ? [-1.5, 0.5 + positionYAdjustment, 0] : [3, 2.0 + positionYAdjustment, 0],
                     zIndex: 1,
                     xOffset: 0,
                     yOffset: 0,
@@ -183,7 +184,7 @@ const ModalProducts = ({ product, onClose }) => {
                     {renderOptions(item)}
                 </div>
                 <div className="flex flex-col w-full items-center">
-                    <p className={`${isSmallScreen ? 'text-xsm' : 'text-xs'} p-0.5 w-full mx-3 text-center truncate bg-gray-400 dark:bg-gray-700 rounded dark:text-white"`}>
+                    <p className={`${isSmallScreen ? 'text-xsm' : 'text-xs'} p-0.5 w-full mx-3 text-center truncate bg-gray-400 dark:bg-gray-700 rounded dark:text-white`}>
                         {product !== "switches"
                             ? item.name.split(" ").slice(0, 4).join(" ")
                             : item.name.split(" ").slice(0, 2).join(" ")}
@@ -224,7 +225,7 @@ const ModalProducts = ({ product, onClose }) => {
 
     return (
         <>
-            <Html position={position}>
+            <Html position={[position[0], position[1] + (positionY / 100), position[2]]}>
                 <div
                     className={`relative bg-gray-300/75 dark:bg-gray-700/50 dark:text-gray-400 pt-5 pb-3 shadow-lg border-black rounded-lg ${product == "sockets" && "flex"} ${isSmallScreen && "flex"}`}
                 >
@@ -247,9 +248,11 @@ const ModalProducts = ({ product, onClose }) => {
             </Html>
             {product === "switches" && isSmallScreen && (
                 <Html
-                    position={position.map(
-                        (pos, index) => (index === 1 ? pos - 1.5 : pos)
-                    )}
+                    position={[
+                        position[0],
+                        position[1] + (positionY / 100) - 1,
+                        position[2]
+                    ]}
                 >
                     <div className={`relative ${!expandedProduct && 'bg-gray-300 bg-opacity-90 dark:bg-gray-800 dark:bg-opacity-80'} pt-5 pb-3 shadow-lg border-black mt-16 rounded-lg flex`}>
                         {!expandedProduct &&

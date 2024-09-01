@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSpring, animated } from '@react-spring/web'
 import products from './../data/products.json'
 import Image from 'next/image';
+import { IconeInfo } from '../icons';
 
 const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick, style, isSmallScreen, expandedProduct }) => {
     const [showModal, setShowModal] = useState(false)
@@ -43,13 +44,15 @@ const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick,
         const element = document.getElementById(`product-${productId}`)
         if (expanded && element) {
             const rect = element.getBoundingClientRect();
-            const xOffset = (rect.width / 200) * (-productId * 2);
-            const yOffset = (rect.top / 200) + (productId * 2);
-            const topPosition = 200 + (productId * 8);
+
+            // Ajuste o yOffset baseado na posição vertical do produto na tela
+            const yOffset = rect.top > window.innerHeight / 2 ? -rect.height / 2 : 0;
+
+            const topPosition = yOffset < 0 ? window.innerHeight / 4 : 200;
 
             let leftPosition;
             if (isSmallScreen) {
-                leftPosition = productId === 1 ? 60 :( [2, 4, 6, 8].includes(productId)) ? -60 : 100;
+                leftPosition = productId === 1 ? 60 : ([2, 4, 6, 8].includes(productId)) ? -60 : 100;
             } else if (isMediumScreen) {
                 leftPosition = (productId === 1 || [2, 3, 4].includes(productId)) ? -150 : 200;
             } else {
@@ -57,7 +60,7 @@ const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick,
             }
 
             api.start({
-                transform: `scale(5) translate(${xOffset}px, ${yOffset - (productId * 6)}px)`,
+                transform: `scale(5) translate(0px, ${yOffset}px)`,
                 zIndex: 2,
                 top: `${topPosition}px`,
                 left: `${leftPosition}px`,
@@ -74,6 +77,7 @@ const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick,
         }
     }, [expanded, productId, api, isSmallScreen, isMediumScreen]);
 
+
     const product = products.find(item => item.id === productId);
 
     return (
@@ -85,55 +89,68 @@ const AnimatedProductImage = ({ imageUrl, altText, productId, expanded, onClick,
                 style={{ ...style, ...springProps }}
             >
                 {!expandedProduct && (
-                    <Image
-                        src={imageUrl}
-                        alt={altText}
-                        width={500} height={500}
-                        className="w-full h-full object-cover"
-                    />
-                )}
-                {showModal && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 text-white text-xss p-4" onMouseLeave={onClick}>
-                        <button
-                            className="absolute top-1 right-1 text-white px-1"
-                            onClick={onClick}
-                        >
-                            x
-                        </button>
-                        <div className="w-full">
-                            <h3 className="font-bold">{product.name}</h3>
-                            <p className="mt-0.5">{product.description}</p>
-                            <div className="flex">
-                                {product.details && (
-                                    <div className="mt-0.5 mr-1">
-                                        <h4 className="font-bold underline">Detalhes</h4>
-                                        <ul>
-                                            {Object.keys(product.details).map((key, index) => (
-                                                <li key={index} className="mt-0.5">
-                                                    <strong>{translateDetail(key)}</strong>: {Array.isArray(product.details[key]) ? product.details[key].join(', ') : product.details[key]}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-                                {product.specifications && (
-                                    <div className="mt-0.5 ml-1">
-                                        <h4 className="font-bold underline">Especificações</h4>
-                                        <ul>
-                                            {Object.keys(product.specifications).map((key, index) => (
-                                                <li key={index} className="mt-0.5">
-                                                    <strong>{translateSpecification(key)}</strong>: {product.specifications[key]}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
+                    <>
+                        <Image
+                            src={imageUrl}
+                            alt={altText}
+                            width={500} height={500}
+                            className="w-full h-full object-cover"
+                        />
+                        <div style={{
+                            position: 'absolute',
+                            bottom: '5px',
+                            right: '5px',
+                            fontSize: '24px',
+                            color: '#ffffff',
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            borderRadius: '50%',
+                            padding: '4px'
+                        }} >
                             </div>
+            </>
+                )}
+            {showModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 text-white text-xss p-4" onMouseLeave={onClick}>
+                    <button
+                        className="absolute top-1 right-1 text-white px-1"
+                        onClick={onClick}
+                    >
+                        x
+                    </button>
+                    <div className="w-full">
+                        <h3 className="font-bold">{product.name}</h3>
+                        <p className="mt-0.5">{product.description}</p>
+                        <div className="flex">
+                            {product.details && (
+                                <div className="mt-0.5 mr-1">
+                                    <h4 className="font-bold underline">Detalhes</h4>
+                                    <ul>
+                                        {Object.keys(product.details).map((key, index) => (
+                                            <li key={index} className="mt-0.5">
+                                                <strong>{translateDetail(key)}</strong>: {Array.isArray(product.details[key]) ? product.details[key].join(', ') : product.details[key]}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                            {product.specifications && (
+                                <div className="mt-0.5 ml-1">
+                                    <h4 className="font-bold underline">Especificações</h4>
+                                    <ul>
+                                        {Object.keys(product.specifications).map((key, index) => (
+                                            <li key={index} className="mt-0.5">
+                                                <strong>{translateSpecification(key)}</strong>: {product.specifications[key]}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     </div>
-                )}
-            </animated.div>
-        </div>
+                </div>
+            )}
+        </animated.div>
+        </div >
     );
 };
 
