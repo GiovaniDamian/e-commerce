@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { animated, useSpring } from '@react-spring/three';
 import { OrbitControls, useGLTF, CameraControls } from '@react-three/drei';
 import RoundedBox from './RoundedBox';
